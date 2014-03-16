@@ -1,0 +1,16 @@
+*.dcu
+*.~*~
+*.local
+*.identcache
+__history
+*.drc
+*.map
+*.exe
+*.dll
+*.ppu
+*.o
+*.or
+*.a
+*.compiled
+bin/*
+backup/*

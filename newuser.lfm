@@ -1,0 +1,149 @@
+object NewUserForm: TNewUserForm
+  Left = 307
+  Height = 240
+  Top = 255
+  Width = 547
+  BorderStyle = bsDialog
+  Caption = 'Создание нового пользователя'
+  ClientHeight = 240
+  ClientWidth = 547
+  LCLVersion = '1.0.14.0'
+  object EditEmail: TLabeledEdit
+    Left = 280
+    Height = 27
+    Top = 39
+    Width = 248
+    Alignment = taCenter
+    EditLabel.AnchorSideLeft.Control = EditEmail
+    EditLabel.AnchorSideRight.Control = EditEmail
+    EditLabel.AnchorSideRight.Side = asrBottom
+    EditLabel.AnchorSideBottom.Control = EditEmail
+    EditLabel.Left = 280
+    EditLabel.Height = 16
+    EditLabel.Top = 20
+    EditLabel.Width = 248
+    EditLabel.Caption = 'Ваш адрес Email:'
+    EditLabel.ParentColor = False
+    EditLabel.ParentFont = False
+    EditLabel.Font.Color = clMaroon
+    TabOrder = 1
+  end
+  object EditEmailPWD: TLabeledEdit
+    Left = 280
+    Height = 27
+    Top = 95
+    Width = 248
+    Alignment = taCenter
+    EchoMode = emPassword
+    EditLabel.AnchorSideLeft.Control = EditEmailPWD
+    EditLabel.AnchorSideRight.Control = EditEmailPWD
+    EditLabel.AnchorSideRight.Side = asrBottom
+    EditLabel.AnchorSideBottom.Control = EditEmailPWD
+    EditLabel.Left = 280
+    EditLabel.Height = 16
+    EditLabel.Top = 76
+    EditLabel.Width = 248
+    EditLabel.Caption = 'Ваш пароль от Email:'
+    EditLabel.ParentColor = False
+    EditLabel.ParentFont = False
+    EditLabel.Font.Color = clMaroon
+    PasswordChar = '*'
+    TabOrder = 4
+  end
+  object EditUserPwd: TLabeledEdit
+    Left = 23
+    Height = 27
+    Top = 95
+    Width = 248
+    Alignment = taCenter
+    EchoMode = emPassword
+    EditLabel.AnchorSideLeft.Control = EditUserPwd
+    EditLabel.AnchorSideRight.Control = EditUserPwd
+    EditLabel.AnchorSideRight.Side = asrBottom
+    EditLabel.AnchorSideBottom.Control = EditUserPwd
+    EditLabel.Left = 23
+    EditLabel.Height = 16
+    EditLabel.Top = 76
+    EditLabel.Width = 248
+    EditLabel.Caption = 'Ваш пароль для учётной записи:'
+    EditLabel.ParentColor = False
+    EditLabel.ParentFont = False
+    ParentFont = False
+    PasswordChar = '*'
+    TabOrder = 2
+  end
+  object EditRePwd: TLabeledEdit
+    Left = 23
+    Height = 27
+    Top = 151
+    Width = 248
+    Alignment = taCenter
+    EchoMode = emPassword
+    EditLabel.AnchorSideLeft.Control = EditRePwd
+    EditLabel.AnchorSideRight.Control = EditRePwd
+    EditLabel.AnchorSideRight.Side = asrBottom
+    EditLabel.AnchorSideBottom.Control = EditRePwd
+    EditLabel.Left = 23
+    EditLabel.Height = 16
+    EditLabel.Top = 132
+    EditLabel.Width = 248
+    EditLabel.Caption = 'Пожалуйста повторите:'
+    EditLabel.ParentColor = False
+    EditLabel.ParentFont = False
+    PasswordChar = '*'
+    TabOrder = 3
+  end
+  object EditName: TLabeledEdit
+    Left = 23
+    Height = 27
+    Top = 39
+    Width = 248
+    Alignment = taCenter
+    EditLabel.AnchorSideLeft.Control = EditName
+    EditLabel.AnchorSideRight.Control = EditName
+    EditLabel.AnchorSideRight.Side = asrBottom
+    EditLabel.AnchorSideBottom.Control = EditName
+    EditLabel.Left = 23
+    EditLabel.Height = 16
+    EditLabel.Top = 20
+    EditLabel.Width = 248
+    EditLabel.Caption = 'Ваше имя или псевдоним:'
+    EditLabel.ParentColor = False
+    EditLabel.ParentFont = False
+    EditLabel.Font.Color = clMaroon
+    TabOrder = 0
+    OnChange = EditNameChange
+  end
+  object CheckBox: TCheckBox
+    Left = 280
+    Height = 21
+    Top = 151
+    Width = 118
+    Caption = 'Показать пароли'
+    OnChange = CheckBoxChange
+    TabOrder = 5
+  end
+  object Bevel1: TBevel
+    Left = 0
+    Height = 50
+    Top = 190
+    Width = 547
+    Align = alBottom
+  end
+  object SaveBtn: TButton
+    Left = 453
+    Height = 25
+    Top = 200
+    Width = 75
+    Caption = 'Сохранить'
+    TabOrder = 6
+  end
+  object CancelBtn: TButton
+    Left = 368
+    Height = 25
+    Top = 200
+    Width = 75
+    Caption = 'Отмена'
+    TabOrder = 7
+  end
+end
