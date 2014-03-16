@@ -199,6 +199,10 @@ object MainForm: TMainForm
         Caption = 'Отладка'
         OnClick = MenuItem9Click
       end
+      object MenuItem10: TMenuItem
+        Caption = 'Тестовый ответ в сообщении'
+        OnClick = MenuItem10Click
+      end
     end
   end
   object SQLite3Connection: TSQLite3Connection

@@ -24,7 +24,6 @@ private
   function GetText   :string;
   function GetTextHeigh (Text   :string)   :integer;
   procedure EnterMouse (Sender   :TObject);
-  procedure OnPaintNow (Sender   :TObject);
   function GetUser   :string;
   procedure LeaveMouse (Sender   :TObject);
   procedure SetDate (AValue   :TDate);
@@ -75,17 +74,6 @@ begin
     (self as TMessages).Color := clHighLightMsg
   else
     (self.Parent as TMessages).Color := clHighLightMsg;
-end;
-
-procedure TMessages.OnPaintNow (Sender   :TObject);
-var
-  DestRect :TRect;
-begin
-  DestRect.Left   := 4;
-  DestRect.Top    := 4;
-  DestRect.Bottom := 64;
-  DestRect.Right  := 64;
-  canvas.StretchDraw (DestRect, fImg.Picture.Graphic);
 end;
 
 function TMessages.GetUser   :string;
@@ -194,9 +182,6 @@ procedure TMessages.Test;
 var
   pic :TPicture;
 begin
-  //(self as TMessages).OnPaint:= OnPaintNow();
-  //fImg.Visible:= false;
-  // Test of property
   Text := 'Привет)) Как дела?' + #13 + #10;
   Date := Now;
   User := 'User';
@@ -209,7 +194,7 @@ end;
 procedure TMessages.ReAlign;
 begin
   inherited ReAlign;
-  (self as TMessages).Height := 60 + GetTextHeigh (string (fText.Caption));
+  (self as TMessages).Height := 74 + GetTextHeigh (string (fText.Caption));
 end;
 
 end.

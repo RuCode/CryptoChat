@@ -21,6 +21,7 @@ TMainForm = class(TForm)
   CheckBoxSaveMee :TCheckBox;
   ContactTabSheet :TTabSheet;
   ListBox1      :TListBox;
+  MenuItem10: TMenuItem;
   MenuItem8     :TMenuItem;
   MenuItem9     :TMenuItem;
   PageControl1  :TPageControl;
@@ -47,10 +48,10 @@ TMainForm = class(TForm)
   RegisterTabSheet :TTabSheet;
   SQLite3Connection :TSQLite3Connection;
   LoginTabSheet :TTabSheet;
-  procedure Button1Click (Sender :TObject);
   procedure CreateUserBtnClick (Sender :TObject);
   procedure FormCreate (Sender :TObject);
   procedure LoginTabSheetResize (Sender :TObject);
+  procedure MenuItem10Click(Sender: TObject);
   procedure MenuItem9Click (Sender :TObject);
   procedure RegisterTabSheetResize (Sender :TObject);
 private
@@ -87,11 +88,6 @@ begin
   NewUserForm.ShowModal;
 end;
 
-procedure TMainForm.Button1Click (Sender :TObject);
-begin
-  //     cf..VertScrollBar.Position:= cf.VertScrollBar.ClientSize;
-end;
-
 procedure TMainForm.FormCreate (Sender :TObject);
 begin
   cf := TCryptFrame.Create (TabSheet2);
@@ -99,6 +95,8 @@ begin
   cf.Parent := TabSheet2;
   cf.Align  := alClient;
   cf.SetUserPic ('/home/anton/Изображения/ava.jpg');
+  cf.UserName:= 'Антон';
+  cf.FriendName:= 'Анна';
   cf.SetFriendPic ('/home/anton/Изображения/ava2.jpg');
 end;
 
@@ -124,6 +122,11 @@ begin
     CheckBoxSaveMee.Top := Top + 144;
     LoginBtn.Top := Top + 140;
   end;
+end;
+
+procedure TMainForm.MenuItem10Click(Sender: TObject);
+begin
+  cf.Recv('Привет))', now, nil);
 end;
 
 procedure TMainForm.MenuItem9Click (Sender :TObject);
