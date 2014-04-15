@@ -8,7 +8,7 @@ uses
 Classes, SysUtils, FileUtil, Forms, Controls, Graphics,
 Dialogs, Menus, ExtCtrls, StdCtrls,
 // My controls
-CryptMessage;
+CryptMessage, Cryptor;
 
 type
 TFiles = pointer;
@@ -19,48 +19,50 @@ type
 
 TCryptFrame = class(TWinControl)
 private
+  Crypt   :TCrypt;
   fScroll   :TScrollBox;
-  fPanel    :TPanel;
-  fMemo     :TMemo;
+  fPanel   :TPanel;
+  fMemo   :TMemo;
   fMyFace   :TImage;
-  fFriendFace :TImage;
-  fSendBtn: TButton;
-  fAtachBtn: TButton;
+  fFriendFace   :TImage;
+  fSendBtn   :TButton;
+  fAtachBtn   :TButton;
   // Работа с файлами
-  fFileOpen: TOpenDialog;
-  fFileList: TStringList;
-  fFileLabel: TLabel;
+  fFileOpen   :TOpenDialog;
+  fFileList   :TStringList;
+  fFileLabel   :TLabel;
   // Мои данные
-  fUserName :string;
+  fUserName   :string;
   // Данные собеседника
-  fFriendName :string;
+  fFriendName   :string;
   // Список сообщений
-  fMsg      :array of TMessages;
-  function GetFriendName :string;
-  function GetUserName :string;
-  procedure SetUserName (AValue :string);
-  procedure SetFriendName (AValue :string);
-  procedure MemoKeyUp (Sender :TObject; var Key :word; Shift :TShiftState);
-  procedure SendThisMsg(Sender: TObject);
-  procedure AttachFiles(Sender: TObject);
+  fMsg   :array of TMessages;
+  function GetFriendName   :string;
+  function GetUserName   :string;
+  procedure SetUserName (AValue   :string);
+  procedure SetFriendName (AValue   :string);
+  procedure MemoKeyUp (Sender   :TObject; var Key   :word; Shift   :TShiftState);
+  procedure SendThisMsg (Sender   :TObject);
+  procedure AttachFiles (Sender   :TObject);
   // Добавить сообщение
-  function Add (UserName, szText :string; Date :TDate; Avatar :TPicture;
-    Files :TFiles) :boolean;
+  function Add (UserName, szText   :string; Date   :TDate; Avatar   :TPicture;
+    Files   :TFiles)   :boolean;
 public
-  constructor Create (AOwner :TComponent); override;
+  constructor Create (AOwner   :TComponent); override;
+  destructor Destroy; override;
   // Количество сообщений
-  function Count :integer;
+  function Count   :integer;
   // Аватарки
-  procedure SetUserPic (FileName :string);
-  procedure SetFriendPic (FileName :string);
+  procedure SetUserPic (FileName   :string);
+  procedure SetFriendPic (FileName   :string);
   procedure Debug;
   // Сообщения
-  procedure Send(szText: String; Date: TDateTime; Files: TFiles);
-  procedure Recv(szText: String; Date: TDateTime; Files: TFiles);
-  procedure AddFile();
+  procedure Send (szText   :string; Date   :TDateTime; Files   :TFiles);
+  procedure Recv (szText   :string; Date   :TDateTime; Files   :TFiles);
+  procedure AddFile ();
 published
-  property UserName :string read GetUserName write SetUserName;
-  property FriendName :string read GetFriendName write SetFriendName;
+  property UserName   :string read GetUserName write SetUserName;
+  property FriendName   :string read GetFriendName write SetFriendName;
 end;
 
 
@@ -68,19 +70,42 @@ implementation
 
 { TCryptFrame }
 
-function TCryptFrame.GetFriendName :string;
+function TCryptFrame.GetFriendName   :string;
 begin
   Result := fFriendName;
 end;
 
-function TCryptFrame.GetUserName :string;
+function TCryptFrame.GetUserName   :string;
 begin
   Result := fUserName;
 end;
 
-constructor TCryptFrame.Create (AOwner :TComponent);
+constructor TCryptFrame.Create (AOwner   :TComponent);
+var
+  i :integer;
+  Mail, Path :string;
 begin
   inherited Create (AOwner);
+  Crypt := TCrypt.Create;
+  {
+  Crypt.HostSmtp:= 'smtp.yandex.ru';
+  if Crypt.Pop3Login ('pop.yandex.ru', 'CryptoChat.test@yandex.ru', '130492') then
+  begin
+    Mail := Crypt.GetMail (1);
+    //ShowMessage ('Количество секций: ' + IntToStr (Crypt.GetCountSection (Mail)));
+    for i := 0 to Crypt.GetCountSection (Crypt.GetMail (1)) - 1 do
+    begin
+      //ShowMessage ('Секция - полностью: ' + Crypt.GetSection (Mail, i));
+      //ShowMessage ('Секция - заголовок: ' + Crypt.GetSectionHead (Mail, i));
+      //ShowMessage ('Секция - тело: ' + Crypt.GetSectionBody (Mail, i));
+      //ShowMessage ('Секция - имя вложения: ' + Crypt.GetSectionFileName (Mail, i));
+      Path:= ExtractFilePath (Application.ExeName) + 'Mail/' + Crypt.GetSectionFileName (Mail, i);
+      //ShowMessage(Path);
+      if Crypt.GetSectionFileName (Mail, i) <> '' then
+        Crypt.SaveSectionToFile (Path, Mail, i);
+      Crypt.KeySend('everhest1@yandex.ru');
+    end;
+  end;}
   // Дополнительные компоненты
   fScroll    := TScrollBox.Create (self);
   fScroll.Parent := self;
@@ -122,45 +147,60 @@ begin
   fMemo.Width := fPanel.Width - 152;
   fMemo.Anchors := [akTop, akRight, akBottom, akLeft];
   // Кнопочки
-  fSendBtn:= TButton.Create(fPanel);
+  fSendBtn   := TButton.Create (fPanel);
   with fSendBtn do
   begin
-    Parent:= fPanel;
-    Top:= fPanel.Height - 32;
-    Left:= 74;
-    Width:= 94;
-    Height:= 26;
-    Caption:= 'Отправить';
-    OnClick:= @SendThisMsg;
+    Parent  := fPanel;
+    Top     := fPanel.Height - 32;
+    Left    := 74;
+    Width   := 94;
+    Height  := 26;
+    Caption := 'Отправить';
+    OnClick := @SendThisMsg;
   end;
-  fAtachBtn:= TButton.Create(fPanel);
+  fAtachBtn := TButton.Create (fPanel);
   with fAtachBtn do
   begin
-    Parent:= fPanel;
-    Top:= fPanel.Height - 32;
-    Left:= 174;
-    Width:= 94;
-    Height:= 26;
-    Caption:= 'Прикрепить';
-    OnClick:= @AttachFiles;
+    Parent  := fPanel;
+    Top     := fPanel.Height - 32;
+    Left    := 174;
+    Width   := 94;
+    Height  := 26;
+    Caption := 'Прикрепить';
+    OnClick := @AttachFiles;
   end;
   // Список файлов
-  fFileList:= TStringList.Create;
-  fFileLabel:= TLabel.Create(fPanel);
+  fFileList  := TStringList.Create;
+  fFileLabel := TLabel.Create (fPanel);
   with fFileLabel do
   begin
-    Parent:= fPanel;
-    Caption:= 'Прикреплённые файлы (0)';
-    Top:= fPanel.Height - 28;
-    Left:= fMemo.Width + 74 - fFileLabel.Width;
-    Height:= 26;
-    font.Color:= clNavy;
-    Anchors:= [akRight, akTop];
+    Parent  := fPanel;
+    Caption := 'Прикреплённые файлы (0)';
+    Top     := fPanel.Height - 28;
+    Left    := fMemo.Width + 74 - fFileLabel.Width;
+    Height  := 26;
+    font.Color := clNavy;
+    Anchors := [akRight, akTop];
   end;
 end;
 
-function TCryptFrame.Add (UserName, szText :string; Date :TDate; Avatar :TPicture;
-Files :TFiles) :boolean;
+destructor TCryptFrame.Destroy;
+begin
+  Crypt.Free;
+  fScroll.FreeOnRelease;
+  fPanel.FreeOnRelease;
+  fMemo.FreeOnRelease;
+  fMyFace.FreeOnRelease;
+  fFriendFace.FreeOnRelease;
+  fSendBtn.FreeOnRelease;
+  fAtachBtn.FreeOnRelease;
+  fFileList.Free;
+  fFileLabel.FreeOnRelease;
+  inherited Destroy;
+end;
+
+function TCryptFrame.Add (UserName, szText   :string; Date   :TDate;
+Avatar   :TPicture; Files   :TFiles)   :boolean;
 begin
   Result := True;
   // Выделяем память
@@ -182,47 +222,48 @@ begin
   fScroll.VertScrollBar.Position := fScroll.VertScrollBar.Range; // ? Ошибка ?
 end;
 
-procedure TCryptFrame.SetUserName (AValue :string);
+procedure TCryptFrame.SetUserName (AValue   :string);
 begin
   fUserName := AValue;
 end;
 
-procedure TCryptFrame.SetFriendName (AValue :string);
+procedure TCryptFrame.SetFriendName (AValue   :string);
 begin
   fFriendName := AValue;
 end;
 
-procedure TCryptFrame.MemoKeyUp (Sender :TObject; var Key :word; Shift :TShiftState);
+procedure TCryptFrame.MemoKeyUp (Sender   :TObject;
+var Key   :word; Shift   :TShiftState);
 const
   VK_RETURN = 13;
 begin
   if (ssCtrl in Shift) and (Key = VK_RETURN) then
-     SendThisMsg(Sender);
+    SendThisMsg (Sender);
 end;
 
-procedure TCryptFrame.SendThisMsg(Sender: TObject);
+procedure TCryptFrame.SendThisMsg (Sender   :TObject);
 begin
-  Send(fMemo.Text, now, nil);
+  Send (fMemo.Text, now, nil);
   fFileList.Clear;
   fMemo.Clear;
 end;
 
-procedure TCryptFrame.AttachFiles(Sender: TObject);
+procedure TCryptFrame.AttachFiles (Sender   :TObject);
 begin
   AddFile;
 end;
 
-function TCryptFrame.Count :integer;
+function TCryptFrame.Count   :integer;
 begin
   Result := High (fMsg) + 1;
 end;
 
-procedure TCryptFrame.SetUserPic (FileName :string);
+procedure TCryptFrame.SetUserPic (FileName   :string);
 begin
   fMyFace.Picture.LoadFromFile (FileName);
 end;
 
-procedure TCryptFrame.SetFriendPic (FileName :string);
+procedure TCryptFrame.SetFriendPic (FileName   :string);
 begin
   fFriendFace.Picture.LoadFromFile (FileName);
 end;
@@ -233,13 +274,13 @@ begin
     [fScroll.VertScrollBar.Range, fScroll.VertScrollBar.Position]);
 end;
 
-procedure TCryptFrame.Send(szText: String; Date: TDateTime; Files: TFiles);
+procedure TCryptFrame.Send (szText   :string; Date   :TDateTime; Files   :TFiles);
 begin
   Add (UserName, szText, Date, fMyFace.Picture, Files);
   fMsg[High (fMsg)].ReAlign;
 end;
 
-procedure TCryptFrame.Recv(szText: String; Date: TDateTime; Files: TFiles);
+procedure TCryptFrame.Recv (szText   :string; Date   :TDateTime; Files   :TFiles);
 begin
   Add (FriendName, szText, Date, fFriendFace.Picture, Files);
   fMsg[High (fMsg)].ReAlign;
@@ -247,11 +288,11 @@ end;
 
 procedure TCryptFrame.AddFile;
 begin
-  fFileOpen:= TOpenDialog.Create(self);
-  fFileOpen.Options:= [ofAllowMultiSelect];
+  fFileOpen := TOpenDialog.Create (self);
+  fFileOpen.Options := [ofAllowMultiSelect];
   if fFileOpen.Execute then
-    fFileList.AddStrings(fFileOpen.Files);
-  fFileLabel.Caption:= 'Прикреплённые файлы ('+IntToStr(fFileList.Count)+')';
+    fFileList.AddStrings (fFileOpen.Files);
+  fFileLabel.Caption := 'Прикреплённые файлы (' + IntToStr (fFileList.Count) + ')';
   fFileOpen.Free;
 end;
 

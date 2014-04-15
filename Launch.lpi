@@ -31,18 +31,21 @@
         <LaunchingApplication PathPlusParams="\usr\bin\xterm -T 'Lazarus Run Output' -e $(LazarusDir)\tools\runwait.sh $(TargetCmdLine)"/>
       </local>
     </RunParams>
-    <RequiredPackages Count="3">
+    <RequiredPackages Count="4">
       <Item1>
-        <PackageName Value="SQLDBLaz"/>
+        <PackageName Value="laz_synapse"/>
       </Item1>
       <Item2>
-        <PackageName Value="TurboPowerIPro"/>
+        <PackageName Value="SQLDBLaz"/>
       </Item2>
       <Item3>
-        <PackageName Value="LCL"/>
+        <PackageName Value="TurboPowerIPro"/>
       </Item3>
+      <Item4>
+        <PackageName Value="LCL"/>
+      </Item4>
     </RequiredPackages>
-    <Units Count="5">
+    <Units Count="7">
       <Unit0>
         <Filename Value="Launch.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -74,6 +77,16 @@
         <IsPartOfProject Value="True"/>
         <UnitName Value="CryptFrame"/>
       </Unit4>
+      <Unit5>
+        <Filename Value="cryptor.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="Cryptor"/>
+      </Unit5>
+      <Unit6>
+        <Filename Value="usercontrol.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="UserControl"/>
+      </Unit6>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

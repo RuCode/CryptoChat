@@ -1,13 +1,14 @@
 object MainForm: TMainForm
-  Left = 133
+  Left = 206
   Height = 392
-  Top = 208
+  Top = 247
   Width = 796
   Caption = 'MainForm'
   ClientHeight = 371
   ClientWidth = 796
   Menu = MainMenu
   OnCreate = FormCreate
+  OnShow = FormShow
   LCLVersion = '1.0.14.0'
   object PageControl: TPageControl
     Cursor = crArrow
@@ -15,9 +16,9 @@ object MainForm: TMainForm
     Height = 371
     Top = 0
     Width = 796
-    ActivePage = ContactTabSheet
+    ActivePage = LoginTabSheet
     Align = alClient
-    TabIndex = 2
+    TabIndex = 1
     TabOrder = 0
     object RegisterTabSheet: TTabSheet
       Caption = 'RegisterTabSheet'
@@ -98,7 +99,7 @@ object MainForm: TMainForm
         Top = 208
         Width = 72
         Caption = 'Войти'
-        OnClick = CreateUserBtnClick
+        OnClick = LoginBtnClick
         TabOrder = 0
       end
       object UserNameComboBox: TComboBox
@@ -126,6 +127,15 @@ object MainForm: TMainForm
         Caption = 'Запомнить меня'
         TabOrder = 3
       end
+      object GoRegBtn: TButton
+        Left = 327
+        Height = 25
+        Top = 240
+        Width = 171
+        Caption = 'Создать пользователя'
+        OnClick = CreateUserBtnClick
+        TabOrder = 4
+      end
     end
     object ContactTabSheet: TTabSheet
       Caption = 'ContactTabSheet'
@@ -146,7 +156,7 @@ object MainForm: TMainForm
           Caption = 'Аня Малая'
         end
       end
-      object ListBox1: TListBox
+      object ListBoxContact: TListBox
         Left = 635
         Height = 346
         Top = 0
@@ -158,8 +168,102 @@ object MainForm: TMainForm
           'Виктория'
         )
         ItemHeight = 21
+        PopupMenu = ContactListPopup
         ScrollWidth = 157
         TabOrder = 1
+      end
+    end
+    object TabSheet1: TTabSheet
+      Caption = 'Параметры соединения'
+      ClientHeight = 346
+      ClientWidth = 794
+      object EditPop3: TLabeledEdit
+        Left = 7
+        Height = 27
+        Top = 24
+        Width = 216
+        EditLabel.AnchorSideLeft.Control = EditPop3
+        EditLabel.AnchorSideRight.Control = EditPop3
+        EditLabel.AnchorSideRight.Side = asrBottom
+        EditLabel.AnchorSideBottom.Control = EditPop3
+        EditLabel.Left = 7
+        EditLabel.Height = 16
+        EditLabel.Top = 5
+        EditLabel.Width = 216
+        EditLabel.Caption = 'EditPop3'
+        EditLabel.ParentColor = False
+        TabOrder = 0
+        Text = 'pop.yandex.ru'
+      end
+      object EditSmtp: TLabeledEdit
+        Left = 7
+        Height = 27
+        Top = 77
+        Width = 216
+        EditLabel.AnchorSideLeft.Control = EditSmtp
+        EditLabel.AnchorSideRight.Control = EditSmtp
+        EditLabel.AnchorSideRight.Side = asrBottom
+        EditLabel.AnchorSideBottom.Control = EditSmtp
+        EditLabel.Left = 7
+        EditLabel.Height = 16
+        EditLabel.Top = 58
+        EditLabel.Width = 216
+        EditLabel.Caption = 'EditSmtp'
+        EditLabel.ParentColor = False
+        TabOrder = 1
+        Text = 'smtp.yandex.ru'
+      end
+      object EditLogin: TLabeledEdit
+        Left = 7
+        Height = 27
+        Top = 128
+        Width = 216
+        EditLabel.AnchorSideLeft.Control = EditLogin
+        EditLabel.AnchorSideRight.Control = EditLogin
+        EditLabel.AnchorSideRight.Side = asrBottom
+        EditLabel.AnchorSideBottom.Control = EditLogin
+        EditLabel.Left = 7
+        EditLabel.Height = 16
+        EditLabel.Top = 109
+        EditLabel.Width = 216
+        EditLabel.Caption = 'EditLogin'
+        EditLabel.ParentColor = False
+        TabOrder = 2
+        Text = 'CryptoChat.test@yandex.ru'
+      end
+      object EditPwd: TLabeledEdit
+        Left = 7
+        Height = 27
+        Top = 184
+        Width = 216
+        EditLabel.AnchorSideLeft.Control = EditPwd
+        EditLabel.AnchorSideRight.Control = EditPwd
+        EditLabel.AnchorSideRight.Side = asrBottom
+        EditLabel.AnchorSideBottom.Control = EditPwd
+        EditLabel.Left = 7
+        EditLabel.Height = 16
+        EditLabel.Top = 165
+        EditLabel.Width = 216
+        EditLabel.Caption = 'EditPwd'
+        EditLabel.ParentColor = False
+        TabOrder = 3
+        Text = '130492'
+      end
+    end
+    object TabSheet3: TTabSheet
+      Caption = 'Переписка'
+      ClientHeight = 346
+      ClientWidth = 794
+      object ListBox2: TListBox
+        Left = 0
+        Height = 346
+        Top = 0
+        Width = 794
+        Align = alClient
+        ItemHeight = 0
+        ScrollWidth = 792
+        TabOrder = 0
+        TopIndex = -1
       end
     end
   end
@@ -173,9 +277,10 @@ object MainForm: TMainForm
       end
     end
     object MenuUsers: TMenuItem
-      Caption = 'Пользователи'
-      object MenuItem1: TMenuItem
+      Caption = 'Контакты'
+      object MenuNewContact: TMenuItem
         Caption = 'Новый'
+        OnClick = MenuNewContactClick
       end
       object MenuItem2: TMenuItem
         Caption = '-'
@@ -205,13 +310,12 @@ object MainForm: TMainForm
       end
     end
   end
-  object SQLite3Connection: TSQLite3Connection
-    Connected = False
-    LoginPrompt = False
-    KeepConnection = False
-    LogEvents = []
-    Options = []
-    left = 416
+  object ContactListPopup: TPopupMenu
+    left = 376
     top = 267
+    object PopUpContact: TMenuItem
+      Caption = 'Добавить собеседника'
+      OnClick = MenuNewContactClick
+    end
   end
 end
