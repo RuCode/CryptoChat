@@ -1,0 +1,12 @@
+{"version":1,"strings":[
+{"hash":205443058,"name":"sqlitewrap.c_unknown","value":"Unknown error"},
+{"hash":169935027,"name":"sqlitewrap.c_failopen","value":"Failed to open database \"%s\" : %s"},
+{"hash":19438355,"name":"sqlitewrap.c_error","value":".\r\nError [%d]: %s.\r\n\"%s\": %s"},
+{"hash":22260238,"name":"sqlitewrap.c_nomessage","value":"Unknown error description"},
+{"hash":3903692,"name":"sqlitewrap.c_errorsql","value":"Error executing SQL"},
+{"hash":60332052,"name":"sqlitewrap.c_errorprepare","value":"Could not prepare SQL statement"},
+{"hash":140933988,"name":"sqlitewrap.c_errorexec","value":"Error executing SQL statement"},
+{"hash":253314196,"name":"sqlitewrap.c_errorempty","value":"Field %s Not found. Empty dataset"},
+{"hash":210799123,"name":"sqlitewrap.c_errorfield","value":"Field not found in dataset: %s"},
+{"hash":42085681,"name":"sqlitewrap.c_errordata","value":"Could not retrieve data"}
+]}

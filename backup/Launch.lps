@@ -1,0 +1,556 @@
+<?xml version="1.0"?>
+<CONFIG>
+  <ProjectSession>
+    <Version Value="9"/>
+    <BuildModes Active="Default"/>
+    <Units Count="55">
+      <Unit0>
+        <Filename Value="Launch.lpr"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="Launch"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="1"/>
+        <CursorPos X="36" Y="10"/>
+        <UsageCount Value="200"/>
+      </Unit0>
+      <Unit1>
+        <Filename Value="main.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="MainForm"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Main"/>
+        <EditorIndex Value="0"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="108"/>
+        <CursorPos X="20" Y="110"/>
+        <UsageCount Value="200"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+      </Unit1>
+      <Unit2>
+        <Filename Value="newuser.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="NewUserForm"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="NewUser"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="79"/>
+        <CursorPos X="52" Y="101"/>
+        <UsageCount Value="200"/>
+      </Unit2>
+      <Unit3>
+        <Filename Value="maincrypt.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="MainCrypt"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="126"/>
+        <CursorPos X="22" Y="155"/>
+        <UsageCount Value="164"/>
+      </Unit3>
+      <Unit4>
+        <Filename Value="utils/test.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="TestForm"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Test"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="244"/>
+        <CursorPos X="3" Y="248"/>
+        <UsageCount Value="148"/>
+      </Unit4>
+      <Unit5>
+        <Filename Value="mailcrypt.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="MailCrypt"/>
+        <EditorIndex Value="3"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="451"/>
+        <CursorPos X="31" Y="477"/>
+        <UsageCount Value="96"/>
+        <Loaded Value="True"/>
+      </Unit5>
+      <Unit6>
+        <Filename Value="cryptchat.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="CryptChat"/>
+        <EditorIndex Value="1"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="111"/>
+        <CursorPos X="15" Y="84"/>
+        <UsageCount Value="73"/>
+        <Loaded Value="True"/>
+      </Unit6>
+      <Unit7>
+        <Filename Value="cryptmessage.pas"/>
+        <UnitName Value="CryptMessage"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="184"/>
+        <CursorPos X="1" Y="1"/>
+        <UsageCount Value="199"/>
+      </Unit7>
+      <Unit8>
+        <Filename Value="cryptframe.pas"/>
+        <UnitName Value="CryptFrame"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="286"/>
+        <CursorPos X="62" Y="325"/>
+        <UsageCount Value="198"/>
+      </Unit8>
+      <Unit9>
+        <Filename Value="cryptor.pas"/>
+        <UnitName Value="CustomCrypt"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="1"/>
+        <CursorPos X="22" Y="391"/>
+        <UsageCount Value="197"/>
+      </Unit9>
+      <Unit10>
+        <Filename Value="usercontrol.pas"/>
+        <UnitName Value="UserControl"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="220"/>
+        <CursorPos X="35" Y="220"/>
+        <UsageCount Value="101"/>
+      </Unit10>
+      <Unit11>
+        <Filename Value="/usr/share/lazarus/1.0.14/lcl/comctrls.pp"/>
+        <UnitName Value="ComCtrls"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="406"/>
+        <CursorPos X="20" Y="429"/>
+        <UsageCount Value="10"/>
+      </Unit11>
+      <Unit12>
+        <Filename Value="/usr/share/lazarus/1.0.14/lcl/extctrls.pp"/>
+        <UnitName Value="ExtCtrls"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="929"/>
+        <CursorPos X="3" Y="944"/>
+        <UsageCount Value="7"/>
+      </Unit12>
+      <Unit13>
+        <Filename Value="/usr/share/lazarus/1.0.14/lcl/controls.pp"/>
+        <UnitName Value="Controls"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="1471"/>
+        <CursorPos X="17" Y="1485"/>
+        <UsageCount Value="8"/>
+      </Unit13>
+      <Unit14>
+        <Filename Value="/usr/share/lazarus/1.0.14/lcl/graphtype.pp"/>
+        <UnitName Value="GraphType"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="30"/>
+        <CursorPos X="11" Y="47"/>
+        <UsageCount Value="7"/>
+      </Unit14>
+      <Unit15>
+        <Filename Value="/usr/share/lazarus/1.0.14/lcl/include/control.inc"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="2098"/>
+        <CursorPos X="1" Y="2112"/>
+        <UsageCount Value="9"/>
+      </Unit15>
+      <Unit16>
+        <Filename Value="/usr/share/lazarus/1.0.14/lcl/include/wincontrol.inc"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="5318"/>
+        <CursorPos X="1" Y="5333"/>
+        <UsageCount Value="9"/>
+      </Unit16>
+      <Unit17>
+        <Filename Value="/usr/share/fpcsrc/2.6.2/rtl/objpas/classes/classesh.inc"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="105"/>
+        <CursorPos X="3" Y="120"/>
+        <UsageCount Value="8"/>
+      </Unit17>
+      <Unit18>
+        <Filename Value="/usr/share/lazarus/1.0.14/lcl/lclclasses.pp"/>
+        <UnitName Value="LCLClasses"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="42"/>
+        <CursorPos X="17" Y="56"/>
+        <UsageCount Value="8"/>
+      </Unit18>
+      <Unit19>
+        <Filename Value="/usr/share/fpcsrc/2.6.2/rtl/inc/objpash.inc"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="178"/>
+        <CursorPos X="21" Y="201"/>
+        <UsageCount Value="9"/>
+      </Unit19>
+      <Unit20>
+        <Filename Value="/usr/share/lazarus/1.0.14/lcl/dialogs.pp"/>
+        <UnitName Value="Dialogs"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="498"/>
+        <CursorPos X="21" Y="522"/>
+        <UsageCount Value="9"/>
+      </Unit20>
+      <Unit21>
+        <Filename Value="../OpenSSL/main.pas"/>
+        <ComponentName Value="MainForm"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Main"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="85"/>
+        <CursorPos X="101" Y="87"/>
+        <UsageCount Value="1"/>
+      </Unit21>
+      <Unit22>
+        <Filename Value="/usr/share/fpcsrc/2.6.2/packages/fcl-process/src/process.pp"/>
+        <UnitName Value="process"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="529"/>
+        <CursorPos X="14" Y="141"/>
+        <UsageCount Value="7"/>
+      </Unit22>
+      <Unit23>
+        <Filename Value="../RecvMail/main.pas"/>
+        <ComponentName Value="MainForm"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="main"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="179"/>
+        <CursorPos X="35" Y="196"/>
+        <UsageCount Value="33"/>
+      </Unit23>
+      <Unit24>
+        <Filename Value="../../synalist/mimemess.pas"/>
+        <UnitName Value="mimemess"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="142"/>
+        <CursorPos X="82" Y="156"/>
+        <UsageCount Value="7"/>
+      </Unit24>
+      <Unit25>
+        <Filename Value="../SendMail/main.pas"/>
+        <UnitName Value="main"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="63"/>
+        <CursorPos X="1" Y="67"/>
+        <UsageCount Value="7"/>
+      </Unit25>
+      <Unit26>
+        <Filename Value="../../synalist/pop3send.pas"/>
+        <UnitName Value="pop3send"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="129"/>
+        <CursorPos X="14" Y="150"/>
+        <UsageCount Value="8"/>
+      </Unit26>
+      <Unit27>
+        <Filename Value="../../synalist/smtpsend.pas"/>
+        <UnitName Value="smtpsend"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="206"/>
+        <CursorPos X="10" Y="229"/>
+        <UsageCount Value="7"/>
+      </Unit27>
+      <Unit28>
+        <Filename Value="/usr/share/fpcsrc/2.6.2/packages/fcl-db/src/sqldb/sqlite/sqlite3conn.pp"/>
+        <UnitName Value="sqlite3conn"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="52"/>
+        <CursorPos X="3" Y="52"/>
+        <UsageCount Value="8"/>
+      </Unit28>
+      <Unit29>
+        <Filename Value="SQLiteWrap.pas"/>
+        <UnitName Value="SQLiteWrap"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="342"/>
+        <CursorPos X="1" Y="365"/>
+        <UsageCount Value="11"/>
+      </Unit29>
+      <Unit30>
+        <Filename Value="utils/usercontrol.pas"/>
+        <UnitName Value="UserControl"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="295"/>
+        <CursorPos X="33" Y="327"/>
+        <UsageCount Value="29"/>
+      </Unit30>
+      <Unit31>
+        <Filename Value="CustomCrypt.pas"/>
+        <UnitName Value="CustomCrypt"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="540"/>
+        <CursorPos X="3" Y="530"/>
+        <UsageCount Value="54"/>
+      </Unit31>
+      <Unit32>
+        <Filename Value="/usr/share/lazarus/1.0.14/lcl/include/promptdialog.inc"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="773"/>
+        <CursorPos X="1" Y="890"/>
+        <UsageCount Value="7"/>
+      </Unit32>
+      <Unit33>
+        <Filename Value="SQLite3.pas"/>
+        <UnitName Value="SQLite3"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="70"/>
+        <CursorPos X="3" Y="93"/>
+        <UsageCount Value="8"/>
+      </Unit33>
+      <Unit34>
+        <Filename Value="../../synalist/mimepart.pas"/>
+        <UnitName Value="mimepart"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="168"/>
+        <CursorPos X="3" Y="111"/>
+        <UsageCount Value="7"/>
+      </Unit34>
+      <Unit35>
+        <Filename Value="../../synalist/synacode.pas"/>
+        <UnitName Value="synacode"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="835"/>
+        <CursorPos X="10" Y="172"/>
+        <UsageCount Value="7"/>
+      </Unit35>
+      <Unit36>
+        <Filename Value="/usr/share/fpcsrc/2.6.2/rtl/objpas/sysutils/sysstrh.inc"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="74"/>
+        <CursorPos X="10" Y="80"/>
+        <UsageCount Value="7"/>
+      </Unit36>
+      <Unit37>
+        <Filename Value="/usr/share/lazarus/1.0.14/lcl/include/pagecontrol.inc"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="31"/>
+        <CursorPos X="43" Y="33"/>
+        <UsageCount Value="8"/>
+      </Unit37>
+      <Unit38>
+        <Filename Value="/usr/share/lazarus/1.0.14/lcl/include/customnotebook.inc"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="434"/>
+        <CursorPos X="78" Y="442"/>
+        <UsageCount Value="10"/>
+      </Unit38>
+      <Unit39>
+        <Filename Value="C:/codetyphon/typhon/lcl/forms.pp"/>
+        <UnitName Value="Forms"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="25"/>
+        <CursorPos X="18" Y="39"/>
+        <UsageCount Value="8"/>
+      </Unit39>
+      <Unit40>
+        <Filename Value="C:/codetyphon/fpcsrc/rtl/win/sysutils.pp"/>
+        <UnitName Value="sysutils"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="166"/>
+        <CursorPos X="1" Y="1"/>
+        <UsageCount Value="8"/>
+      </Unit40>
+      <Unit41>
+        <Filename Value="C:/codetyphon/typhon/lcl/maps.pp"/>
+        <UnitName Value="maps"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="43"/>
+        <CursorPos X="1" Y="1"/>
+        <UsageCount Value="8"/>
+      </Unit41>
+      <Unit42>
+        <Filename Value="C:/codetyphon/typhon/lcl/imglist.pp"/>
+        <UnitName Value="ImgList"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="46"/>
+        <CursorPos X="1" Y="1"/>
+        <UsageCount Value="8"/>
+      </Unit42>
+      <Unit43>
+        <Filename Value="C:/codetyphon/fpcsrc/packages/fcl-base/src/gettext.pp"/>
+        <UnitName Value="gettext"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="46"/>
+        <CursorPos X="1" Y="1"/>
+        <UsageCount Value="8"/>
+      </Unit43>
+      <Unit44>
+        <Filename Value="C:/codetyphon/fpcsrc/packages/fcl-process/src/process.pp"/>
+        <UnitName Value="process"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="8"/>
+        <CursorPos X="32" Y="26"/>
+        <UsageCount Value="8"/>
+      </Unit44>
+      <Unit45>
+        <Filename Value="C:/codetyphon/fpcsrc/rtl/objpas/sysutils/osutilsh.inc"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="29"/>
+        <CursorPos X="23" Y="46"/>
+        <UsageCount Value="9"/>
+      </Unit45>
+      <Unit46>
+        <Filename Value="C:/codetyphon/fpcsrc/rtl/objpas/sysutils/osutil.inc"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="107"/>
+        <CursorPos X="3" Y="110"/>
+        <UsageCount Value="8"/>
+      </Unit46>
+      <Unit47>
+        <Filename Value="C:/codetyphon/typhon/lcl/controls.pp"/>
+        <UnitName Value="Controls"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="1293"/>
+        <CursorPos X="1" Y="1087"/>
+        <UsageCount Value="10"/>
+      </Unit47>
+      <Unit48>
+        <Filename Value="C:/codetyphon/typhon/lcl/extctrls.pp"/>
+        <UnitName Value="ExtCtrls"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="938"/>
+        <CursorPos X="3" Y="949"/>
+        <UsageCount Value="10"/>
+      </Unit48>
+      <Unit49>
+        <Filename Value="C:/codetyphon/typhon/lcl/graphtype.pp"/>
+        <UnitName Value="GraphType"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="22"/>
+        <CursorPos X="11" Y="41"/>
+        <UsageCount Value="8"/>
+      </Unit49>
+      <Unit50>
+        <Filename Value="C:/codetyphon/fpcsrc/rtl/inc/systemh.inc"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="425"/>
+        <CursorPos X="3" Y="442"/>
+        <UsageCount Value="8"/>
+      </Unit50>
+      <Unit51>
+        <Filename Value="/usr/share/fpcsrc/2.6.2/rtl/objpas/sysutils/sysutilh.inc"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="267"/>
+        <CursorPos X="18" Y="290"/>
+        <UsageCount Value="9"/>
+      </Unit51>
+      <Unit52>
+        <Filename Value="/usr/share/fpcsrc/2.6.2/rtl/objpas/sysutils/sysutils.inc"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="144"/>
+        <CursorPos X="9" Y="151"/>
+        <UsageCount Value="9"/>
+      </Unit52>
+      <Unit53>
+        <Filename Value="newfriend.pas"/>
+        <ComponentName Value="NewFriendForm"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="NewFriend"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="23"/>
+        <CursorPos X="24" Y="27"/>
+        <UsageCount Value="21"/>
+      </Unit53>
+      <Unit54>
+        <Filename Value="widgetchats.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="WidgetChats"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="2"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="18"/>
+        <CursorPos X="30" Y="37"/>
+        <UsageCount Value="24"/>
+        <Loaded Value="True"/>
+      </Unit54>
+    </Units>
+    <General>
+      <ActiveWindowIndexAtStart Value="0"/>
+    </General>
+    <JumpHistory Count="20" HistoryIndex="19">
+      <Position1>
+        <Filename Value="main.pas"/>
+        <Caret Line="195" Column="1" TopLine="173"/>
+      </Position1>
+      <Position2>
+        <Filename Value="main.pas"/>
+        <Caret Line="192" Column="79" TopLine="173"/>
+      </Position2>
+      <Position3>
+        <Filename Value="main.pas"/>
+        <Caret Line="195" Column="1" TopLine="173"/>
+      </Position3>
+      <Position4>
+        <Filename Value="cryptchat.pas"/>
+        <Caret Line="293" Column="23" TopLine="272"/>
+      </Position4>
+      <Position5>
+        <Filename Value="main.pas"/>
+        <Caret Line="189" Column="38" TopLine="173"/>
+      </Position5>
+      <Position6>
+        <Filename Value="main.pas"/>
+        <Caret Line="102" Column="3" TopLine="100"/>
+      </Position6>
+      <Position7>
+        <Filename Value="main.pas"/>
+        <Caret Line="104" Column="3" TopLine="102"/>
+      </Position7>
+      <Position8>
+        <Filename Value="main.pas"/>
+        <Caret Line="110" Column="20" TopLine="108"/>
+      </Position8>
+      <Position9>
+        <Filename Value="widgetchats.pas"/>
+        <Caret Line="16" Column="37" TopLine="1"/>
+      </Position9>
+      <Position10>
+        <Filename Value="widgetchats.pas"/>
+        <Caret Line="29" Column="3" TopLine="27"/>
+      </Position10>
+      <Position11>
+        <Filename Value="widgetchats.pas"/>
+        <Caret Line="32" Column="50" TopLine="1"/>
+      </Position11>
+      <Position12>
+        <Filename Value="widgetchats.pas"/>
+        <Caret Line="8" Column="40" TopLine="1"/>
+      </Position12>
+      <Position13>
+        <Filename Value="widgetchats.pas"/>
+        <Caret Line="41" Column="26" TopLine="1"/>
+      </Position13>
+      <Position14>
+        <Filename Value="mailcrypt.pas"/>
+        <Caret Line="57" Column="26" TopLine="16"/>
+      </Position14>
+      <Position15>
+        <Filename Value="mailcrypt.pas"/>
+        <Caret Line="462" Column="29" TopLine="454"/>
+      </Position15>
+      <Position16>
+        <Filename Value="mailcrypt.pas"/>
+        <Caret Line="463" Column="32" TopLine="441"/>
+      </Position16>
+      <Position17>
+        <Filename Value="mailcrypt.pas"/>
+        <Caret Line="467" Column="12" TopLine="444"/>
+      </Position17>
+      <Position18>
+        <Filename Value="widgetchats.pas"/>
+        <Caret Line="41" Column="26" TopLine="1"/>
+      </Position18>
+      <Position19>
+        <Filename Value="widgetchats.pas"/>
+        <Caret Line="37" Column="28" TopLine="18"/>
+      </Position19>
+      <Position20>
+        <Filename Value="mailcrypt.pas"/>
+        <Caret Line="227" Column="19" TopLine="218"/>
+      </Position20>
+    </JumpHistory>
+  </ProjectSession>
+</CONFIG>

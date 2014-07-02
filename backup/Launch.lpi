@@ -31,94 +31,70 @@
         <LaunchingApplication PathPlusParams="\usr\bin\xterm -T 'Lazarus Run Output' -e $(LazarusDir)\tools\runwait.sh $(TargetCmdLine)"/>
       </local>
     </RunParams>
-    <RequiredPackages Count="2">
+    <RequiredPackages Count="4">
       <Item1>
         <PackageName Value="laz_synapse"/>
       </Item1>
       <Item2>
-        <PackageName Value="LCL"/>
+        <PackageName Value="SQLDBLaz"/>
       </Item2>
+      <Item3>
+        <PackageName Value="TurboPowerIPro"/>
+      </Item3>
+      <Item4>
+        <PackageName Value="LCL"/>
+      </Item4>
     </RequiredPackages>
-    <Units Count="15">
+    <Units Count="8">
       <Unit0>
         <Filename Value="Launch.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="Launch"/>
       </Unit0>
       <Unit1>
-        <Filename Value="SRC\FORMS\newuser.pas"/>
-        <IsPartOfProject Value="True"/>
-        <HasResources Value="True"/>
-        <UnitName Value="newuser"/>
-      </Unit1>
-      <Unit2>
-        <Filename Value="SRC\FORMS\main.pas"/>
+        <Filename Value="main.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="MainForm"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="Main"/>
+      </Unit1>
+      <Unit2>
+        <Filename Value="newuser.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="NewUserForm"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="NewUser"/>
       </Unit2>
       <Unit3>
-        <Filename Value="SRC\DEPRECATED\cryptchat.pas"/>
-        <IsPartOfProject Value="True"/>
-        <UnitName Value="CryptChat"/>
-      </Unit3>
-      <Unit4>
-        <Filename Value="SRC\README.TXT"/>
-        <IsPartOfProject Value="True"/>
-      </Unit4>
-      <Unit5>
-        <Filename Value="SRC\DEPRECATED\cryptmessage.pas"/>
-        <IsPartOfProject Value="True"/>
-        <UnitName Value="cryptmessage"/>
-      </Unit5>
-      <Unit6>
-        <Filename Value="SRC\DEPRECATED\CustomCrypt.pas"/>
-        <IsPartOfProject Value="True"/>
-        <UnitName Value="CustomCrypt"/>
-      </Unit6>
-      <Unit7>
-        <Filename Value="SRC\DEPRECATED\mailcrypt.pas"/>
-        <IsPartOfProject Value="True"/>
-        <UnitName Value="MailCrypt"/>
-      </Unit7>
-      <Unit8>
-        <Filename Value="SRC\DEPRECATED\maincrypt.pas"/>
+        <Filename Value="maincrypt.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="MainCrypt"/>
-      </Unit8>
-      <Unit9>
-        <Filename Value="SRC\DEPRECATED\widgetchats.pas"/>
+      </Unit3>
+      <Unit4>
+        <Filename Value="utils\test.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="TestForm"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Test"/>
+      </Unit4>
+      <Unit5>
+        <Filename Value="mailcrypt.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="MailCrypt"/>
+      </Unit5>
+      <Unit6>
+        <Filename Value="cryptchat.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="CryptChat"/>
+      </Unit6>
+      <Unit7>
+        <Filename Value="widgetchats.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="WidgetChats"/>
-      </Unit9>
-      <Unit10>
-        <Filename Value="SRC\DEPRECATED\test.pas"/>
-        <IsPartOfProject Value="True"/>
-        <HasResources Value="True"/>
-        <UnitName Value="test"/>
-      </Unit10>
-      <Unit11>
-        <Filename Value="SRC\SQLiteWrapper\SQLite3.pas"/>
-        <IsPartOfProject Value="True"/>
-        <UnitName Value="SQLite3"/>
-      </Unit11>
-      <Unit12>
-        <Filename Value="SRC\SQLiteWrapper\sqlite3udf.pas"/>
-        <IsPartOfProject Value="True"/>
-        <UnitName Value="sqlite3udf"/>
-      </Unit12>
-      <Unit13>
-        <Filename Value="SRC\SQLiteWrapper\SQLiteWrap.pas"/>
-        <IsPartOfProject Value="True"/>
-        <UnitName Value="SQLiteWrap"/>
-      </Unit13>
-      <Unit14>
-        <Filename Value="SRC\contactbox.pas"/>
-        <IsPartOfProject Value="True"/>
-        <UnitName Value="contactbox"/>
-      </Unit14>
+      </Unit7>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
@@ -126,11 +102,8 @@
     <PathDelim Value="\"/>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>
-      <OtherUnitFiles Value="$(LazarusDir)\lcl\units\$(TargetCPU)-$(TargetOS);$(LazarusDir)\packager\units\$(TargetCPU)-$(TargetOS);$(LazarusDir)\components\custom;$(LazarusDir)\components\codetools\units\$(TargetCPU)-$(TargetOS);$(LazarusDir)\lcl\units\$(TargetCPU)-$(TargetOS)\$(LCLWidgetType);utils;SQLiteWrapper;SRC\FORMS;SRC;SRC\DEPRECATED;SRC\SQLiteWrapper"/>
+      <OtherUnitFiles Value="$(LazarusDir)\lcl\units\$(TargetCPU)-$(TargetOS);$(LazarusDir)\packager\units\$(TargetCPU)-$(TargetOS);$(LazarusDir)\components\custom;$(LazarusDir)\components\codetools\units\$(TargetCPU)-$(TargetOS);$(LazarusDir)\lcl\units\$(TargetCPU)-$(TargetOS)\$(LCLWidgetType);utils"/>
     </SearchPaths>
-    <CodeGeneration>
-      <SmartLinkUnit Value="True"/>
-    </CodeGeneration>
     <Linking>
       <Options>
         <Win32>
@@ -143,9 +116,6 @@
         <MsgFileName Value=""/>
       </CompilerMessages>
       <CompilerPath Value="$(CompPath)"/>
-      <ExecuteAfter>
-        <Command Value="sh &quot;.\Tools\OnRun.sh&quot;"/>
-      </ExecuteAfter>
     </Other>
   </CompilerOptions>
   <Debugging>

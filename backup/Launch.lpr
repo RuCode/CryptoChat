@@ -7,8 +7,8 @@ uses
   cthreads,
   {$ENDIF}{$ENDIF}
   Interfaces, // this includes the LCL widgetset
-  Forms, Main, NewUser, CustomCrypt, MainCrypt, Test, cryptmessage, MailCrypt,
-  CryptChat, widgetchats, SQLite3, sqlite3udf, SQLiteWrap, contactbox;
+  Forms, Main, NewUser, CustomCrypt,
+MainCrypt, Test, MailCrypt, CryptChat;
 
 {$R *.res}
 

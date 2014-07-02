@@ -39,7 +39,7 @@
         <PackageName Value="LCL"/>
       </Item2>
     </RequiredPackages>
-    <Units Count="15">
+    <Units Count="14">
       <Unit0>
         <Filename Value="Launch.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -114,11 +114,6 @@
         <IsPartOfProject Value="True"/>
         <UnitName Value="SQLiteWrap"/>
       </Unit13>
-      <Unit14>
-        <Filename Value="SRC\contactbox.pas"/>
-        <IsPartOfProject Value="True"/>
-        <UnitName Value="contactbox"/>
-      </Unit14>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

@@ -1,5 +1,0 @@
-<?xml version="1.0"?>
-<CONFIG>
-  <Compiler Value="/usr/bin/fpc" Date="1363527598"/>
-  <Params Value=" -MObjFPC -Scghi -O1 -g -gl -vewnhi -Fl/opt/gnome/lib -Fu/usr/share/lazarus/1.0.14/lcl/units/i386-linux -Fu/usr/share/lazarus/1.0.14/packager/units/i386-linux -Fu/usr/share/lazarus/1.0.14/components/custom -Fu/usr/share/lazarus/1.0.14/components/codetools/units/i386-linux -Fu/usr/share/lazarus/1.0.14/lcl/units/i386-linux/gtk2 -Fu/home/anton/.lazarus/lib/TurboPowerIPro/units/i386-linux/gtk2 -Fu/home/anton/.lazarus/lib/Printer4Lazarus/lib/i386-linux/gtk2 -Fu/home/anton/.lazarus/lib/SQLDBLaz/lib/i386-linux/gtk2 -Fu/home/anton/.lazarus/lib/SynEdit/units/i386-linux/gtk2 -Fu/home/anton/.lazarus/lib/IDEIntf/units/i386-linux/gtk2 -Fu/home/anton/.lazarus/lib/units/i386-linux/gtk2 -Fu/home/anton/.lazarus/lib/LCLBase/units/i386-linux -Fu/usr/share/lazarus/1.0.14/components/lazutils/lib/i386-linux -Fu/home/anton/Проекты/CryptoChat/ -l -dLCL -dLCLgtk2 Launch.lpr"/>
-</CONFIG>
