@@ -154,7 +154,7 @@ begin
   fIMAPClient.FullSSL := True;
   fConnected := False;
   fUserName := 'i.rcode';
-  fPassword := 'LQexIX1CSS';
+  fPassword := 'LQexIX1';
   fIMAPHost := 'imap.yandex.ru';
   fIMAPPort := 993;
   fCurrentFolderUIID := 0;
