@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectSession>
+    <Version Value="9"/>
+    <BuildModes Active="Default"/>
+    <Units Count="13">
+      <Unit0>
+        <Filename Value="Launch.lpr"/>
+        <IsPartOfProject Value="True"/>
+        <IsVisibleTab Value="True"/>
+        <UsageCount Value="48"/>
+        <Loaded Value="True"/>
+      </Unit0>
+      <Unit1>
+        <Filename Value="main.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="Form1"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Main"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="20" Y="55"/>
+        <UsageCount Value="48"/>
+      </Unit1>
+      <Unit2>
+        <Filename Value="extendedssl.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="ExtendedSSL"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="39"/>
+        <CursorPos X="34" Y="53"/>
+        <UsageCount Value="44"/>
+      </Unit2>
+      <Unit3>
+        <Filename Value="../openssl/openssl/main.c"/>
+        <CursorPos X="52" Y="61"/>
+        <UsageCount Value="18"/>
+        <DefaultSyntaxHighlighter Value="C++"/>
+      </Unit3>
+      <Unit4>
+        <Filename Value="../openssl/openssl/openssl.cbp"/>
+        <UsageCount Value="7"/>
+        <DefaultSyntaxHighlighter Value="None"/>
+      </Unit4>
+      <Unit5>
+        <Filename Value="../openssl/librsa/main.c"/>
+        <TopLine Value="55"/>
+        <CursorPos Y="50"/>
+        <UsageCount Value="18"/>
+        <DefaultSyntaxHighlighter Value="C++"/>
+      </Unit5>
+      <Unit6>
+        <Filename Value="/usr/share/fpcsrc/2.6.2/packages/openssl/src/openssl.pas"/>
+        <TopLine Value="1067"/>
+        <CursorPos X="3" Y="1063"/>
+        <UsageCount Value="9"/>
+      </Unit6>
+      <Unit7>
+        <Filename Value="/usr/share/fpcsrc/2.6.2/rtl/inc/dynlibs.pas"/>
+        <TopLine Value="64"/>
+        <CursorPos X="3" Y="67"/>
+        <UsageCount Value="7"/>
+      </Unit7>
+      <Unit8>
+        <Filename Value="/usr/share/fpcsrc/2.6.2/rtl/unix/dynlibs.inc"/>
+        <TopLine Value="35"/>
+        <CursorPos X="10" Y="49"/>
+        <UsageCount Value="7"/>
+      </Unit8>
+      <Unit9>
+        <Filename Value="/usr/share/fpcsrc/2.6.2/rtl/unix/dl.pp"/>
+        <TopLine Value="55"/>
+        <CursorPos X="10" Y="69"/>
+        <UsageCount Value="7"/>
+      </Unit9>
+      <Unit10>
+        <Filename Value="/usr/share/fpcsrc/2.6.2/packages/fcl-base/src/libtar.pp"/>
+        <TopLine Value="598"/>
+        <CursorPos X="42" Y="120"/>
+        <UsageCount Value="7"/>
+      </Unit10>
+      <Unit11>
+        <Filename Value="openssl.pas"/>
+        <UnitName Value="openssl"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="3364"/>
+        <CursorPos X="64" Y="3378"/>
+        <UsageCount Value="10"/>
+      </Unit11>
+      <Unit12>
+        <Filename Value="/usr/share/fpcsrc/2.6.2/rtl/inc/objpash.inc"/>
+        <TopLine Value="185"/>
+        <CursorPos X="8" Y="187"/>
+        <UsageCount Value="10"/>
+      </Unit12>
+    </Units>
+    <JumpHistory HistoryIndex="-1"/>
+  </ProjectSession>
+</CONFIG>

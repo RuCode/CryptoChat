@@ -3,7 +3,7 @@
   <ProjectSession>
     <Version Value="9"/>
     <BuildModes Active="Default"/>
-    <Units Count="4">
+    <Units Count="6">
       <Unit0>
         <Filename Value="Launch.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -11,7 +11,7 @@
         <WindowIndex Value="-1"/>
         <TopLine Value="-1"/>
         <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="22"/>
+        <UsageCount Value="25"/>
       </Unit0>
       <Unit1>
         <Filename Value="main.pas"/>
@@ -21,9 +21,8 @@
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="main"/>
         <IsVisibleTab Value="True"/>
-        <EditorIndex Value="1"/>
-        <TopLine Value="25"/>
-        <CursorPos X="71" Y="34"/>
+        <TopLine Value="30"/>
+        <CursorPos X="13" Y="56"/>
         <ExtraEditorCount Value="1"/>
         <ExtraEditor1>
           <EditorIndex Value="-1"/>
@@ -31,7 +30,7 @@
           <TopLine Value="35"/>
           <CursorPos X="25" Y="43"/>
         </ExtraEditor1>
-        <UsageCount Value="22"/>
+        <UsageCount Value="25"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit1>
@@ -39,64 +38,73 @@
         <Filename Value="engine.mail.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="Engine.Mail"/>
-        <CursorPos X="14" Y="15"/>
-        <UsageCount Value="22"/>
+        <EditorIndex Value="1"/>
+        <TopLine Value="29"/>
+        <CursorPos X="35" Y="59"/>
+        <UsageCount Value="25"/>
         <Loaded Value="True"/>
       </Unit2>
       <Unit3>
         <Filename Value="../../Исходный код/CryptoChat/SRC/DEPRECATED/mailcrypt.pas"/>
-        <UnitName Value="MailCrypt"/>
-        <EditorIndex Value="2"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="85"/>
         <CursorPos X="92" Y="97"/>
         <UsageCount Value="10"/>
-        <Loaded Value="True"/>
       </Unit3>
+      <Unit4>
+        <Filename Value="/usr/lib/codetyphon/typhon/components/pl_Synapse/source/imapsend.pas"/>
+        <UnitName Value="imapsend"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="554"/>
+        <CursorPos Y="577"/>
+        <UsageCount Value="10"/>
+      </Unit4>
+      <Unit5>
+        <Filename Value="/usr/lib/codetyphon/typhon/components/pl_Synapse/source/blcksock.pas"/>
+        <UnitName Value="blcksock"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="2088"/>
+        <CursorPos Y="2111"/>
+        <UsageCount Value="10"/>
+      </Unit5>
     </Units>
-    <JumpHistory Count="8" HistoryIndex="7">
+    <JumpHistory Count="9" HistoryIndex="8">
       <Position1>
         <Filename Value="engine.mail.pas"/>
-        <Caret Line="33" Column="48" TopLine="12"/>
+        <Caret Line="35" Column="52" TopLine="9"/>
       </Position1>
       <Position2>
         <Filename Value="engine.mail.pas"/>
-        <Caret Line="8"/>
+        <Caret Line="60" Column="30" TopLine="54"/>
       </Position2>
       <Position3>
         <Filename Value="engine.mail.pas"/>
-        <Caret Line="9" Column="13"/>
+        <Caret Line="8" Column="58"/>
       </Position3>
       <Position4>
         <Filename Value="engine.mail.pas"/>
-        <Caret Line="38" Column="39" TopLine="12"/>
+        <Caret Line="57" Column="29" TopLine="44"/>
       </Position4>
       <Position5>
         <Filename Value="engine.mail.pas"/>
-        <Caret Line="28" Column="32" TopLine="14"/>
+        <Caret Line="27" Column="58" TopLine="7"/>
       </Position5>
       <Position6>
         <Filename Value="main.pas"/>
-        <Caret Line="9" Column="23"/>
+        <Caret Line="51" Column="32" TopLine="27"/>
       </Position6>
       <Position7>
         <Filename Value="engine.mail.pas"/>
-        <Caret Line="55" TopLine="37"/>
+        <Caret Line="56" Column="29" TopLine="47"/>
       </Position7>
       <Position8>
-        <Filename Value="main.pas"/>
-        <Caret Line="9" Column="23"/>
+        <Filename Value="engine.mail.pas"/>
+        <Caret Line="27" Column="54" TopLine="12"/>
       </Position8>
+      <Position9>
+        <Filename Value="main.pas"/>
+        <Caret Line="51" Column="32" TopLine="30"/>
+      </Position9>
     </JumpHistory>
   </ProjectSession>
-  <Debugging>
-    <BreakPoints Count="1">
-      <Item1>
-        <Kind Value="bpkSource"/>
-        <WatchScope Value="wpsLocal"/>
-        <WatchKind Value="wpkWrite"/>
-        <Source Value="main.pas"/>
-        <Line Value="46"/>
-      </Item1>
-    </BreakPoints>
-  </Debugging>
 </CONFIG>

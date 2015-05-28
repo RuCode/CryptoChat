@@ -5,8 +5,7 @@ unit Engine.Mail;
 interface
 
 uses
-  Classes, Dialogs, SysUtils, ExtCtrls, Forms, Controls, mimemess, mimepart, pop3send, smtpsend,
-  synacode;
+  Classes, Dialogs, SysUtils, ExtCtrls, Forms, Controls, imapsend, ssl_openssl;
 
 type
 
@@ -17,25 +16,22 @@ type
     fConnected: boolean;
     fLogin: string;
     fPassword: string;
-    fSMTPHost: string;
-    fSMTPPort: integer;
-    fPOP3Host: string;
-    fPOP3Port: integer;
-    fPOP3Send: TPOP3Send;
-    fMailMessage: TMimeMess;
+    fIMAPHost: string;
+    fIMAPPort: integer;
+    fIMAPClient: TIMAPSend;
+    function GetFullResult: string;
     procedure SetConnected(AValue: boolean);
   public
     constructor Create; virtual;
     destructor Destroy; override;
-    // Свойства которые должны быть заполнены для работы с почтой
-    property Login: string read fLogin write flogin;
+    procedure GetFolderList(var ListFolders: TStringList);
+  public
+    property Login: string read fLogin write flogin; // переименовать
     property Password: string write fPassword;
-    property SMTPHost: string read fSMTPHost write fSMTPHost;
-    property SMTPPort: integer read fSMTPPort write fSMTPPort;
-    property POP3Host: string read fPOP3Host write fPOP3Host;
-    property POP3Port: integer read fPOP3Port write fPOP3Port;
-
+    property IMAPHost: string read fIMAPHost write fIMAPHost;
+    property IMAPPort: integer read fIMAPPort write fIMAPPort;
     property Connected: boolean read fConnected write SetConnected;
+    property FullResult: string read GetFullResult;// переименовать
   end;
 
 implementation
@@ -46,26 +42,40 @@ procedure TCustomMail.SetConnected(AValue: boolean);
 begin
   if fConnected = AValue then
     Exit;
-  fPOP3Send.TargetHost := POP3Host;
-  fPOP3Send.UserName := Login;
-  fPOP3Send.Password := fPassword;
-  fConnected := fPOP3Send.Login;
+  fIMAPClient.TargetHost := IMAPHost;
+  fIMAPClient.TargetPort := IntToStr(IMAPPort);
+  fIMAPClient.UserName := Login;
+  fIMAPClient.Password := fPassword;
+  fConnected := fIMAPClient.Login;
+end;
+
+function TCustomMail.GetFullResult: string;
+begin
+  Result := fIMAPClient.ResultString;
+end;
+
+procedure TCustomMail.GetFolderList(var ListFolders: TStringList);
+begin
+  fIMAPClient.List('', ListFolders);
 end;
 
 constructor TCustomMail.Create;
 begin
   inherited Create;
+  fIMAPClient := TIMAPSend.Create;
+  fIMAPClient.AutoTLS := True;
+  fIMAPClient.FullSSL := True;
   fConnected := False;
-  fLogin := 'i.rcode@yandex.ru';
-  fPassword := '3jD253MxhE';
-  fSMTPHost := 'smtp.yandex.ru';
-  fSMTPPort := 465;
-  fPOP3Host := 'pop.yandex.ru';
-  fPOP3Port := 995;
+  fLogin := 'i.rcode';
+  fPassword := 'LQexIX1CSS';
+  fIMAPHost := 'imap.yandex.ru';
+  fIMAPPort := 993;
 end;
 
 destructor TCustomMail.Destroy;
 begin
+  fIMAPClient.Logout;
+  fIMAPClient.Free;
   inherited Destroy;
 end;
 

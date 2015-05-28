@@ -14,7 +14,6 @@ type
 
   TMainForm = class(TForm)
     Button1: TButton;
-    EditHostOut: TLabeledEdit;
     EditPortOut: TLabeledEdit;
     EditUserName: TLabeledEdit;
     EditUserPassword: TLabeledEdit;
@@ -24,12 +23,12 @@ type
     Memo: TMemo;
     procedure Button1Click(Sender: TObject);
   private
-    procedure SetLogLine(AValue: String);
+    procedure SetLogLine(AValue: string);
     { private declarations }
   public
     { public declarations }
     mail: TCustomMail;
-    property Log: String write SetLogLine;
+    property Log: string write SetLogLine;
   end;
 
 var
@@ -42,13 +41,22 @@ implementation
 { TMainForm }
 
 procedure TMainForm.Button1Click(Sender: TObject);
+var
+  list: TStringList;
 begin
-  mail:= TCustomMail.Create;
-  mail.Connected:= true;
-  Log:= BoolToStr(mail.Connected, 'Connected', 'Error');
+
+  mail := TCustomMail.Create;
+  mail.Connected := True;
+  Log := BoolToStr(mail.Connected, 'Connected', 'Error');
+  Log := mail.FullResult;
+
+  list:= TStringList.Create;
+  mail.GetFolderList(list);
+  Memo.Lines.Assign(list);
+  list.Free;
 end;
 
-procedure TMainForm.SetLogLine(AValue: String);
+procedure TMainForm.SetLogLine(AValue: string);
 begin
   Memo.Append(AValue);
 end;
