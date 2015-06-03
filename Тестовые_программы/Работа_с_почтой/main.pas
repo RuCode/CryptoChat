@@ -16,7 +16,7 @@ type
     EditPortOut: TLabeledEdit;
     EditUserName: TLabeledEdit;
     EditUserPassword: TLabeledEdit;
-    EditHostIn: TLabeledEdit;
+    EditHost: TLabeledEdit;
     EditPortIn: TLabeledEdit;
     MainMenu: TMainMenu;
     Memo: TMemo;
@@ -25,6 +25,8 @@ type
     MenuItem3: TMenuItem;
     MenuItem4: TMenuItem;
     MenuItem5: TMenuItem;
+    MenuItem6: TMenuItem;
+    MenuItem7: TMenuItem;
     Panel1: TPanel;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -32,6 +34,8 @@ type
     procedure MenuItem3Click(Sender: TObject);
     procedure MenuItem4Click(Sender: TObject);
     procedure MenuItem5Click(Sender: TObject);
+    procedure MenuItem6Click(Sender: TObject);
+    procedure MenuItem7Click(Sender: TObject);
   private
     procedure SetLogLine(AValue: string);
     { private declarations }
@@ -89,6 +93,10 @@ procedure TMainForm.MenuItem4Click(Sender: TObject);
 // Подключиться
 begin
   BeginNewFunc;
+  mail.UserName := EditUserName.Text;
+  mail.Password := EditUserPassword.Text;
+  mail.IMAPHost := EditHost.Text;
+  mail.IMAPPort := StrToInt(EditPortIn.Text);
   mail.Connected := True;
   Log := BoolToStr(mail.Connected, 'Connected', 'Error');
   Log := mail.FullResult.Text;
@@ -98,7 +106,22 @@ procedure TMainForm.MenuItem5Click(Sender: TObject);
 // Узнать количество новых писем
 begin
   BeginNewFunc;
-  Log := IntToStr(mail.CountOfNewMails);
+  Log := 'Новых писем: ' + IntToStr(mail.CountOfNewMails);
+  Log := 'Всего писем: ' + IntToStr(mail.CountOfMails);
+end;
+
+procedure TMainForm.MenuItem6Click(Sender: TObject);
+// Получить заголовок сообщения
+begin
+  BeginNewFunc;
+  Log := Mail.GetMailHeader(1);
+end;
+
+procedure TMainForm.MenuItem7Click(Sender: TObject);
+// Получить сообщение
+begin
+  BeginNewFunc;
+  Log := Mail.GetMail(1);
 end;
 
 procedure TMainForm.SetLogLine(AValue: string);

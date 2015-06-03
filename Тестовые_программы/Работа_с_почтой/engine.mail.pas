@@ -15,6 +15,12 @@ uses
   Classes, Dialogs, SysUtils, ExtCtrls, Forms, Controls, imapsend, ssl_openssl, synautil, synacode, synaicnv,
   mimeinln, mimemess, mimepart, synachar;
 
+const
+  ERROR_CAPTION = 'Ошибка';
+  ERROR_INDEX_MESSAGE = 'Индекс сообщения должен быть от 1 до числа равного количеству писем...';
+  ERROR_RECIEVE_HEADER = 'Ошибка получения заголовка письма #%d';
+  ERROR_RECIEVE_BODY = 'Ошибка получения тела письма #%d';
+
 type
 
   { TCustomMail }
@@ -29,10 +35,7 @@ type
     fIMAPClient: TIMAPSend;
     {:UIID выбранной директории}
     fCurrentFolderUIID: integer;
-    {:Количество новых писем в текущей директории}
-    fCountOfNewMails: integer;
-    {:Количество писем в текущей директории}
-    fCountOfMailsInCurrentFolder: integer;
+    function GetCountOfMails: integer;
     function GetCountOfNewMails: integer;
     function GetFullResult: TStringList;
     function GetResultString: string;
@@ -45,8 +48,10 @@ type
 
     {:Узнать список директорий на сервере.}
     procedure GetFolderList(var ListFolders: TStringList);
-    {:Узнать список директорий на сервере.}
-
+    {:Получить заголовок сообщения.}
+    function GetMailHeader(Index: Integer): String;
+    {:Получить сообщение.}
+    function GetMail(Index: Integer): String;
   public
     {:Имя пользователя для авторизации.}
     property UserName: string read fUserName write fUserName;
@@ -60,8 +65,10 @@ type
     property Connected: boolean read fConnected write SetConnected;
     {:Узнать или указать текущую директорию.}
     property SelectedFolder: string read GetSelectedFolder write SetSelectedFolder;
-    {: Количество новых писем}
+    {:Количество новых писем}
     property CountOfNewMails: integer read GetCountOfNewMails;
+    {:Количество писем в директории}
+    property CountOfMails: integer read GetCountOfMails;
     {:Результаты команды.}
     property FullResult: TStringList read GetFullResult;
     {:Результаты команды.}
@@ -97,8 +104,6 @@ procedure TCustomMail.SetSelectedFolder(AFolderName: string);
 begin
   if fIMAPClient.SelectFolder(AFolderName) then
   begin
-    fCountOfMailsInCurrentFolder := fIMAPClient.SelectedCount;
-    fCountOfNewMails := fIMAPClient.SelectedRecent;
     fCurrentFolderUIID := fIMAPClient.SelectedUIDvalidity;
   end;
 end;
@@ -111,16 +116,14 @@ end;
 
 function TCustomMail.GetCountOfNewMails: integer;
 // Количество новых писем
-var
-  MessList: TStringList;
 begin
-  MessList := TStringList.Create;
-  if ImapClient.SearchMess('UNSEEN', MessList) then
-  begin
-    Result := MessList.Count;
-    fCountOfNewMails := Result;
-  end;
-  MessList.Free;
+  Result := fIMAPClient.SelectedRecent;
+end;
+
+function TCustomMail.GetCountOfMails: integer;
+// Количество писем
+begin
+  Result := fIMAPClient.SelectedCount;
 end;
 
 function TCustomMail.GetResultString: string;
@@ -145,6 +148,55 @@ begin
     ListFolders[i] := CharsetConversion(ListFolders[i], TMimeChar.UTF_7mod, TMimeChar.UTF_8);
 end;
 
+function TCustomMail.GetMailHeader(Index: Integer): String;
+// Получить заголовок сообщения
+var
+  List: TStringList;
+begin
+  Result := '';
+  if Index < 1 then
+  begin
+    MessageDlg(ERROR_CAPTION, ERROR_INDEX_MESSAGE, mtError, [mbOK], '');
+    Exit;
+  end;
+  try
+    List := TStringList.Create;
+    if not fIMAPClient.FetchHeader(Index, List) then
+    begin
+      MessageDlg(ERROR_CAPTION, Format(ERROR_RECIEVE_HEADER, [Index]), mtError, [mbOK], '');
+      Exit;
+    end;
+    Result := List.Text;
+  finally
+    List.Free;
+  end;
+end;
+
+function TCustomMail.GetMail(Index: Integer): String;
+// Получить заголовок сообщения
+var
+  List: TStringList;
+begin
+  Result := '';
+  if Index < 1 then
+  begin
+    MessageDlg(ERROR_CAPTION, ERROR_INDEX_MESSAGE, mtError, [mbOK], '');
+    Exit;
+  end;
+  try
+    List := TStringList.Create;
+    if not fIMAPClient.FetchMess(Index, List) then
+    begin
+      MessageDlg(ERROR_CAPTION, Format(ERROR_RECIEVE_BODY, [Index]), mtError, [mbOK], '');
+      Exit;
+    end;
+    Result := List.Text;
+  finally
+    List.Free;
+  end;
+end;
+
+
 constructor TCustomMail.Create;
 // Создание обьекта
 begin
@@ -158,8 +210,6 @@ begin
   fIMAPHost := 'imap.yandex.ru';
   fIMAPPort := 993;
   fCurrentFolderUIID := 0;
-  fCountOfNewMails := 0;
-  fCountOfMailsInCurrentFolder := 0;
 end;
 
 destructor TCustomMail.Destroy;

@@ -4,7 +4,7 @@ object MainForm: TMainForm
   Top = 110
   Width = 747
   Caption = 'Form'
-  ClientHeight = 356
+  ClientHeight = 329
   ClientWidth = 747
   Menu = MainMenu
   OnCreate = FormCreate
@@ -12,7 +12,7 @@ object MainForm: TMainForm
   LCLVersion = '1.5'
   object Memo: TMemo
     Left = 0
-    Height = 276
+    Height = 249
     Top = 80
     Width = 747
     Align = alClient
@@ -47,15 +47,15 @@ object MainForm: TMainForm
       TabOrder = 0
       Text = 'i.rcode@yandex.ru'
     end
-    object EditHostIn: TLabeledEdit
+    object EditHost: TLabeledEdit
       Left = 216
       Height = 27
       Top = 40
       Width = 208
-      EditLabel.AnchorSideLeft.Control = EditHostIn
-      EditLabel.AnchorSideRight.Control = EditHostIn
+      EditLabel.AnchorSideLeft.Control = EditHost
+      EditLabel.AnchorSideRight.Control = EditHost
       EditLabel.AnchorSideRight.Side = asrBottom
-      EditLabel.AnchorSideBottom.Control = EditHostIn
+      EditLabel.AnchorSideBottom.Control = EditHost
       EditLabel.Left = 216
       EditLabel.Height = 17
       EditLabel.Top = 20
@@ -81,7 +81,7 @@ object MainForm: TMainForm
       EditLabel.Caption = 'Пароль:'
       EditLabel.ParentColor = False
       TabOrder = 2
-      Text = 'LQexIX1CSS'
+      Text = 'LQexIX1'
     end
     object EditPortOut: TLabeledEdit
       Left = 672
@@ -136,6 +136,18 @@ object MainForm: TMainForm
       object MenuItem3: TMenuItem
         Caption = 'Зайти в папку "Входящие"'
         OnClick = MenuItem3Click
+      end
+      object MenuItem5: TMenuItem
+        Caption = 'Узнать количество новых писем'
+        OnClick = MenuItem5Click
+      end
+      object MenuItem6: TMenuItem
+        Caption = 'Получить заголовок сообщения'
+        OnClick = MenuItem6Click
+      end
+      object MenuItem7: TMenuItem
+        Caption = 'Получить сообщение'
+        OnClick = MenuItem7Click
       end
     end
   end

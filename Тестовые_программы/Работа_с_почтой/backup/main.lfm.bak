@@ -1,0 +1,154 @@
+object MainForm: TMainForm
+  Left = 214
+  Height = 356
+  Top = 110
+  Width = 747
+  Caption = 'Form'
+  ClientHeight = 329
+  ClientWidth = 747
+  Menu = MainMenu
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  LCLVersion = '1.5'
+  object Memo: TMemo
+    Left = 0
+    Height = 249
+    Top = 80
+    Width = 747
+    Align = alClient
+    ReadOnly = True
+    ScrollBars = ssVertical
+    TabOrder = 0
+  end
+  object Panel1: TPanel
+    Left = 0
+    Height = 80
+    Top = 0
+    Width = 747
+    Align = alTop
+    ClientHeight = 80
+    ClientWidth = 747
+    TabOrder = 1
+    object EditUserName: TLabeledEdit
+      Left = 8
+      Height = 27
+      Top = 40
+      Width = 200
+      EditLabel.AnchorSideLeft.Control = EditUserName
+      EditLabel.AnchorSideRight.Control = EditUserName
+      EditLabel.AnchorSideRight.Side = asrBottom
+      EditLabel.AnchorSideBottom.Control = EditUserName
+      EditLabel.Left = 8
+      EditLabel.Height = 17
+      EditLabel.Top = 20
+      EditLabel.Width = 200
+      EditLabel.Caption = 'Логин:'
+      EditLabel.ParentColor = False
+      TabOrder = 0
+      Text = 'i.rcode@yandex.ru'
+    end
+    object EditHost: TLabeledEdit
+      Left = 216
+      Height = 27
+      Top = 40
+      Width = 208
+      EditLabel.AnchorSideLeft.Control = EditHost
+      EditLabel.AnchorSideRight.Control = EditHost
+      EditLabel.AnchorSideRight.Side = asrBottom
+      EditLabel.AnchorSideBottom.Control = EditHost
+      EditLabel.Left = 216
+      EditLabel.Height = 17
+      EditLabel.Top = 20
+      EditLabel.Width = 208
+      EditLabel.Caption = 'Сервер входящей почты:'
+      EditLabel.ParentColor = False
+      TabOrder = 1
+      Text = 'imap.yandex.ru'
+    end
+    object EditUserPassword: TLabeledEdit
+      Left = 432
+      Height = 27
+      Top = 40
+      Width = 160
+      EditLabel.AnchorSideLeft.Control = EditUserPassword
+      EditLabel.AnchorSideRight.Control = EditUserPassword
+      EditLabel.AnchorSideRight.Side = asrBottom
+      EditLabel.AnchorSideBottom.Control = EditUserPassword
+      EditLabel.Left = 432
+      EditLabel.Height = 17
+      EditLabel.Top = 20
+      EditLabel.Width = 160
+      EditLabel.Caption = 'Пароль:'
+      EditLabel.ParentColor = False
+      TabOrder = 2
+      Text = 'LQexIX1CSS'
+    end
+    object EditPortOut: TLabeledEdit
+      Left = 672
+      Height = 27
+      Top = 40
+      Width = 64
+      EditLabel.AnchorSideLeft.Control = EditPortOut
+      EditLabel.AnchorSideRight.Control = EditPortOut
+      EditLabel.AnchorSideRight.Side = asrBottom
+      EditLabel.AnchorSideBottom.Control = EditPortOut
+      EditLabel.Left = 672
+      EditLabel.Height = 17
+      EditLabel.Top = 20
+      EditLabel.Width = 64
+      EditLabel.Caption = 'Порт:'
+      EditLabel.ParentColor = False
+      TabOrder = 3
+      Text = '465'
+    end
+    object EditPortIn: TLabeledEdit
+      Left = 600
+      Height = 27
+      Top = 40
+      Width = 64
+      EditLabel.AnchorSideLeft.Control = EditPortIn
+      EditLabel.AnchorSideRight.Control = EditPortIn
+      EditLabel.AnchorSideRight.Side = asrBottom
+      EditLabel.AnchorSideBottom.Control = EditPortIn
+      EditLabel.Left = 600
+      EditLabel.Height = 17
+      EditLabel.Top = 20
+      EditLabel.Width = 64
+      EditLabel.Caption = 'Порт:'
+      EditLabel.ParentColor = False
+      TabOrder = 4
+      Text = '993'
+    end
+  end
+  object MainMenu: TMainMenu
+    left = 464
+    top = 240
+    object MenuItem1: TMenuItem
+      Caption = 'Функции'
+      object MenuItem4: TMenuItem
+        Caption = 'Подключиться'
+        OnClick = MenuItem4Click
+      end
+      object MenuItem2: TMenuItem
+        Caption = 'Получить список папок'
+        OnClick = MenuItem2Click
+      end
+      object MenuItem3: TMenuItem
+        Caption = 'Зайти в папку "Входящие"'
+        OnClick = MenuItem3Click
+      end
+      object MenuItem5: TMenuItem
+        Caption = 'Узнать количество новых писем'
+        OnClick = MenuItem5Click
+      end
+      object MenuItem6: TMenuItem
+        Caption = 'Получить заголовок сообщения'
+        OnClick = MenuItem6Click
+      end
+      object MenuItem7: TMenuItem
+        Caption = 'Получить сообщение'
+        OnClick = MenuItem7Click
+      end
+    end
+  end
+end
