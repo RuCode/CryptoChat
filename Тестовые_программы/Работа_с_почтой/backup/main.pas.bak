@@ -21,21 +21,27 @@ type
     MainMenu: TMainMenu;
     Memo: TMemo;
     MenuItem1: TMenuItem;
+    MenuItem10: TMenuItem;
     MenuItem2: TMenuItem;
     MenuItem3: TMenuItem;
     MenuItem4: TMenuItem;
     MenuItem5: TMenuItem;
     MenuItem6: TMenuItem;
     MenuItem7: TMenuItem;
+    MenuItem8: TMenuItem;
+    MenuItem9: TMenuItem;
     Panel1: TPanel;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
+    procedure MenuItem10Click(Sender: TObject);
     procedure MenuItem2Click(Sender: TObject);
     procedure MenuItem3Click(Sender: TObject);
     procedure MenuItem4Click(Sender: TObject);
     procedure MenuItem5Click(Sender: TObject);
     procedure MenuItem6Click(Sender: TObject);
     procedure MenuItem7Click(Sender: TObject);
+    procedure MenuItem8Click(Sender: TObject);
+    procedure MenuItem9Click(Sender: TObject);
   private
     procedure SetLogLine(AValue: string);
     { private declarations }
@@ -65,6 +71,18 @@ procedure TMainForm.FormDestroy(Sender: TObject);
 // Уничтожение
 begin
   mail.Free;
+end;
+
+procedure TMainForm.MenuItem10Click(Sender: TObject);
+// Получить имя вложения
+var
+  StringList: TStringList;
+begin
+  BeginNewFunc;
+  StringList := TStringList.Create;
+  StringList.Text := Mail.GetMailBody(StrToInt(InputBox('Ввод', 'Введите индекс письма:', '')));
+  Log := UTF8ToSys('Имя первого вложения: ') + Mail.GetMailAttachFileName(StringList, 1);
+  StringList.Free;
 end;
 
 procedure TMainForm.MenuItem2Click(Sender: TObject);
@@ -106,22 +124,46 @@ procedure TMainForm.MenuItem5Click(Sender: TObject);
 // Узнать количество новых писем
 begin
   BeginNewFunc;
-  Log := 'Новых писем: ' + IntToStr(mail.CountOfNewMails);
-  Log := 'Всего писем: ' + IntToStr(mail.CountOfMails);
+  Log := UTF8ToSys('Новых писем: ') + IntToStr(mail.CountOfNewMails);
+  Log := UTF8ToSys('Всего писем: ') + IntToStr(mail.CountOfMails);
 end;
 
 procedure TMainForm.MenuItem6Click(Sender: TObject);
 // Получить заголовок сообщения
 begin
   BeginNewFunc;
-  Log := Mail.GetMailHeader(1);
+  Log := Mail.GetMailHeader(StrToInt(InputBox('Ввод', 'Введите индекс письма:', '')));
 end;
 
 procedure TMainForm.MenuItem7Click(Sender: TObject);
 // Получить сообщение
 begin
   BeginNewFunc;
-  Log := Mail.GetMail(1);
+  Log := Mail.GetMailBody(StrToInt(InputBox('Ввод', 'Введите индекс письма:', '')));
+end;
+
+procedure TMainForm.MenuItem8Click(Sender: TObject);
+// Получить текст письма
+var
+  StringList: TStringList;
+begin
+  BeginNewFunc;
+  StringList := TStringList.Create;
+  StringList.Text := Mail.GetMailBody(StrToInt(InputBox('Ввод', 'Введите индекс письма:', '')));
+  Log := Mail.GetMailText(StringList);
+  StringList.Free;
+end;
+
+procedure TMainForm.MenuItem9Click(Sender: TObject);
+// Получить количество вложений
+var
+  StringList: TStringList;
+begin
+  BeginNewFunc;
+  StringList := TStringList.Create;
+  StringList.Text := Mail.GetMailBody(StrToInt(InputBox('Ввод', 'Введите индекс письма:', '')));
+  Log := UTF8ToSys('Вложений: ') + IntToStr(Mail.GetMailAttachCount(StringList));
+  StringList.Free;
 end;
 
 procedure TMainForm.SetLogLine(AValue: string);

@@ -49,9 +49,15 @@ type
     {:Узнать список директорий на сервере.}
     procedure GetFolderList(var ListFolders: TStringList);
     {:Получить заголовок сообщения.}
-    function GetMailHeader(Index: Integer): String;
+    function GetMailHeader(Index: integer): string;
     {:Получить сообщение.}
-    function GetMail(Index: Integer): String;
+    function GetMailBody(Index: integer): string;
+    {:Получить текст сообщения в расшифрованном виде}
+    function GetMailText(Text: TStringList): string;
+    {:Получить количество вложений}
+    function GetMailAttachCount(Text: TStringList): integer;
+    {:Получить имя файла вложения}
+    function GetMailAttachFileName(Text: TStringList; Index: integer): string;
   public
     {:Имя пользователя для авторизации.}
     property UserName: string read fUserName write fUserName;
@@ -109,31 +115,31 @@ begin
 end;
 
 function TCustomMail.GetFullResult: TStringList;
-// Получим полный ответ от сервера
+  // Получим полный ответ от сервера
 begin
   Result := fIMAPClient.FullResult;
 end;
 
 function TCustomMail.GetCountOfNewMails: integer;
-// Количество новых писем
+  // Количество новых писем
 begin
   Result := fIMAPClient.SelectedRecent;
 end;
 
 function TCustomMail.GetCountOfMails: integer;
-// Количество писем
+  // Количество писем
 begin
   Result := fIMAPClient.SelectedCount;
 end;
 
 function TCustomMail.GetResultString: string;
-// Статус команды
+  // Статус команды
 begin
   Result := fIMAPClient.ResultString;
 end;
 
 function TCustomMail.GetSelectedFolder: string;
-// Определить текущею директорию
+  // Определить текущею директорию
 begin
   Result := fIMAPClient.SelectedFolder;
 end;
@@ -148,8 +154,8 @@ begin
     ListFolders[i] := CharsetConversion(ListFolders[i], TMimeChar.UTF_7mod, TMimeChar.UTF_8);
 end;
 
-function TCustomMail.GetMailHeader(Index: Integer): String;
-// Получить заголовок сообщения
+function TCustomMail.GetMailHeader(Index: integer): string;
+  // Получить заголовок сообщения
 var
   List: TStringList;
 begin
@@ -172,8 +178,8 @@ begin
   end;
 end;
 
-function TCustomMail.GetMail(Index: Integer): String;
-// Получить заголовок сообщения
+function TCustomMail.GetMailBody(Index: integer): string;
+  // Получить заголовок сообщения
 var
   List: TStringList;
 begin
@@ -196,9 +202,48 @@ begin
   end;
 end;
 
+function TCustomMail.GetMailText(Text: TStringList): string;
+  // Получить текст письма из тела письма
+var
+  MimeMess: TMimemess;
+begin
+  MimeMess := TMimemess.Create;
+  MimeMess.Lines.Assign(Text);
+  MimeMess.DecodeMessage;
+  Result := MimeMess.MessagePart.PartBody.Text;
+  MimeMess.Free;
+end;
+
+function TCustomMail.GetMailAttachCount(Text: TStringList): integer;
+  // Получить количество вложений
+var
+  MimeMess: TMimemess;
+begin
+  MimeMess := TMimemess.Create;
+  MimeMess.Lines.Assign(Text);
+  MimeMess.DecodeMessage;
+  Result := MimeMess.MessagePart.GetSubPartCount;
+  MimeMess.Free;
+end;
+
+function TCustomMail.GetMailAttachFileName(Text: TStringList; Index: integer): string;
+
+  // Получить имя файла вложения
+var
+  MimeMess: TMimeMess;
+  MimePart: TMimePart;
+begin
+  MimeMess := TMimemess.Create;
+  MimeMess.Lines.Assign(Text);
+  MimeMess.DecodeMessage;
+  MimePart := MimeMess.MessagePart.GetSubPart(Index);
+  MimePart.DecodePart;
+  Result := MimePart.FileName;
+  MimeMess.Free;
+end;
 
 constructor TCustomMail.Create;
-// Создание обьекта
+  // Создание обьекта
 begin
   inherited Create;
   fIMAPClient := TIMAPSend.Create;
@@ -206,14 +251,14 @@ begin
   fIMAPClient.FullSSL := True;
   fConnected := False;
   fUserName := 'i.rcode';
-  fPassword := 'LQexIX1CSS';
+  fPassword := 'LQexIX1';
   fIMAPHost := 'imap.yandex.ru';
   fIMAPPort := 993;
   fCurrentFolderUIID := 0;
 end;
 
 destructor TCustomMail.Destroy;
-// Уничтожение обьекта
+  // Уничтожение обьекта
 begin
   fIMAPClient.Logout;
   fIMAPClient.Free;

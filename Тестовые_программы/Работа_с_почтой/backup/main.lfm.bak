@@ -4,7 +4,7 @@ object MainForm: TMainForm
   Top = 110
   Width = 747
   Caption = 'Form'
-  ClientHeight = 329
+  ClientHeight = 356
   ClientWidth = 747
   Menu = MainMenu
   OnCreate = FormCreate
@@ -12,7 +12,7 @@ object MainForm: TMainForm
   LCLVersion = '1.5'
   object Memo: TMemo
     Left = 0
-    Height = 249
+    Height = 276
     Top = 80
     Width = 747
     Align = alClient
@@ -81,7 +81,7 @@ object MainForm: TMainForm
       EditLabel.Caption = 'Пароль:'
       EditLabel.ParentColor = False
       TabOrder = 2
-      Text = 'LQexIX1CSS'
+      Text = 'LQexIX1'
     end
     object EditPortOut: TLabeledEdit
       Left = 672
@@ -124,7 +124,7 @@ object MainForm: TMainForm
     left = 464
     top = 240
     object MenuItem1: TMenuItem
-      Caption = 'Функции'
+      Caption = 'Чтение писем IMAP'
       object MenuItem4: TMenuItem
         Caption = 'Подключиться'
         OnClick = MenuItem4Click
@@ -148,6 +148,18 @@ object MainForm: TMainForm
       object MenuItem7: TMenuItem
         Caption = 'Получить сообщение'
         OnClick = MenuItem7Click
+      end
+      object MenuItem8: TMenuItem
+        Caption = 'Раскодировать сообщение'
+        OnClick = MenuItem8Click
+      end
+      object MenuItem9: TMenuItem
+        Caption = 'Получить количество вложений'
+        OnClick = MenuItem9Click
+      end
+      object MenuItem10: TMenuItem
+        Caption = 'Получить имя вложения'
+        OnClick = MenuItem10Click
       end
     end
   end
