@@ -23,6 +23,7 @@ type
     MenuItem1: TMenuItem;
     MenuItem10: TMenuItem;
     MenuItem11: TMenuItem;
+    MenuItem12: TMenuItem;
     MenuItem2: TMenuItem;
     MenuItem3: TMenuItem;
     MenuItem4: TMenuItem;
@@ -35,6 +36,7 @@ type
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure MenuItem10Click(Sender: TObject);
+    procedure MenuItem12Click(Sender: TObject);
     procedure MenuItem2Click(Sender: TObject);
     procedure MenuItem3Click(Sender: TObject);
     procedure MenuItem4Click(Sender: TObject);
@@ -84,6 +86,14 @@ begin
   StringList.Text := Mail.GetMailBody(StrToInt(InputBox('Ввод', 'Введите индекс письма:', '')));
   Log := UTF8ToSys('Имя первого вложения: ') + Mail.GetMailAttachFileName(StringList, 1);
   StringList.Free;
+end;
+
+procedure TMainForm.MenuItem12Click(Sender: TObject);
+// Сохранить вложение
+begin
+  BeginNewFunc;
+  Mail.SaveAttachToFile(1, 1, ExtractFilePath(Application.ExeName) + 'attach.pdf');
+  Log := 'Сохранено в attach.pdf';
 end;
 
 procedure TMainForm.MenuItem2Click(Sender: TObject);

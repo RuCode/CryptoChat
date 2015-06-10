@@ -4,7 +4,7 @@ object MainForm: TMainForm
   Top = 110
   Width = 747
   Caption = 'Form'
-  ClientHeight = 356
+  ClientHeight = 329
   ClientWidth = 747
   Menu = MainMenu
   OnCreate = FormCreate
@@ -12,7 +12,7 @@ object MainForm: TMainForm
   LCLVersion = '1.5'
   object Memo: TMemo
     Left = 0
-    Height = 276
+    Height = 249
     Top = 80
     Width = 747
     Align = alClient
@@ -160,6 +160,10 @@ object MainForm: TMainForm
       object MenuItem10: TMenuItem
         Caption = 'Получить имя вложения'
         OnClick = MenuItem10Click
+      end
+      object MenuItem12: TMenuItem
+        Caption = 'Сохранить вложение'
+        OnClick = MenuItem12Click
       end
     end
     object MenuItem11: TMenuItem

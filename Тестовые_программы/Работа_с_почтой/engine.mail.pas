@@ -58,6 +58,8 @@ type
     function GetMailAttachCount(Text: TStringList): integer;
     {:Получить имя файла вложения}
     function GetMailAttachFileName(Text: TStringList; Index: integer): string;
+    {:Сохранить вложение в файо}
+    procedure SaveAttachToFile(AMailIndex, AttachIndex: Integer; AFileName: String);
   public
     {:Имя пользователя для авторизации.}
     property UserName: string read fUserName write fUserName;
@@ -239,6 +241,53 @@ begin
   MimePart.DecodePart;
   Result := MimePart.FileName;
   MimeMess.Free;
+end;
+
+procedure TCustomMail.SaveAttachToFile(AMailIndex, AttachIndex: Integer; AFileName: String);
+// Cохраняет вложение в файл
+
+  procedure SaveToFile(szData, szPath: string);
+  var
+    hFile: TextFile;
+  begin
+    AssignFile(hFile, szPath);
+    Rewrite(hFile);
+    Write(hFile, szData);
+    CloseFile(hFile);
+  end;
+
+const
+  ATTACHMENT_STR = 'attachment';
+
+var
+  MimePart: TMimePart;
+  i, CountAttach: integer;
+  Stream:   TStringStream;
+  MailMessage: TMimeMess;
+begin
+  MailMessage:= TMimeMess.Create;
+  CountAttach := -1;
+  if not Connected then
+    Exit;
+  MailMessage.Lines.Text := GetMailBody(AMailIndex);
+  MailMessage.DecodeMessage;
+  for i := 0 to MailMessage.MessagePart.GetSubPartCount - 1 do
+  begin
+    Inc(CountAttach, 1);
+    MimePart := MailMessage.MessagePart.GetSubPart(i);    \
+    if not SameText(MimePart.Disposition, ATTACHMENT_STR) then
+       Continue;
+    if CountAttach <> AttachIndex then
+       Continue;
+    Stream := TStringStream.Create('');
+    try
+      Stream.WriteString(DecodeBase64(MimePart.PartBody.Text));
+      SaveToFile(Stream.DataString, AFileName);
+    finally
+      Stream.Free;
+      MailMessage.Free;
+    end;
+  end;
 end;
 
 constructor TCustomMail.Create;
