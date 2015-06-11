@@ -1,6 +1,7 @@
 {/////////////////////////////////////////////////////////////////////////////////////////////////////////////
                             Модуль для управления почтой по средствам IMAP
  /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  11.06.2015 - А что если загружать заголовок\тело и с ним работать остальными методами класса?!
   05.2015 - RuCode
     * Нвчал разработку
  /////////////////////////////////////////////////////////////////////////////////////////////////////////////}
@@ -13,7 +14,7 @@ interface
 
 uses
   Classes, Dialogs, SysUtils, ExtCtrls, Forms, Controls, imapsend, ssl_openssl, synautil, synacode, synaicnv,
-  mimeinln, mimemess, mimepart, synachar;
+  mimemess, mimepart, synachar;
 
 const
   ERROR_CAPTION = 'Ошибка';
@@ -59,7 +60,18 @@ type
     {:Получить имя файла вложения}
     function GetMailAttachFileName(Text: TStringList; Index: integer): string;
     {:Сохранить вложение в файо}
-    procedure SaveAttachToFile(AMailIndex, AttachIndex: Integer; AFileName: String);
+    procedure SaveAttachToFile(AMailIndex, AttachIndex: integer; AFileName: string);
+    {:Узнать почту отправителя}
+    function GetEmailFrom(AMailIndex: integer): string;
+    {:Узнать почту получателя}
+    function GetEmailTo(AMailIndex: integer): string;
+    {:Тема письма}
+    function GetEmailSubject(AMailIndex: integer): string;
+    {:Дата отправки письма}
+    function GetEmailDate(AMailIndex: integer): TDateTime;
+    {:Отправка письма}
+    function SendMail(FromAddr, ToAddr, Subject, Text, FileName: string): boolean;
+
   public
     {:Имя пользователя для авторизации.}
     property UserName: string read fUserName write fUserName;
@@ -243,7 +255,7 @@ begin
   MimeMess.Free;
 end;
 
-procedure TCustomMail.SaveAttachToFile(AMailIndex, AttachIndex: Integer; AFileName: String);
+procedure TCustomMail.SaveAttachToFile(AMailIndex, AttachIndex: integer; AFileName: string);
 // Cохраняет вложение в файл
 
   procedure SaveToFile(szData, szPath: string);
@@ -262,10 +274,10 @@ const
 var
   MimePart: TMimePart;
   i, CountAttach: integer;
-  Stream:   TStringStream;
+  Stream: TStringStream;
   MailMessage: TMimeMess;
 begin
-  MailMessage:= TMimeMess.Create;
+  MailMessage := TMimeMess.Create;
   CountAttach := -1;
   if not Connected then
     Exit;
@@ -274,11 +286,11 @@ begin
   for i := 0 to MailMessage.MessagePart.GetSubPartCount - 1 do
   begin
     Inc(CountAttach, 1);
-    MimePart := MailMessage.MessagePart.GetSubPart(i);    \
+    MimePart := MailMessage.MessagePart.GetSubPart(i);
     if not SameText(MimePart.Disposition, ATTACHMENT_STR) then
-       Continue;
+      Continue;
     if CountAttach <> AttachIndex then
-       Continue;
+      Continue;
     Stream := TStringStream.Create('');
     try
       Stream.WriteString(DecodeBase64(MimePart.PartBody.Text));
@@ -287,6 +299,87 @@ begin
       Stream.Free;
       MailMessage.Free;
     end;
+  end;
+end;
+
+function TCustomMail.GetEmailFrom(AMailIndex: integer): string;
+  // Узнать кем отправлено письмо
+var
+  MailMessage: TMimeMess;
+begin
+  MailMessage := TMimeMess.Create;
+  MailMessage.Lines.Text := GetMailHeader(AMailIndex);
+  MailMessage.DecodeMessage;
+  Result := MailMessage.Header.From;
+  MailMessage.Free;
+end;
+
+function TCustomMail.GetEmailTo(AMailIndex: integer): string;
+  // Узнать кем отправлено письмо
+var
+  MailMessage: TMimeMess;
+begin
+  MailMessage := TMimeMess.Create;
+  MailMessage.Lines.Text := GetMailHeader(AMailIndex);
+  MailMessage.DecodeMessage;
+  Result := MailMessage.Header.ToList[0];
+  MailMessage.Free;
+end;
+
+function TCustomMail.GetEmailSubject(AMailIndex: integer): string;
+  // Узнать тему письма
+var
+  MailMessage: TMimeMess;
+begin
+  MailMessage := TMimeMess.Create;
+  MailMessage.Lines.Text := GetMailHeader(AMailIndex);
+  MailMessage.DecodeMessage;
+  Result := MailMessage.Header.Subject;
+  MailMessage.Free;
+end;
+
+function TCustomMail.GetEmailDate(AMailIndex: integer): TDateTime;
+  // Дата отправки письма
+var
+  MailMessage: TMimeMess;
+begin
+  MailMessage := TMimeMess.Create;
+  MailMessage.Lines.Text := GetMailHeader(AMailIndex);
+  MailMessage.DecodeMessage;
+  Result := MailMessage.Header.Date;
+  MailMessage.Free;
+end;
+
+function TCustomMail.SendMail(FromAddr, ToAddr, Subject, Text, FileName: string): boolean;
+  // Отправка письма
+var
+  MailMessage: TMimeMess;
+  MIMEPart: TMimePart;
+  StringList: TStringList;
+begin
+  Result:= False;
+  MailMessage := TMimeMess.Create;
+  StringList := TStringList.Create;
+  try
+    // Заголовок письма
+    MailMessage.Header.Subject := Subject;// тема сообщения
+    MailMessage.Header.From := FromAddr; // имя и адрес отправителя
+    MailMessage.Header.ToList.Add(ToAddr); // имя и адрес получателя
+    // Корневой элемент
+    MIMEPart := MailMessage.AddPartMultipart('alternative', nil);
+    if length(Text) <> 0 then
+    begin
+      StringList.Text := Text;
+      MailMessage.AddPartText(StringList, MIMEPart);
+    end;
+    // Вложение
+
+    // Кодируем и отправляем
+    MailMessage.EncodeMessage;
+    Result := fIMAPClient.AppendMess('Sent', MailMessage.Lines);
+  finally
+    MailMessage.Free;
+    StringList.Free;
   end;
 end;
 

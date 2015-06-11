@@ -13,7 +13,6 @@ type
   { TMainForm }
 
   TMainForm = class(TForm)
-    EditPortOut: TLabeledEdit;
     EditUserName: TLabeledEdit;
     EditUserPassword: TLabeledEdit;
     EditHost: TLabeledEdit;
@@ -24,6 +23,8 @@ type
     MenuItem10: TMenuItem;
     MenuItem11: TMenuItem;
     MenuItem12: TMenuItem;
+    MenuItem13: TMenuItem;
+    MenuItem14: TMenuItem;
     MenuItem2: TMenuItem;
     MenuItem3: TMenuItem;
     MenuItem4: TMenuItem;
@@ -37,6 +38,8 @@ type
     procedure FormDestroy(Sender: TObject);
     procedure MenuItem10Click(Sender: TObject);
     procedure MenuItem12Click(Sender: TObject);
+    procedure MenuItem13Click(Sender: TObject);
+    procedure MenuItem14Click(Sender: TObject);
     procedure MenuItem2Click(Sender: TObject);
     procedure MenuItem3Click(Sender: TObject);
     procedure MenuItem4Click(Sender: TObject);
@@ -94,6 +97,21 @@ begin
   BeginNewFunc;
   Mail.SaveAttachToFile(1, 1, ExtractFilePath(Application.ExeName) + 'attach.pdf');
   Log := 'Сохранено в attach.pdf';
+end;
+
+procedure TMainForm.MenuItem13Click(Sender: TObject);
+// Получить информацию о письме
+begin
+  Log := UTF8ToSys('От: ') + Mail.GetEmailFrom(1);
+  Log := UTF8ToSys('К: ') + Mail.GetEmailTo(1);
+  Log := UTF8ToSys('Тема: ') + Mail.GetEmailSubject(1);
+end;
+
+procedure TMainForm.MenuItem14Click(Sender: TObject);
+// Отправка письма
+begin
+  BeginNewFunc;
+  Log := BoolToStr(Mail.SendMail(EditUserName.Text, 'antony@email.su', 'Тема', 'Текст', ''), 'Отправлено', 'Ошибка');
 end;
 
 procedure TMainForm.MenuItem2Click(Sender: TObject);

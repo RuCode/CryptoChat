@@ -2,19 +2,19 @@ object MainForm: TMainForm
   Left = 214
   Height = 356
   Top = 110
-  Width = 747
+  Width = 668
   Caption = 'Form'
-  ClientHeight = 329
-  ClientWidth = 747
+  ClientHeight = 356
+  ClientWidth = 668
   Menu = MainMenu
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   LCLVersion = '1.5'
   object Memo: TMemo
     Left = 0
-    Height = 249
+    Height = 276
     Top = 80
-    Width = 747
+    Width = 668
     Align = alClient
     ReadOnly = True
     ScrollBars = ssVertical
@@ -24,10 +24,10 @@ object MainForm: TMainForm
     Left = 0
     Height = 80
     Top = 0
-    Width = 747
+    Width = 668
     Align = alTop
     ClientHeight = 80
-    ClientWidth = 747
+    ClientWidth = 668
     TabOrder = 1
     object EditUserName: TLabeledEdit
       Left = 8
@@ -83,24 +83,6 @@ object MainForm: TMainForm
       TabOrder = 2
       Text = 'LQexIX1'
     end
-    object EditPortOut: TLabeledEdit
-      Left = 672
-      Height = 27
-      Top = 40
-      Width = 64
-      EditLabel.AnchorSideLeft.Control = EditPortOut
-      EditLabel.AnchorSideRight.Control = EditPortOut
-      EditLabel.AnchorSideRight.Side = asrBottom
-      EditLabel.AnchorSideBottom.Control = EditPortOut
-      EditLabel.Left = 672
-      EditLabel.Height = 17
-      EditLabel.Top = 20
-      EditLabel.Width = 64
-      EditLabel.Caption = 'Порт:'
-      EditLabel.ParentColor = False
-      TabOrder = 3
-      Text = '465'
-    end
     object EditPortIn: TLabeledEdit
       Left = 600
       Height = 27
@@ -116,7 +98,7 @@ object MainForm: TMainForm
       EditLabel.Width = 64
       EditLabel.Caption = 'Порт:'
       EditLabel.ParentColor = False
-      TabOrder = 4
+      TabOrder = 3
       Text = '993'
     end
   end
@@ -165,9 +147,17 @@ object MainForm: TMainForm
         Caption = 'Сохранить вложение'
         OnClick = MenuItem12Click
       end
+      object MenuItem13: TMenuItem
+        Caption = 'Информация о письме'
+        OnClick = MenuItem13Click
+      end
     end
     object MenuItem11: TMenuItem
       Caption = 'Отправка писем IMAP'
+      object MenuItem14: TMenuItem
+        Caption = 'Отправить письмо'
+        OnClick = MenuItem14Click
+      end
     end
   end
 end

@@ -3,7 +3,7 @@
   <ProjectSession>
     <Version Value="9"/>
     <BuildModes Active="Default"/>
-    <Units Count="14">
+    <Units Count="15">
       <Unit0>
         <Filename Value="Launch.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -11,7 +11,7 @@
         <WindowIndex Value="-1"/>
         <TopLine Value="-1"/>
         <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="37"/>
+        <UsageCount Value="40"/>
       </Unit0>
       <Unit1>
         <Filename Value="main.pas"/>
@@ -20,17 +20,17 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="main"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="2"/>
-        <TopLine Value="79"/>
-        <CursorPos Y="95"/>
+        <TopLine Value="70"/>
+        <CursorPos X="3" Y="73"/>
         <ExtraEditorCount Value="1"/>
         <ExtraEditor1>
           <EditorIndex Value="-1"/>
-          <WindowIndex Value="-1"/>
-          <TopLine Value="35"/>
-          <CursorPos X="25" Y="43"/>
+          <TopLine Value="111"/>
+          <CursorPos X="19" Y="112"/>
         </ExtraEditor1>
-        <UsageCount Value="37"/>
+        <UsageCount Value="40"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit1>
@@ -38,11 +38,10 @@
         <Filename Value="engine.mail.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="Engine.Mail"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="3"/>
-        <TopLine Value="240"/>
-        <CursorPos Y="248"/>
-        <UsageCount Value="37"/>
+        <TopLine Value="352"/>
+        <CursorPos X="16" Y="352"/>
+        <UsageCount Value="40"/>
         <Loaded Value="True"/>
       </Unit2>
       <Unit3>
@@ -55,8 +54,8 @@
       <Unit4>
         <Filename Value="/usr/lib/codetyphon/typhon/components/pl_Synapse/source/imapsend.pas"/>
         <EditorIndex Value="-1"/>
-        <TopLine Value="249"/>
-        <CursorPos X="14" Y="205"/>
+        <TopLine Value="63"/>
+        <CursorPos X="12" Y="78"/>
         <UsageCount Value="11"/>
       </Unit4>
       <Unit5>
@@ -96,9 +95,9 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="Test"/>
-        <TopLine Value="563"/>
-        <CursorPos X="3" Y="567"/>
-        <UsageCount Value="11"/>
+        <TopLine Value="518"/>
+        <CursorPos X="3" Y="522"/>
+        <UsageCount Value="13"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit10>
@@ -106,9 +105,9 @@
         <Filename Value="../../Исходный_код/SRC/DEPRECATED/mailcrypt.pas"/>
         <UnitName Value="MailCrypt"/>
         <EditorIndex Value="1"/>
-        <TopLine Value="312"/>
-        <CursorPos X="3" Y="312"/>
-        <UsageCount Value="11"/>
+        <TopLine Value="33"/>
+        <CursorPos X="14" Y="47"/>
+        <UsageCount Value="13"/>
         <Loaded Value="True"/>
       </Unit11>
       <Unit12>
@@ -125,124 +124,133 @@
         <CursorPos X="19" Y="170"/>
         <UsageCount Value="10"/>
       </Unit13>
+      <Unit14>
+        <Filename Value="/usr/lib/codetyphon/fpcsrc/packages/amunits/examples/otherlibs/string.pas"/>
+        <EditorIndex Value="-1"/>
+        <UsageCount Value="10"/>
+      </Unit14>
     </Units>
-    <JumpHistory Count="29" HistoryIndex="28">
+    <JumpHistory Count="30" HistoryIndex="29">
       <Position1>
         <Filename Value="engine.mail.pas"/>
-        <Caret Line="277" TopLine="262"/>
+        <Caret Line="353" Column="22" TopLine="349"/>
       </Position1>
       <Position2>
         <Filename Value="engine.mail.pas"/>
-        <Caret Line="276" TopLine="262"/>
+        <Caret Line="359" TopLine="357"/>
       </Position2>
       <Position3>
         <Filename Value="engine.mail.pas"/>
-        <Caret Line="277" TopLine="262"/>
+        <Caret Line="360" TopLine="353"/>
       </Position3>
       <Position4>
         <Filename Value="engine.mail.pas"/>
-        <Caret Line="279" TopLine="262"/>
+        <Caret Line="361" TopLine="353"/>
       </Position4>
       <Position5>
         <Filename Value="engine.mail.pas"/>
-        <Caret Line="280" TopLine="262"/>
+        <Caret Line="362" TopLine="353"/>
       </Position5>
       <Position6>
         <Filename Value="engine.mail.pas"/>
-        <Caret Line="291" TopLine="262"/>
+        <Caret Line="364" TopLine="353"/>
       </Position6>
       <Position7>
         <Filename Value="engine.mail.pas"/>
-        <Caret Line="296" Column="82" TopLine="261"/>
+        <Caret Line="365" TopLine="353"/>
       </Position7>
       <Position8>
-        <Filename Value="main.pas"/>
-        <Caret Line="94" TopLine="86"/>
+        <Filename Value="engine.mail.pas"/>
+        <Caret Line="366" TopLine="353"/>
       </Position8>
       <Position9>
         <Filename Value="engine.mail.pas"/>
-        <Caret Line="296" Column="82" TopLine="261"/>
+        <Caret Line="368" TopLine="353"/>
       </Position9>
       <Position10>
         <Filename Value="engine.mail.pas"/>
-        <Caret Line="277" Column="39" TopLine="262"/>
+        <Caret Line="369" Column="23" TopLine="353"/>
       </Position10>
       <Position11>
         <Filename Value="engine.mail.pas"/>
-        <Caret Line="280" Column="88" TopLine="262"/>
+        <Caret Line="379" Column="15" TopLine="353"/>
       </Position11>
       <Position12>
-        <Filename Value="main.pas"/>
-        <Caret Line="94" TopLine="86"/>
+        <Filename Value="engine.mail.pas"/>
+        <Caret Line="361" TopLine="353"/>
       </Position12>
       <Position13>
-        <Filename Value="main.pas"/>
-        <Caret Line="84" Column="3" TopLine="79"/>
+        <Filename Value="engine.mail.pas"/>
+        <Caret Line="362" TopLine="353"/>
       </Position13>
       <Position14>
         <Filename Value="engine.mail.pas"/>
-        <Caret Line="279" Column="4" TopLine="263"/>
+        <Caret Line="363" TopLine="353"/>
       </Position14>
       <Position15>
-        <Filename Value="main.pas"/>
-        <Caret Line="94" TopLine="79"/>
+        <Filename Value="engine.mail.pas"/>
+        <Caret Line="365" TopLine="353"/>
       </Position15>
       <Position16>
-        <Filename Value="main.pas"/>
-        <Caret Line="95" TopLine="79"/>
+        <Filename Value="engine.mail.pas"/>
+        <Caret Line="366" TopLine="353"/>
       </Position16>
       <Position17>
         <Filename Value="engine.mail.pas"/>
-        <Caret Line="280" TopLine="263"/>
+        <Caret Line="367" TopLine="353"/>
       </Position17>
       <Position18>
         <Filename Value="engine.mail.pas"/>
-        <Caret Line="281" TopLine="263"/>
+        <Caret Line="369" TopLine="353"/>
       </Position18>
       <Position19>
         <Filename Value="engine.mail.pas"/>
-        <Caret Line="276" TopLine="263"/>
+        <Caret Line="370" TopLine="353"/>
       </Position19>
       <Position20>
         <Filename Value="engine.mail.pas"/>
-        <Caret Line="277" TopLine="263"/>
+        <Caret Line="372" TopLine="353"/>
       </Position20>
       <Position21>
         <Filename Value="engine.mail.pas"/>
-        <Caret Line="280" TopLine="263"/>
+        <Caret Line="373" TopLine="353"/>
       </Position21>
       <Position22>
         <Filename Value="engine.mail.pas"/>
-        <Caret Line="281" TopLine="263"/>
+        <Caret Line="378" TopLine="353"/>
       </Position22>
       <Position23>
         <Filename Value="engine.mail.pas"/>
-        <Caret Line="283" TopLine="263"/>
+        <Caret Line="379" TopLine="353"/>
       </Position23>
       <Position24>
         <Filename Value="engine.mail.pas"/>
-        <Caret Line="284" TopLine="263"/>
+        <Caret Line="381" TopLine="356"/>
       </Position24>
       <Position25>
         <Filename Value="engine.mail.pas"/>
-        <Caret Line="285" TopLine="263"/>
+        <Caret Line="382" TopLine="357"/>
       </Position25>
       <Position26>
         <Filename Value="engine.mail.pas"/>
-        <Caret Line="286" TopLine="263"/>
+        <Caret Line="384" TopLine="359"/>
       </Position26>
       <Position27>
         <Filename Value="engine.mail.pas"/>
-        <Caret Line="288" TopLine="263"/>
+        <Caret Line="379" Column="39" TopLine="364"/>
       </Position27>
       <Position28>
-        <Filename Value="engine.mail.pas"/>
-        <Caret Line="289" TopLine="263"/>
+        <Filename Value="main.pas"/>
+        <Caret Line="95" TopLine="88"/>
       </Position28>
       <Position29>
-        <Filename Value="engine.mail.pas"/>
-        <Caret Line="280" Column="15" TopLine="263"/>
+        <Filename Value="main.pas"/>
+        <Caret Line="94" TopLine="87"/>
       </Position29>
+      <Position30>
+        <Filename Value="engine.mail.pas"/>
+        <Caret Line="380" Column="44" TopLine="377"/>
+      </Position30>
     </JumpHistory>
   </ProjectSession>
 </CONFIG>
