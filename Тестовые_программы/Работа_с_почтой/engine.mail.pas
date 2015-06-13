@@ -23,6 +23,8 @@
              - Так же идея в том, что грузим сначала заголовок письма, а дальше применяем к нему методы и
                   если заголовка не хватает, то догружаем тело...
 
+             - Имя пользователя EMAIL - целиком, например, user@host.ru
+
 
   11.06.2015 - А что если загружать заголовок\тело и с ним работать остальными методами класса?!
   05.2015 - RuCode
@@ -46,14 +48,23 @@ const
   ERROR_RECIEVE_BODY = 'Ошибка получения тела письма #%d';
 
 type
+  TMailState = ({:Не загружено пиьсмо}msNone, {:Загружен заголовок}msMailHead, {:Загружено целиком}msMailAll);
 
   { TCustomMail }
 
   TCustomMail = class(TObject)
   private
     fConnected: boolean;
+    {: Флаги что бы определять где делать logout, ибо приложение зависает}
+    fSMTPConnected, fIMAPConnected: boolean;
+    {:Индекс текущего письма}
+    fCurrentMail: integer;
+    {:Состояние письма}
+    fMailState: TMailState;
     {:Для хранения полного ответа на нашу команду}
     fFullResult: TStringList;
+    {:Для хранения полного письма или его заголовка}
+    fMailData: TStringList;
     {:Для чтения почты по протоколу IMAP}
     fIMAPClient: TIMAPSend;
     {:Для отправки почты по протоколу SMTP}
@@ -89,23 +100,23 @@ type
     {:Получить сообщение.}
     function GetMailBody(Index: integer): string;
     {:Получить текст сообщения в расшифрованном виде}
-    function GetMailText(Text: TStringList): string;
+    function GetMailText: string;
     {:Получить количество вложений}
-    function GetMailAttachCount(Text: TStringList): integer;
+    function GetMailAttachCount: integer;
     {:Получить имя файла вложения}
-    function GetMailAttachFileName(Text: TStringList; Index: integer): string;
+    function GetMailAttachFileName(Index: integer): string;
     {:Сохранить вложение в файо}
-    procedure SaveAttachToFile(AMailIndex, AttachIndex: integer; AFileName: string);
+    procedure SaveAttachToFile(AttachIndex: integer; AFileName: string);
     {:Узнать почту отправителя}
-    function GetEmailFrom(AMailIndex: integer): string;
+    function GetEmailFrom: string;
     {:Узнать почту получателя}
-    function GetEmailTo(AMailIndex: integer): string;
+    function GetEmailTo: string;
     {:Тема письма}
-    function GetEmailSubject(AMailIndex: integer): string;
+    function GetEmailSubject: string;
     {:Дата отправки письма}
-    function GetEmailDate(AMailIndex: integer): TDateTime;
+    function GetEmailDate: TDateTime;
     {:Отправка письма}
-    function SendMail(FromAddr, ToAddr, Subject, Text: string; FileName: string = ''): boolean;
+    function SendMail(ToAddr, Subject, Text: string; FileName: string = ''): boolean;
 
   public
     {:Имя пользователя для авторизации.}
@@ -140,21 +151,19 @@ implementation
 
 procedure TCustomMail.SetConnected(AValue: boolean);
 // Устанавливаем или сбрасываем соединение с сервером
-var
-  SMTPConnected, IMAPConnected: boolean;
 begin
   if fConnected = AValue then
     Exit;
   if AValue then
   begin
-    IMAPConnected := fIMAPClient.Login;
-    SMTPConnected := fSMTPClient.Login;
-    fConnected := IMAPConnected and SMTPConnected;
+    fIMAPConnected := fIMAPClient.Login;
+    fSMTPConnected := fSMTPClient.Login;
+    fConnected := fIMAPConnected and fSMTPConnected;
     if not fConnected then
     begin
-      if SMTPConnected then
+      if fSMTPConnected then
         fSMTPClient.Logout;
-      if IMAPConnected then
+      if fIMAPConnected then
         fIMAPClient.Logout;
     end;
   end
@@ -294,8 +303,6 @@ end;
 
 function TCustomMail.GetMailHeader(Index: integer): string;
   // Получить заголовок сообщения
-var
-  List: TStringList;
 begin
   Result := '';
   if Index < 1 then
@@ -303,23 +310,18 @@ begin
     MessageDlg(ERROR_CAPTION, ERROR_INDEX_MESSAGE, mtError, [mbOK], '');
     Exit;
   end;
-  try
-    List := TStringList.Create;
-    if not fIMAPClient.FetchHeader(Index, List) then
-    begin
-      MessageDlg(ERROR_CAPTION, Format(ERROR_RECIEVE_HEADER, [Index]), mtError, [mbOK], '');
-      Exit;
-    end;
-    Result := List.Text;
-  finally
-    List.Free;
+  if not fIMAPClient.FetchHeader(Index, fMailData) then
+  begin
+    MessageDlg(ERROR_CAPTION, Format(ERROR_RECIEVE_HEADER, [Index]), mtError, [mbOK], '');
+    Exit;
   end;
+  Result := fMailData.Text;
+  fCurrentMail := Index;
+  fMailState := msMailHead;
 end;
 
 function TCustomMail.GetMailBody(Index: integer): string;
   // Получить заголовок сообщения
-var
-  List: TStringList;
 begin
   Result := '';
   if Index < 1 then
@@ -327,51 +329,63 @@ begin
     MessageDlg(ERROR_CAPTION, ERROR_INDEX_MESSAGE, mtError, [mbOK], '');
     Exit;
   end;
-  try
-    List := TStringList.Create;
-    if not fIMAPClient.FetchMess(Index, List) then
-    begin
-      MessageDlg(ERROR_CAPTION, Format(ERROR_RECIEVE_BODY, [Index]), mtError, [mbOK], '');
-      Exit;
-    end;
-    Result := List.Text;
-  finally
-    List.Free;
+  if not fIMAPClient.FetchMess(Index, fMailData) then
+  begin
+    MessageDlg(ERROR_CAPTION, Format(ERROR_RECIEVE_BODY, [Index]), mtError, [mbOK], '');
+    Exit;
   end;
+  Result := fMailData.Text;
+  fCurrentMail := Index;
+  fMailState := msMailAll;
 end;
 
-function TCustomMail.GetMailText(Text: TStringList): string;
+function TCustomMail.GetMailText: string;
   // Получить текст письма из тела письма
 var
   MimeMess: TMimemess;
 begin
+  Result := '';
+  if fMailState = msNone then
+    Exit;
+  if fMailState = msMailHead then
+    GetMailBody(fCurrentMail);
   MimeMess := TMimemess.Create;
-  MimeMess.Lines.Assign(Text);
+  MimeMess.Lines.Assign(fMailData);
   MimeMess.DecodeMessage;
   Result := MimeMess.MessagePart.PartBody.Text;
   MimeMess.Free;
 end;
 
-function TCustomMail.GetMailAttachCount(Text: TStringList): integer;
+function TCustomMail.GetMailAttachCount: integer;
   // Получить количество вложений
 var
   MimeMess: TMimemess;
 begin
+  Result := -1;
+  if fMailState = msNone then
+    Exit;
+  if fMailState = msMailHead then
+    GetMailBody(fCurrentMail);
   MimeMess := TMimemess.Create;
-  MimeMess.Lines.Assign(Text);
+  MimeMess.Lines.Assign(fMailData);
   MimeMess.DecodeMessage;
   Result := MimeMess.MessagePart.GetSubPartCount;
   MimeMess.Free;
 end;
 
-function TCustomMail.GetMailAttachFileName(Text: TStringList; Index: integer): string;
+function TCustomMail.GetMailAttachFileName(Index: integer): string;
   // Получить имя файла вложения
 var
   MimeMess: TMimeMess;
   MimePart: TMimePart;
 begin
+  Result := '';
+  if fMailState = msNone then
+    Exit;
+  if fMailState = msMailHead then
+    GetMailBody(fCurrentMail);
   MimeMess := TMimemess.Create;
-  MimeMess.Lines.Assign(Text);
+  MimeMess.Lines.Assign(fMailData);
   MimeMess.DecodeMessage;
   MimePart := MimeMess.MessagePart.GetSubPart(Index);
   MimePart.DecodePart;
@@ -379,7 +393,7 @@ begin
   MimeMess.Free;
 end;
 
-procedure TCustomMail.SaveAttachToFile(AMailIndex, AttachIndex: integer; AFileName: string);
+procedure TCustomMail.SaveAttachToFile(AttachIndex: integer; AFileName: string);
 // Cохраняет вложение в файл
 
   procedure SaveToFile(szData, szPath: string);
@@ -401,11 +415,15 @@ var
   Stream: TStringStream;
   MailMessage: TMimeMess;
 begin
+  if fMailState = msNone then
+    Exit;
+  if fMailState = msMailHead then
+    GetMailBody(fCurrentMail);
   MailMessage := TMimeMess.Create;
   CountAttach := -1;
   if not Connected then
     Exit;
-  MailMessage.Lines.Text := GetMailBody(AMailIndex);
+  MailMessage.Lines.Assign(fMailData);
   MailMessage.DecodeMessage;
   for i := 0 to MailMessage.MessagePart.GetSubPartCount - 1 do
   begin
@@ -426,55 +444,56 @@ begin
   end;
 end;
 
-function TCustomMail.GetEmailFrom(AMailIndex: integer): string;
+function TCustomMail.GetEmailFrom: string;
   // Узнать кем отправлено письмо
 var
   MailMessage: TMimeMess;
 begin
   MailMessage := TMimeMess.Create;
-  MailMessage.Lines.Text := GetMailHeader(AMailIndex);
+  MailMessage.Lines.Assign(fMailData);
   MailMessage.DecodeMessage;
   Result := MailMessage.Header.From;
   MailMessage.Free;
 end;
 
-function TCustomMail.GetEmailTo(AMailIndex: integer): string;
+function TCustomMail.GetEmailTo: string;
   // Узнать кем отправлено письмо
 var
   MailMessage: TMimeMess;
 begin
   MailMessage := TMimeMess.Create;
-  MailMessage.Lines.Text := GetMailHeader(AMailIndex);
+  MailMessage.Lines.Assign(fMailData);
   MailMessage.DecodeMessage;
   Result := MailMessage.Header.ToList[0];
   MailMessage.Free;
 end;
 
-function TCustomMail.GetEmailSubject(AMailIndex: integer): string;
+function TCustomMail.GetEmailSubject: string;
   // Узнать тему письма
 var
   MailMessage: TMimeMess;
 begin
   MailMessage := TMimeMess.Create;
-  MailMessage.Lines.Text := GetMailHeader(AMailIndex);
+  MailMessage.Lines.Assign(fMailData);
   MailMessage.DecodeMessage;
   Result := MailMessage.Header.Subject;
   MailMessage.Free;
 end;
 
-function TCustomMail.GetEmailDate(AMailIndex: integer): TDateTime;
+function TCustomMail.GetEmailDate: TDateTime;
   // Дата отправки письма
 var
   MailMessage: TMimeMess;
 begin
   MailMessage := TMimeMess.Create;
-  MailMessage.Lines.Text := GetMailHeader(AMailIndex);
+  MailMessage.Lines.Assign(fMailData);
   MailMessage.DecodeMessage;
   Result := MailMessage.Header.Date;
   MailMessage.Free;
 end;
 
-function TCustomMail.SendMail(FromAddr, ToAddr, Subject, Text: string; FileName: string = ''): boolean;
+function TCustomMail.SendMail(ToAddr, Subject, Text: string; FileName: string): boolean;
+
   // Отправка письма
 var
   MailMessage: TMimeMess;
@@ -487,7 +506,7 @@ begin
   try
     // Заголовок письма
     MailMessage.Header.Subject := Subject;// тема сообщения
-    MailMessage.Header.From := FromAddr; // имя и адрес отправителя
+    MailMessage.Header.From := fSMTPClient.UserName; // имя и адрес отправителя
     MailMessage.Header.ToList.Add(ToAddr); // имя и адрес получателя
     // Корневой элемент
     MIMEPart := MailMessage.AddPartMultipart('alternative', nil);
@@ -497,13 +516,15 @@ begin
       MailMessage.AddPartText(StringList, MIMEPart);
     end;
     // Вложение
+    MIMEPart := MailMessage.AddPartMultipart('attachment', nil);
     if FileName <> '' then
       MailMessage.AddPartBinaryFromFile(FileName, MIMEPart);
     // Кодируем и отправляем
     MailMessage.EncodeMessage;
-    fSMTPClient.MailFrom(FromAddr, Length(FromAddr));
-    fSMTPClient.MailTo(ToAddr);
-    fSMTPClient.MailData(MailMessage.Lines);
+    Result := True;
+    Result := Result and fSMTPClient.MailFrom(fSMTPClient.UserName, Length(fSMTPClient.UserName));
+    Result := Result and fSMTPClient.MailTo(ToAddr);
+    Result := Result and fSMTPClient.MailData(MailMessage.Lines);
   finally
     MailMessage.Free;
     StringList.Free;
@@ -527,6 +548,11 @@ begin
   SMTPHost := 'smtp.yandex.ru';
   SMTPPort := 465;
   // Инициализация
+  fSMTPConnected := False;
+  fIMAPConnected := False;
+  fCurrentMail := -1;
+  fMailState := msNone;
+  fMailData := TStringList.Create;
   fFullResult := TStringList.Create;
   fConnected := False;
   UserName := 'i.rcode';
@@ -536,10 +562,13 @@ end;
 destructor TCustomMail.Destroy;
   // Уничтожение обьекта
 begin
+  fMailData.Free;
   fFullResult.Free;
-  fSMTPClient.Logout;
+  if fSMTPConnected then
+    fSMTPClient.Logout;
   fSMTPClient.Free;
-  fIMAPClient.Logout;
+  if fIMAPConnected then
+    fIMAPClient.Logout;
   fIMAPClient.Free;
   inherited Destroy;
 end;

@@ -10,96 +10,176 @@ object MainForm: TMainForm
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   LCLVersion = '1.5'
-  object Memo: TMemo
+  object PageControl: TPageControl
     Left = 0
-    Height = 276
-    Top = 80
-    Width = 668
-    Align = alClient
-    ReadOnly = True
-    ScrollBars = ssVertical
-    TabOrder = 0
-  end
-  object Panel1: TPanel
-    Left = 0
-    Height = 80
+    Height = 356
     Top = 0
     Width = 668
-    Align = alTop
-    ClientHeight = 80
-    ClientWidth = 668
-    TabOrder = 1
-    object EditUserName: TLabeledEdit
-      Left = 8
-      Height = 27
-      Top = 40
-      Width = 200
-      EditLabel.AnchorSideLeft.Control = EditUserName
-      EditLabel.AnchorSideRight.Control = EditUserName
-      EditLabel.AnchorSideRight.Side = asrBottom
-      EditLabel.AnchorSideBottom.Control = EditUserName
-      EditLabel.Left = 8
-      EditLabel.Height = 17
-      EditLabel.Top = 20
-      EditLabel.Width = 200
-      EditLabel.Caption = 'Логин:'
-      EditLabel.ParentColor = False
-      TabOrder = 0
-      Text = 'i.rcode@yandex.ru'
+    ActivePage = TabSheet1
+    Align = alClient
+    TabIndex = 0
+    TabOrder = 0
+    object TabSheet1: TTabSheet
+      Caption = 'Настройки соединения'
+      ClientHeight = 321
+      ClientWidth = 662
+      object EditUserName: TLabeledEdit
+        Left = 32
+        Height = 27
+        Top = 64
+        Width = 208
+        EditLabel.AnchorSideLeft.Control = EditUserName
+        EditLabel.AnchorSideRight.Control = EditUserName
+        EditLabel.AnchorSideRight.Side = asrBottom
+        EditLabel.AnchorSideBottom.Control = EditUserName
+        EditLabel.Left = 32
+        EditLabel.Height = 17
+        EditLabel.Top = 44
+        EditLabel.Width = 208
+        EditLabel.Caption = 'Логин:'
+        EditLabel.ParentColor = False
+        TabOrder = 0
+        Text = 'i.rcode@yandex.ru'
+      end
+      object EditHost: TLabeledEdit
+        Left = 32
+        Height = 27
+        Top = 120
+        Width = 208
+        EditLabel.AnchorSideLeft.Control = EditHost
+        EditLabel.AnchorSideRight.Control = EditHost
+        EditLabel.AnchorSideRight.Side = asrBottom
+        EditLabel.AnchorSideBottom.Control = EditHost
+        EditLabel.Left = 32
+        EditLabel.Height = 17
+        EditLabel.Top = 100
+        EditLabel.Width = 208
+        EditLabel.Caption = 'Сервер входящей почты:'
+        EditLabel.ParentColor = False
+        TabOrder = 1
+        Text = 'imap.yandex.ru'
+      end
+      object EditUserPassword: TLabeledEdit
+        Left = 272
+        Height = 27
+        Top = 64
+        Width = 208
+        EditLabel.AnchorSideLeft.Control = EditUserPassword
+        EditLabel.AnchorSideRight.Control = EditUserPassword
+        EditLabel.AnchorSideRight.Side = asrBottom
+        EditLabel.AnchorSideBottom.Control = EditUserPassword
+        EditLabel.Left = 272
+        EditLabel.Height = 17
+        EditLabel.Top = 44
+        EditLabel.Width = 208
+        EditLabel.Caption = 'Пароль:'
+        EditLabel.ParentColor = False
+        TabOrder = 2
+        Text = 'LQexIX1'
+      end
+      object EditPortIn: TLabeledEdit
+        Left = 272
+        Height = 27
+        Top = 120
+        Width = 208
+        EditLabel.AnchorSideLeft.Control = EditPortIn
+        EditLabel.AnchorSideRight.Control = EditPortIn
+        EditLabel.AnchorSideRight.Side = asrBottom
+        EditLabel.AnchorSideBottom.Control = EditPortIn
+        EditLabel.Left = 272
+        EditLabel.Height = 17
+        EditLabel.Top = 100
+        EditLabel.Width = 208
+        EditLabel.Caption = 'Порт:'
+        EditLabel.ParentColor = False
+        TabOrder = 3
+        Text = '993'
+      end
+      object Label1: TLabel
+        Left = 10
+        Height = 23
+        Top = 10
+        Width = 134
+        Caption = 'Входящая почта:'
+        Font.Height = -16
+        ParentColor = False
+        ParentFont = False
+      end
+      object Label2: TLabel
+        Left = 10
+        Height = 23
+        Top = 168
+        Width = 144
+        Caption = 'Исходящая почта:'
+        Font.Height = -16
+        ParentColor = False
+        ParentFont = False
+      end
+      object Bevel1: TBevel
+        Left = 10
+        Height = 40
+        Top = 0
+        Width = 646
+        Shape = bsBottomLine
+      end
+      object Bevel2: TBevel
+        Left = 10
+        Height = 50
+        Top = 144
+        Width = 648
+        Shape = bsBottomLine
+      end
+      object EditPortOut: TLabeledEdit
+        Left = 272
+        Height = 27
+        Top = 224
+        Width = 208
+        EditLabel.AnchorSideLeft.Control = EditPortOut
+        EditLabel.AnchorSideRight.Control = EditPortOut
+        EditLabel.AnchorSideRight.Side = asrBottom
+        EditLabel.AnchorSideBottom.Control = EditPortOut
+        EditLabel.Left = 272
+        EditLabel.Height = 17
+        EditLabel.Top = 204
+        EditLabel.Width = 208
+        EditLabel.Caption = 'Порт:'
+        EditLabel.ParentColor = False
+        TabOrder = 4
+        Text = '465'
+      end
+      object EditHostOut: TLabeledEdit
+        Left = 32
+        Height = 27
+        Top = 224
+        Width = 208
+        EditLabel.AnchorSideLeft.Control = EditHostOut
+        EditLabel.AnchorSideRight.Control = EditHostOut
+        EditLabel.AnchorSideRight.Side = asrBottom
+        EditLabel.AnchorSideBottom.Control = EditHostOut
+        EditLabel.Left = 32
+        EditLabel.Height = 17
+        EditLabel.Top = 204
+        EditLabel.Width = 208
+        EditLabel.Caption = 'Сервер исходящей почты:'
+        EditLabel.ParentColor = False
+        TabOrder = 5
+        Text = 'smtp.yandex.ru'
+      end
     end
-    object EditHost: TLabeledEdit
-      Left = 216
-      Height = 27
-      Top = 40
-      Width = 208
-      EditLabel.AnchorSideLeft.Control = EditHost
-      EditLabel.AnchorSideRight.Control = EditHost
-      EditLabel.AnchorSideRight.Side = asrBottom
-      EditLabel.AnchorSideBottom.Control = EditHost
-      EditLabel.Left = 216
-      EditLabel.Height = 17
-      EditLabel.Top = 20
-      EditLabel.Width = 208
-      EditLabel.Caption = 'Сервер входящей почты:'
-      EditLabel.ParentColor = False
-      TabOrder = 1
-      Text = 'imap.yandex.ru'
-    end
-    object EditUserPassword: TLabeledEdit
-      Left = 432
-      Height = 27
-      Top = 40
-      Width = 160
-      EditLabel.AnchorSideLeft.Control = EditUserPassword
-      EditLabel.AnchorSideRight.Control = EditUserPassword
-      EditLabel.AnchorSideRight.Side = asrBottom
-      EditLabel.AnchorSideBottom.Control = EditUserPassword
-      EditLabel.Left = 432
-      EditLabel.Height = 17
-      EditLabel.Top = 20
-      EditLabel.Width = 160
-      EditLabel.Caption = 'Пароль:'
-      EditLabel.ParentColor = False
-      TabOrder = 2
-      Text = 'LQexIX1'
-    end
-    object EditPortIn: TLabeledEdit
-      Left = 600
-      Height = 27
-      Top = 40
-      Width = 64
-      EditLabel.AnchorSideLeft.Control = EditPortIn
-      EditLabel.AnchorSideRight.Control = EditPortIn
-      EditLabel.AnchorSideRight.Side = asrBottom
-      EditLabel.AnchorSideBottom.Control = EditPortIn
-      EditLabel.Left = 600
-      EditLabel.Height = 17
-      EditLabel.Top = 20
-      EditLabel.Width = 64
-      EditLabel.Caption = 'Порт:'
-      EditLabel.ParentColor = False
-      TabOrder = 3
-      Text = '993'
+    object TabSheet2: TTabSheet
+      Caption = 'Журнал'
+      ClientHeight = 321
+      ClientWidth = 662
+      object Memo: TMemo
+        Left = 0
+        Height = 321
+        Top = 0
+        Width = 662
+        Align = alClient
+        ReadOnly = True
+        ScrollBars = ssVertical
+        TabOrder = 0
+      end
     end
   end
   object MainMenu: TMainMenu
@@ -132,7 +212,7 @@ object MainForm: TMainForm
         OnClick = MenuItem7Click
       end
       object MenuItem8: TMenuItem
-        Caption = 'Раскодировать сообщение'
+        Caption = 'Раскодировать и прочитать сообщение'
         OnClick = MenuItem8Click
       end
       object MenuItem9: TMenuItem

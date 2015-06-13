@@ -6,17 +6,23 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, Menus,
-  ExtCtrls, StdCtrls, Engine.Mail;
+  ExtCtrls, StdCtrls, ComCtrls, Engine.Mail;
 
 type
 
   { TMainForm }
 
   TMainForm = class(TForm)
+    Bevel1: TBevel;
+    Bevel2: TBevel;
+    EditHostOut: TLabeledEdit;
+    EditPortOut: TLabeledEdit;
     EditUserName: TLabeledEdit;
     EditUserPassword: TLabeledEdit;
     EditHost: TLabeledEdit;
     EditPortIn: TLabeledEdit;
+    Label1: TLabel;
+    Label2: TLabel;
     MainMenu: TMainMenu;
     Memo: TMemo;
     MenuItem1: TMenuItem;
@@ -33,7 +39,9 @@ type
     MenuItem7: TMenuItem;
     MenuItem8: TMenuItem;
     MenuItem9: TMenuItem;
-    Panel1: TPanel;
+    PageControl: TPageControl;
+    TabSheet1: TTabSheet;
+    TabSheet2: TTabSheet;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure MenuItem10Click(Sender: TObject);
@@ -81,37 +89,33 @@ end;
 
 procedure TMainForm.MenuItem10Click(Sender: TObject);
 // Получить имя вложения
-var
-  StringList: TStringList;
 begin
   BeginNewFunc;
-  StringList := TStringList.Create;
-  StringList.Text := Mail.GetMailBody(StrToInt(InputBox('Ввод', 'Введите индекс письма:', '')));
-  Log := UTF8ToSys('Имя первого вложения: ') + Mail.GetMailAttachFileName(StringList, 1);
-  StringList.Free;
+  Log := UTF8ToSys('Имя первого вложения: ') + Mail.GetMailAttachFileName(1);
 end;
 
 procedure TMainForm.MenuItem12Click(Sender: TObject);
 // Сохранить вложение
 begin
   BeginNewFunc;
-  Mail.SaveAttachToFile(1, 1, ExtractFilePath(Application.ExeName) + 'attach.pdf');
+  Mail.SaveAttachToFile(1, ExtractFilePath(Application.ExeName) + 'attach.pdf');
   Log := 'Сохранено в attach.pdf';
 end;
 
 procedure TMainForm.MenuItem13Click(Sender: TObject);
 // Получить информацию о письме
 begin
-  Log := UTF8ToSys('От: ') + Mail.GetEmailFrom(1);
-  Log := UTF8ToSys('К: ') + Mail.GetEmailTo(1);
-  Log := UTF8ToSys('Тема: ') + Mail.GetEmailSubject(1);
+  Log := UTF8ToSys('От: ') + Mail.GetEmailFrom;
+  Log := UTF8ToSys('К: ') + Mail.GetEmailTo;
+  Log := UTF8ToSys('Тема: ') + Mail.GetEmailSubject;
 end;
 
 procedure TMainForm.MenuItem14Click(Sender: TObject);
 // Отправка письма
 begin
   BeginNewFunc;
-  Log := BoolToStr(Mail.SendMail(EditUserName.Text, 'antony@email.su', 'Тема', 'Текст', ''), 'Отправлено', 'Ошибка');
+  Log := BoolToStr(Mail.SendMail('antony@email.su', 'Тема', 'Текст', ExtractFilePath(Application.ExeName) + 'attach.pdf'),
+    'Отправлено', 'Ошибка');
   Log := mail.FullResult.Text;
   Log := mail.ResultString;
 end;
@@ -146,9 +150,13 @@ begin
   mail.Password := EditUserPassword.Text;
   mail.IMAPHost := EditHost.Text;
   mail.IMAPPort := StrToInt(EditPortIn.Text);
+  mail.SMTPHost := EditHostOut.Text;
+  mail.SMTPPort := StrToInt(EditPortOut.Text);
   mail.Connected := True;
   Log := BoolToStr(mail.Connected, 'Connected', 'Error');
   Log := mail.FullResult.Text;
+  if mail.Connected then
+    PageControl.ActivePageIndex:= 1;
 end;
 
 procedure TMainForm.MenuItem5Click(Sender: TObject);
@@ -175,26 +183,16 @@ end;
 
 procedure TMainForm.MenuItem8Click(Sender: TObject);
 // Получить текст письма
-var
-  StringList: TStringList;
 begin
   BeginNewFunc;
-  StringList := TStringList.Create;
-  StringList.Text := Mail.GetMailBody(StrToInt(InputBox('Ввод', 'Введите индекс письма:', '')));
-  Log := Mail.GetMailText(StringList);
-  StringList.Free;
+  Log := Mail.GetMailText;
 end;
 
 procedure TMainForm.MenuItem9Click(Sender: TObject);
 // Получить количество вложений
-var
-  StringList: TStringList;
 begin
   BeginNewFunc;
-  StringList := TStringList.Create;
-  StringList.Text := Mail.GetMailBody(StrToInt(InputBox('Ввод', 'Введите индекс письма:', '')));
-  Log := UTF8ToSys('Вложений: ') + IntToStr(Mail.GetMailAttachCount(StringList));
-  StringList.Free;
+  Log := UTF8ToSys('Вложений: ') + IntToStr(Mail.GetMailAttachCount);
 end;
 
 procedure TMainForm.SetLogLine(AValue: string);
