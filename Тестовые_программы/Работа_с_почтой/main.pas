@@ -112,6 +112,8 @@ procedure TMainForm.MenuItem14Click(Sender: TObject);
 begin
   BeginNewFunc;
   Log := BoolToStr(Mail.SendMail(EditUserName.Text, 'antony@email.su', 'Тема', 'Текст', ''), 'Отправлено', 'Ошибка');
+  Log := mail.FullResult.Text;
+  Log := mail.ResultString;
 end;
 
 procedure TMainForm.MenuItem2Click(Sender: TObject);

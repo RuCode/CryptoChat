@@ -1,6 +1,29 @@
 {/////////////////////////////////////////////////////////////////////////////////////////////////////////////
                             Модуль для управления почтой по средствам IMAP
  /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  13.06.2015 - К сожалению использовать IMAP для чтения и отправки писем это какой то геморой, добавляю
+                  поддержку SMTP. Настройки для яндекса:
+
+
+                      Входящая почта
+
+                              Протокол — IMAP;
+                              Имя сервера — imap.yandex.ru;
+                              Порт — 993;
+                              SSL — SSL/TLS;
+                              Аутентификация — Обычный пароль.
+
+                      Исходящая почта
+
+                              Имя сервера — smtp.yandex.ru;
+                              Порт — 465;
+                              SSL — SSL/TLS;
+                              Аутентификация — Обычный пароль.
+
+             - Так же идея в том, что грузим сначала заголовок письма, а дальше применяем к нему методы и
+                  если заголовка не хватает, то догружаем тело...
+
+
   11.06.2015 - А что если загружать заголовок\тело и с ним работать остальными методами класса?!
   05.2015 - RuCode
     * Нвчал разработку
@@ -14,7 +37,7 @@ interface
 
 uses
   Classes, Dialogs, SysUtils, ExtCtrls, Forms, Controls, imapsend, ssl_openssl, synautil, synacode, synaicnv,
-  mimemess, mimepart, synachar;
+  mimemess, mimepart, synachar, smtpsend;
 
 const
   ERROR_CAPTION = 'Ошибка';
@@ -29,20 +52,32 @@ type
   TCustomMail = class(TObject)
   private
     fConnected: boolean;
-    fUserName: string;
-    fPassword: string;
-    fIMAPHost: string;
-    fIMAPPort: integer;
+    {:Для хранения полного ответа на нашу команду}
+    fFullResult: TStringList;
+    {:Для чтения почты по протоколу IMAP}
     fIMAPClient: TIMAPSend;
-    {:UIID выбранной директории}
-    fCurrentFolderUIID: integer;
+    {:Для отправки почты по протоколу SMTP}
+    fSMTPClient: TSMTPSend;
+
     function GetCountOfMails: integer;
     function GetCountOfNewMails: integer;
     function GetFullResult: TStringList;
+    function GetIMAPHost: string;
+    function GetIMAPPort: integer;
+    function GetPassword: string;
     function GetResultString: string;
     function GetSelectedFolder: string;
+    function GetSMTPHost: string;
+    function GetSMTPPort: integer;
+    function GetUserName: string;
     procedure SetConnected(AValue: boolean);
+    procedure SetIMAPHost(AValue: string);
+    procedure SetIMAPPort(AValue: integer);
+    procedure SetPassword(AValue: string);
     procedure SetSelectedFolder(AFolderName: string);
+    procedure SetSMTPHost(AValue: string);
+    procedure SetSMTPPort(AValue: integer);
+    procedure SetUserName(AValue: string);
   public
     constructor Create; virtual;
     destructor Destroy; override;
@@ -70,17 +105,21 @@ type
     {:Дата отправки письма}
     function GetEmailDate(AMailIndex: integer): TDateTime;
     {:Отправка письма}
-    function SendMail(FromAddr, ToAddr, Subject, Text, FileName: string): boolean;
+    function SendMail(FromAddr, ToAddr, Subject, Text: string; FileName: string = ''): boolean;
 
   public
     {:Имя пользователя для авторизации.}
-    property UserName: string read fUserName write fUserName;
+    property UserName: string read GetUserName write SetUserName;
     {:Пароль для авторизации.}
-    property Password: string write fPassword;
+    property Password: string read GetPassword write SetPassword;
     {:Адрес сервера IMAP.}
-    property IMAPHost: string read fIMAPHost write fIMAPHost;
+    property IMAPHost: string read GetIMAPHost write SetIMAPHost;
     {:Порт на котором вертиться протокол IMAP.}
-    property IMAPPort: integer read fIMAPPort write fIMAPPort;
+    property IMAPPort: integer read GetIMAPPort write SetIMAPPort;
+    {:Адрес сервера SMTP.}
+    property SMTPHost: string read GetSMTPHost write SetSMTPHost;
+    {:Порт на котором вертиться протокол SMTP.}
+    property SMTPPort: integer read GetSMTPPort write SetSMTPPort;
     {:Управление соединением и получение состояния соединения.}
     property Connected: boolean read fConnected write SetConnected;
     {:Узнать или указать текущую директорию.}
@@ -101,37 +140,102 @@ implementation
 
 procedure TCustomMail.SetConnected(AValue: boolean);
 // Устанавливаем или сбрасываем соединение с сервером
+var
+  SMTPConnected, IMAPConnected: boolean;
 begin
   if fConnected = AValue then
     Exit;
   if AValue then
   begin
-    fIMAPClient.TargetHost := IMAPHost;
-    fIMAPClient.TargetPort := IntToStr(IMAPPort);
-    fIMAPClient.UserName := UserName;
-    fIMAPClient.Password := fPassword;
-    fConnected := fIMAPClient.Login;
+    IMAPConnected := fIMAPClient.Login;
+    SMTPConnected := fSMTPClient.Login;
+    fConnected := IMAPConnected and SMTPConnected;
+    if not fConnected then
+    begin
+      if SMTPConnected then
+        fSMTPClient.Logout;
+      if IMAPConnected then
+        fIMAPClient.Logout;
+    end;
   end
   else
   begin
     fIMAPClient.Logout;
+    fSMTPClient.Logout;
     fConnected := False;
   end;
+end;
+
+procedure TCustomMail.SetIMAPHost(AValue: string);
+// Установить имя сервера IMAP
+begin
+  fIMAPClient.TargetHost := AValue;
+end;
+
+procedure TCustomMail.SetIMAPPort(AValue: integer);
+// Установить порт подключения к серверу IMAP
+begin
+  fIMAPClient.TargetPort := IntToStr(AValue);
+end;
+
+procedure TCustomMail.SetPassword(AValue: string);
+// Устанавливаем пароль для авторизации
+begin
+  fIMAPClient.Password := AValue;
+  fSMTPClient.Password := AValue;
 end;
 
 procedure TCustomMail.SetSelectedFolder(AFolderName: string);
 // Выбираем новую директорию
 begin
-  if fIMAPClient.SelectFolder(AFolderName) then
-  begin
-    fCurrentFolderUIID := fIMAPClient.SelectedUIDvalidity;
-  end;
+  fIMAPClient.SelectFolder(AFolderName);
+end;
+
+procedure TCustomMail.SetSMTPHost(AValue: string);
+// Установить имя сервера SMTP
+begin
+  fSMTPClient.TargetHost := AValue;
+end;
+
+procedure TCustomMail.SetSMTPPort(AValue: integer);
+// Установить порт сервера SMTP
+begin
+  fSMTPClient.TargetPort := IntToStr(AValue);
+end;
+
+procedure TCustomMail.SetUserName(AValue: string);
+// Устанавливаем имя пользователя
+begin
+  fIMAPClient.UserName := AValue;
+  fSMTPClient.UserName := AValue;
 end;
 
 function TCustomMail.GetFullResult: TStringList;
   // Получим полный ответ от сервера
 begin
-  Result := fIMAPClient.FullResult;
+  fFullResult.Assign(fIMAPClient.FullResult);
+  fFullResult.Add(fSMTPClient.FullResult.Text);
+  Result := fFullResult;
+end;
+
+function TCustomMail.GetIMAPHost: string;
+  // Получить имя сервера IMAP
+begin
+  Result := fIMAPClient.TargetHost;
+end;
+
+function TCustomMail.GetIMAPPort: integer;
+  // Получить порт сервера IMAP
+begin
+  Result := StrToInt(fIMAPClient.TargetPort);
+end;
+
+function TCustomMail.GetPassword: string;
+  // Получить пароль
+begin
+  if fIMAPClient.Password <> fSMTPClient.Password then
+    raise Exception.Create('Фатальная ошибка: Пароль пользователя должен быть одинаковым и для входящей и для исходящей почты...');
+  Result := fIMAPClient.Password;
 end;
 
 function TCustomMail.GetCountOfNewMails: integer;
@@ -149,13 +253,33 @@ end;
 function TCustomMail.GetResultString: string;
   // Статус команды
 begin
-  Result := fIMAPClient.ResultString;
+  Result := fIMAPClient.ResultString + #13 + #10 + fSMTPClient.ResultString;
 end;
 
 function TCustomMail.GetSelectedFolder: string;
   // Определить текущею директорию
 begin
   Result := fIMAPClient.SelectedFolder;
+end;
+
+function TCustomMail.GetSMTPHost: string;
+  // Получить имя сервера SMTP
+begin
+  Result := fSMTPClient.TargetHost;
+end;
+
+function TCustomMail.GetSMTPPort: integer;
+  // Получить порт SMTP
+begin
+  Result := StrToInt(fSMTPClient.TargetPort);
+end;
+
+function TCustomMail.GetUserName: string;
+  // Получить имя пользователя
+begin
+  if fIMAPClient.UserName <> fSMTPClient.UserName then
+    raise Exception.Create('Фатальная ошибка: Имя пользователя должно быть одинаковым и для входящей и для исходящей почты...');
+  Result := fIMAPClient.UserName;
 end;
 
 procedure TCustomMail.GetFolderList(var ListFolders: TStringList);
@@ -350,14 +474,14 @@ begin
   MailMessage.Free;
 end;
 
-function TCustomMail.SendMail(FromAddr, ToAddr, Subject, Text, FileName: string): boolean;
+function TCustomMail.SendMail(FromAddr, ToAddr, Subject, Text: string; FileName: string = ''): boolean;
   // Отправка письма
 var
   MailMessage: TMimeMess;
   MIMEPart: TMimePart;
   StringList: TStringList;
 begin
-  Result:= False;
+  Result := False;
   MailMessage := TMimeMess.Create;
   StringList := TStringList.Create;
   try
@@ -373,10 +497,13 @@ begin
       MailMessage.AddPartText(StringList, MIMEPart);
     end;
     // Вложение
-
+    if FileName <> '' then
+      MailMessage.AddPartBinaryFromFile(FileName, MIMEPart);
     // Кодируем и отправляем
     MailMessage.EncodeMessage;
-    Result := fIMAPClient.AppendMess('Sent', MailMessage.Lines);
+    fSMTPClient.MailFrom(FromAddr, Length(FromAddr));
+    fSMTPClient.MailTo(ToAddr);
+    fSMTPClient.MailData(MailMessage.Lines);
   finally
     MailMessage.Free;
     StringList.Free;
@@ -387,20 +514,31 @@ constructor TCustomMail.Create;
   // Создание обьекта
 begin
   inherited Create;
+  // IMAP
   fIMAPClient := TIMAPSend.Create;
   fIMAPClient.AutoTLS := True;
   fIMAPClient.FullSSL := True;
+  IMAPHost := 'imap.yandex.ru';
+  IMAPPort := 993;
+  // SMTP
+  fSMTPClient := TSMTPSend.Create;
+  fSMTPClient.AutoTLS := True;
+  fSMTPClient.FullSSL := True;
+  SMTPHost := 'smtp.yandex.ru';
+  SMTPPort := 465;
+  // Инициализация
+  fFullResult := TStringList.Create;
   fConnected := False;
-  fUserName := 'i.rcode';
-  fPassword := 'LQexIX1';
-  fIMAPHost := 'imap.yandex.ru';
-  fIMAPPort := 993;
-  fCurrentFolderUIID := 0;
+  UserName := 'i.rcode';
+  Password := 'LQexIX1';
 end;
 
 destructor TCustomMail.Destroy;
   // Уничтожение обьекта
 begin
+  fFullResult.Free;
+  fSMTPClient.Logout;
+  fSMTPClient.Free;
   fIMAPClient.Logout;
   fIMAPClient.Free;
   inherited Destroy;
