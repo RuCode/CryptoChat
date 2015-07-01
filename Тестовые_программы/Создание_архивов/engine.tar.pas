@@ -1,3 +1,16 @@
+{
+  Задача, создание архива в памяти и преобразование в форму для отправки письма.
+  Скорее всего все операции будут делаться в памяти, так что операции будут ограничены потоками...
+
+  Функционал для создания письма:
+    - Создать поток архива
+    - Добавить в поток файл
+
+  Функционал для чтения письма:
+    - Открыть поток с ахривом
+    - Выделить файл из потока-архива в отдельный поток
+}
+
 unit Engine.Tar;
 
 {$mode objfpc}{$H+}
@@ -18,16 +31,35 @@ type
 
   TCustomTar = class
   private
+    {: Проекция архива в памяти}
+    fArchiveStream: TMemoryStream;
+    {: Для записи в архива}
     fTarWriter: TTarWriter;
+    {: Для чтение из архива}
     fTarReader: TTarArchive;
+    {: Для поиска в архиве}
     fTarRec: TTarDirRec;
-    fCurrentAction: TActionForTar;
   public
     constructor Create;
-    procedure OpenTar(FileName: string; Action: TActionForTar = aftRead);
-    procedure AddTextFile(FileName: string);
-    procedure AddBinaryFile(FileName: string);
-    procedure ExtractFile(TarFileName, FileName: string);
+    destructor Destroy; override;
+    {: Добавление нового файла из потока в поток-архив}
+    function AddFile(TarFileName: string; Stream: TStream): boolean; overload;
+    {: Добавление нового файла с диска в поток-архив}
+    function AddFile(TarFileName: string; FilePath: string): boolean; overload;
+    {: Извлечение файла из потока}
+    function ExtractFile(TarFileName: string; var Stream: TStream): boolean;
+    {: Извлечение файла из потока}
+    function ExtractFile(TarFileName: string; FilePath: string): boolean;
+
+    {: Сохранение архива в файл}
+    procedure StoreToFile(FilePath: string);
+    {: Сохранение архива в поток}
+    procedure StoreToStream(var Stream: TStream);
+    {: Загрузка архива в файл}
+    procedure LoadFromFile(FilePath: string);
+    {: Загрузка архива в поток}
+    procedure LoadFromStream(var Stream: TStream);
+
   end;
 
 implementation
@@ -36,77 +68,106 @@ implementation
 
 constructor TCustomTar.Create;
 begin
-  fCurrentAction := aftClosed;
+  fArchiveStream := TMemoryStream.Create;
 end;
 
-procedure TCustomTar.OpenTar(FileName: string; Action: TActionForTar);
+destructor TCustomTar.Destroy;
 begin
-  if Action = aftWrite then
-    fTarWriter := TTarWriter.Create(FileName)
-  else
-    aftRead:
-      fTarReader := TTarArchive.Create(FileName, fmOpenRead);
-  fCurrentAction := Action;
-
-{  var
-    TarWriter: TTarWriter;
-    TarReader: TTarArchive;
-    TarRec: TTarDirRec;
-    szBuf: String;
-  begin
-    // Write
-    WriteLn(#13+#10+'Create TAR');
-    Write('Input text: ');
-    ReadLn(szBuf);
-    TarWriter:= TTarWriter.Create('new.tar');
-    TarWriter.AddString(szBuf, 'main.txt', now);
-    TarWriter.Free;
-    WriteLn('File main.txt added to TAR');
-    // Read
-    WriteLn(#13+#10+'Read main.txt from TAR');
-    TarReader:= TTarArchive.Create('new.tar', fmOpenRead);
-    TarReader.ReadFile;
-    TarRec.Name:= 'main.txt';
-    TarReader.FindNext(TarRec);
-    WriteLn(TarReader.ReadFile);
-    TarReader.Free;
-    ReadLn;
-
- }
+  fArchiveStream.Free;
 end;
 
-procedure TCustomTar.AddTextFile(FileName: string);
-// Добавляем текстовый файл в архив
-var
-  StringList: TStringList;
+function TCustomTar.AddFile(TarFileName: string; Stream: TStream): boolean;
+  // Добавление файла в поток-архива
 begin
-  if fCurrentAction = aftClosed then
-    raise Exception.Create(ERRORTAR_NOT_OPEN_FILE);
-  StringList := TStringList.Create;
-  StringList.LoadFromFile(FileName);
-  fTarWriter.AddString(StringList.Text, ExtractFileName(FileName), now);
-  StringList.Free;
+  Result := True;
+  try
+    try
+      fTarWriter := TTarWriter.Create(fArchiveStream);
+      fTarWriter.AddStream(Stream, TarFileName, Now);
+    except
+      Result := False;
+    end;
+  finally
+    fTarWriter.Free;
+  end;
 end;
 
-procedure TCustomTar.AddBinaryFile(FileName: string);
-// Добавляет бинарный файл в архив
+function TCustomTar.AddFile(TarFileName: string; FilePath: string): boolean;
+  // Добавление файла в поток-архива
 begin
-  if fCurrentAction = aftClosed then
-    raise Exception.Create(ERRORTAR_NOT_OPEN_FILE);
-  fTarWriter.AddFile(FileName, ExtractFileName(FileName));
+  Result := True;
+  try
+    try
+      fTarWriter := TTarWriter.Create(fArchiveStream);
+      fTarWriter.AddFile(FilePath, TarFileName);
+    except
+      Result := False;
+    end;
+  finally
+    fTarWriter.Free;
+  end;
 end;
 
-procedure TCustomTar.ExtractFile(TarFileName, FileName: string);
-var
-  StringList: TStringList;
+function TCustomTar.ExtractFile(TarFileName: string; var Stream: TStream): boolean;
+  // Извлечение файла
 begin
-  StringList := TStringList.Create;
-  fTarReader.Reset;
-  TarRec.Name := TarFileName;
-  TarReader.FindNext(TarRec);
-  StringList.Add(TarReader.ReadFile);
-  StringList.SaveToFile(FileName);
-  StringList.Free;
+  Result := True;
+  try
+    try
+      fTarReader := TTarArchive.Create(fArchiveStream);
+      fTarReader.Reset;
+      fTarRec.Name := TarFileName;
+      fTarReader.FindNext(fTarRec);
+      fTarReader.ReadFile(Stream);
+    except
+      Result := False;
+    end;
+  finally
+    fTarReader.Free;
+  end;
+end;
+
+function TCustomTar.ExtractFile(TarFileName: string; FilePath: string): boolean;
+  // Извлечение файла
+begin
+  Result := True;
+  try
+    try
+      fTarReader := TTarArchive.Create(fArchiveStream);
+      fTarReader.Reset;
+      fTarRec.Name := TarFileName;
+      fTarReader.FindNext(fTarRec);
+      fTarReader.ReadFile(FilePath);
+    except
+      Result := False;
+    end;
+  finally
+    fTarReader.Free;
+  end;
+end;
+
+procedure TCustomTar.StoreToFile(FilePath: string);
+// Сохранение в файл
+begin
+  fArchiveStream.SaveToFile(FilePath);
+end;
+
+procedure TCustomTar.StoreToStream(var Stream: TStream);
+// Сохранение в поток
+begin
+  fArchiveStream.SaveToStream(Stream);
+end;
+
+procedure TCustomTar.LoadFromFile(FilePath: string);
+// Загрузка из файла
+begin
+  fArchiveStream.LoadFromFile(FilePath);
+end;
+
+procedure TCustomTar.LoadFromStream(var Stream: TStream);
+// Загрузка из потока
+begin
+  fArchiveStream.LoadFromStream(Stream);
 end;
 
 end.
