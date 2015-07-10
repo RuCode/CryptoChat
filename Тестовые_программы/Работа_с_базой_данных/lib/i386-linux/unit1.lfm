@@ -1,0 +1,64 @@
+object MainForm: TMainForm
+  Left = 290
+  Height = 377
+  Top = 83
+  Width = 615
+  Caption = 'MainForm'
+  ClientHeight = 350
+  ClientWidth = 615
+  Menu = MainMenu
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  LCLVersion = '1.5'
+  object Memo: TMemo
+    Left = 0
+    Height = 350
+    Top = 0
+    Width = 615
+    Align = alClient
+    ReadOnly = True
+    TabOrder = 0
+  end
+  object Sqlite3Dataset: TSqlite3Dataset
+    SaveOnClose = True
+    left = 123
+    top = 131
+  end
+  object MainMenu: TMainMenu
+    left = 392
+    top = 120
+    object MenuItem1: TMenuItem
+      Caption = 'Файл'
+      object MenuItem3: TMenuItem
+        Caption = 'Создать\Открыть БД'
+        OnClick = MenuItem3Click
+      end
+      object MenuItem5: TMenuItem
+        Caption = '-'
+      end
+      object MenuItem4: TMenuItem
+        Caption = 'Выход'
+        OnClick = MenuItem4Click
+      end
+    end
+    object MenuItem2: TMenuItem
+      Caption = 'New Item2'
+    end
+  end
+  object SQLite3Connection1: TSQLite3Connection
+    Connected = False
+    LoginPrompt = False
+    KeepConnection = False
+    Transaction = SQLTransaction1
+    Options = []
+    left = 296
+    top = 195
+  end
+  object SQLTransaction1: TSQLTransaction
+    Active = False
+    Database = SQLite3Connection1
+    Options = []
+    left = 246
+    top = 130
+  end
+end
