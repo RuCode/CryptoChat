@@ -1,0 +1,5 @@
+--DELETE FROM USERS;
+
+--INSERT INTO USERS (NickName, Email, PasswordHash) VALUES ('aa', 'aa#aa', 'hash');
+
+SELECT * FROM USERS;

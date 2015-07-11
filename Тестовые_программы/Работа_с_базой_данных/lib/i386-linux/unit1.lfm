@@ -19,11 +19,6 @@ object MainForm: TMainForm
     ReadOnly = True
     TabOrder = 0
   end
-  object Sqlite3Dataset: TSqlite3Dataset
-    SaveOnClose = True
-    left = 123
-    top = 131
-  end
   object MainMenu: TMainMenu
     left = 392
     top = 120
@@ -42,23 +37,20 @@ object MainForm: TMainForm
       end
     end
     object MenuItem2: TMenuItem
-      Caption = 'New Item2'
+      Caption = 'Пользователи'
+      object MenuItem6: TMenuItem
+        Caption = 'Создать нового пользователя'
+        OnClick = MenuItem6Click
+      end
+      object MenuItem7: TMenuItem
+        Caption = 'Установить пользователю аватарку'
+      end
+      object MenuItem8: TMenuItem
+        Caption = 'Получить аватарку пользователя'
+      end
+      object MenuItem9: TMenuItem
+        Caption = 'Получить информацию о пользователе'
+      end
     end
-  end
-  object SQLite3Connection1: TSQLite3Connection
-    Connected = False
-    LoginPrompt = False
-    KeepConnection = False
-    Transaction = SQLTransaction1
-    Options = []
-    left = 296
-    top = 195
-  end
-  object SQLTransaction1: TSQLTransaction
-    Active = False
-    Database = SQLite3Connection1
-    Options = []
-    left = 246
-    top = 130
   end
 end

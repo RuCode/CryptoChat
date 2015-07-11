@@ -5,8 +5,7 @@ unit Unit1;
 interface
 
 uses
-  Classes, SysUtils, Sqlite3DS, sqldb, sqlite3conn, FileUtil, Forms, Controls,
-  Graphics, Dialogs, StdCtrls, Menus, engine.databases;
+  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, Menus, engine.databases;
 
 type
 
@@ -20,13 +19,15 @@ type
     MenuItem3: TMenuItem;
     MenuItem4: TMenuItem;
     MenuItem5: TMenuItem;
-    SQLite3Connection1: TSQLite3Connection;
-    Sqlite3Dataset: TSqlite3Dataset;
-    SQLTransaction1: TSQLTransaction;
+    MenuItem6: TMenuItem;
+    MenuItem7: TMenuItem;
+    MenuItem8: TMenuItem;
+    MenuItem9: TMenuItem;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure MenuItem3Click(Sender: TObject);
     procedure MenuItem4Click(Sender: TObject);
+    procedure MenuItem6Click(Sender: TObject);
   private
     { private declarations }
   public
@@ -48,13 +49,20 @@ begin
   Close;
 end;
 
+procedure TMainForm.MenuItem6Click(Sender: TObject);
+// Создание нового пользователя
+begin
+  Memo.Lines.Add(BoolToStr(DB.AddUser('Test', 'pass', 'Test@Email.ru'), 'Новый пользователь создан', 'ошибка'));
+end;
+
 procedure TMainForm.MenuItem3Click(Sender: TObject);
+// Открытие и создание БД
 var
   DBPath: string;
 begin
+  Memo.Lines.Add('ПРОХОДИМ ТЕСТИРОВАНИЕ ОТКРЫТИЯ И СОЗДАНИЯ БД....');
   DBPath := ExtractFilePath(Application.ExeName) + DirectorySeparator + 'database2.sqlite3';
   Memo.Lines.Add(BoolToStr(DB.OpenDataBase(DBPath), 'Смог открыть', 'Не смог открыть'));
-  //  Memo.Lines.Add(BoolToStr(DB.ExecSQL('CREATE TABLE USERS (Code integer NOT NULL)'), 'Смог выполнить запрос', 'Не смог выполнить запрос'));
   DBPath := ExtractFilePath(Application.ExeName) + DirectorySeparator + 'database.sqlite3';
   Memo.Lines.Add(BoolToStr(DB.CreateDataBase(DBPath), 'Смог выполнить запрос', 'Не смог выполнить запрос'));
 end;
