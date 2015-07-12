@@ -3,3 +3,5 @@
 --INSERT INTO USERS (NickName, Email, PasswordHash) VALUES ('aa', 'aa#aa', 'hash');
 
 SELECT * FROM USERS;
+
+--SELECT AVATAR FROM USERS WHERE ID = 1;

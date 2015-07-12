@@ -7,7 +7,7 @@ uses
   cthreads,
   {$ENDIF}{$ENDIF}
   Interfaces, // this includes the LCL widgetset
-  Forms, lz_sqlite3, Unit1, Engine.DataBases
+  Forms, Unit1, Engine.DataBases, SQLite3, SQLite3Utils, SQLite3Wrap
   { you can add units after this };
 
 {$R *.res}

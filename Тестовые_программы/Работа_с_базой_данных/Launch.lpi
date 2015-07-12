@@ -27,18 +27,12 @@
         <FormatVersion Value="1"/>
       </local>
     </RunParams>
-    <RequiredPackages Count="3">
+    <RequiredPackages Count="1">
       <Item1>
-        <PackageName Value="lz_sqldb"/>
-      </Item1>
-      <Item2>
-        <PackageName Value="lz_sqlite3"/>
-      </Item2>
-      <Item3>
         <PackageName Value="LCL"/>
-      </Item3>
+      </Item1>
     </RequiredPackages>
-    <Units Count="3">
+    <Units Count="6">
       <Unit0>
         <Filename Value="Launch.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -56,6 +50,21 @@
         <IsPartOfProject Value="True"/>
         <UnitName Value="Engine.DataBases"/>
       </Unit2>
+      <Unit3>
+        <Filename Value="../../Компоненты_системы/SQLiteWrapper/SQLite3Wrap.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="SQLite3Wrap"/>
+      </Unit3>
+      <Unit4>
+        <Filename Value="../../Компоненты_системы/SQLiteWrapper/SQLite3.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="SQLite3"/>
+      </Unit4>
+      <Unit5>
+        <Filename Value="../../Компоненты_системы/SQLiteWrapper/SQLite3Utils.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="SQLite3Utils"/>
+      </Unit5>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
@@ -65,6 +74,7 @@
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>
+      <OtherUnitFiles Value="../../Компоненты_системы/SQLiteWrapper"/>
       <UnitOutputDirectory Value="lib/$(TargetCPU)-$(TargetOS)"/>
     </SearchPaths>
     <Linking>

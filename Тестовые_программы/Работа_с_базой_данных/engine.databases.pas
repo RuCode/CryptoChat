@@ -5,31 +5,7 @@ unit Engine.DataBases;
 interface
 
 uses
-  Classes, SysUtils, Sqlite3DS, sqldb, sqlite3conn, FileUtil, Dialogs, md5;
-
-const
-  // Названия столбцов таблиц
-  SQL_COL_ID_USER = 'ID_USER';
-  SQL_COL_ID_FRIEND = 'ID_FRIEND';
-  SQL_COL_AUTH = 'AUTH';
-  SQL_COL_UUID = 'UUID';
-  SQL_COL_NICK_NAME = 'NNAME';
-  SQL_COL_EMAIL = 'EMAIL';
-  SQL_COL_AVATAR = 'ADATA';
-  SQL_COL_RESP_DATE = 'RDATE';
-  SQL_COL_XID = 'XID';
-  SQL_COL_IS_MYMSG = 'ISMY';
-  SQL_COL_OPEN_KEY = 'OPEN';
-  SQL_COL_SECRET_KEY = 'SECRET';
-  SQL_COL_BF_KEY = 'BF';
-  SQL_COL_ZIP_DATA = 'ZDATA';
-  SQL_COL_HASH = 'HASH';
-  SQL_COL_MESSAGE = 'MESSAGE';
-
-  // Таблицы
-  SQL_TBL_USERS = 'USERS';
-  SQL_TBL_FRIENDS = 'FRIENDS';
-  SQL_TBL_MESSAGES = 'MESSAGES';
+  Classes, SysUtils, sqldb, sqlite3conn, FileUtil, Dialogs, md5, SQLite3Wrap;
 
 type
 
@@ -39,10 +15,7 @@ type
   private
     // Для основной работы
     CriticalSection: TRTLCriticalSection;
-    Sqlite3Dataset: TSqlite3Dataset;
-    // Для создания бд
-    SQLite3Connection: TSQLite3Connection;
-    SQLTransaction: TSQLTransaction;
+    SqliteDatabase: TSQLite3Database;
     {: Обновление структур основных таблиц в базе данных}
     procedure UpdateGeneralTableStructure;
   public
@@ -55,7 +28,13 @@ type
     {: Выполнить произвольный запрос}
     function ExecSQL(SQLText: string): boolean;
     {: Добавление нового пользователя}
-    function AddUser(NickName, Password, Email: string; AvatarFileName: string = ''): Boolean;
+    function AddUser(const NickName, Password, Email: string; const AvatarFileName: string = ''): boolean;
+    {: Изменение аватарки пользователя}
+    function SetUserAvatar(UserID: integer; const AvatarFileName: string = ''): boolean;
+    {: Сохранить аватарку пользоватля}
+    function SaveUserAvatarToStream(UserID: integer; Stream: TStream): boolean;
+    {: Получить информацию о пользователе}
+    function GetUserInfo(UserID: integer; out NickName, PasswordHash, Email: string): boolean;
   end;
 
 implementation
@@ -66,59 +45,40 @@ procedure TCustomDataBase.UpdateGeneralTableStructure;
 // Обновление структур основных таблиц в базе данных
 begin
   // Таблица с описанием пользователей программы
-  ExecSQL('CREATE TABLE IF NOT EXISTS USERS (''ID'' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, ''NickName'' TEXT, ''Email'' TEXT, ''PasswordHash'' TEXT, ''AVATAR'' BLOB);');
+  SqliteDatabase.Execute(
+    'CREATE TABLE IF NOT EXISTS USERS (''ID'' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, ''NickName'' TEXT, ''Email'' TEXT, ''PasswordHash'' TEXT, ''AVATAR'' BLOB);');
 
   // Таблица с описанием друзей
-  ExecSQL('CREATE TABLE IF NOT EXISTS FRIENDS (''USER'' INTEGER REFERENCES ID(USERS), ''ID'' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, ''NickName'' TEXT, ''Email'' TEXT, ''AVATAR'' BLOB);');
+  SqliteDatabase.Execute(
+    'CREATE TABLE IF NOT EXISTS FRIENDS (''USER'' INTEGER REFERENCES ID(USERS), ''ID'' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, ''NickName'' TEXT, ''Email'' TEXT, ''AVATAR'' BLOB);');
 
   // Таблица с сообщениями
-  ExecSQL('CREATE TABLE IF NOT EXISTS MESSAGES (''User'' INTEGER REFERENCES ID(USERS), ''Friend'' INTEGER REFERENCES ID(Friends), ''ID'' INTEGER, ''MessageDate'' DATETIME, '
+  SqliteDatabase.Execute(
+    'CREATE TABLE IF NOT EXISTS MESSAGES (''User'' INTEGER REFERENCES ID(USERS), ''Friend'' INTEGER REFERENCES ID(Friends), ''ID'' INTEGER, ''MessageDate'' DATETIME, '
     + '''Self'' BOOLEAN, ''OpenKey'' BLOB, ''PrivateKey'' BLOB, ''BlowFishKey'' BLOB, ''MessageTar'' BLOB);');
 end;
 
 constructor TCustomDataBase.Create;
 begin
   inherited Create;
-  Sqlite3Dataset := TSqlite3Dataset.Create(nil);
-  SQLite3Connection := TSQLite3Connection.Create(nil);
-  SQLTransaction := TSQLTransaction.Create(nil);
-  SQLite3Connection.Transaction := SQLTransaction;
-  SQLTransaction.DataBase := SQLite3Connection;
 end;
 
 destructor TCustomDataBase.Destroy;
 begin
-  SQLTransaction.Free;
-  SQLite3Connection.Free;
-  Sqlite3Dataset.Free;
   inherited Destroy;
 end;
 
 function TCustomDataBase.CreateDataBase(FileName: string): boolean;
   // Создание новой базы данных
 begin
+  EnterCriticalsection(CriticalSection);
   try
-    EnterCriticalsection(CriticalSection);
-    SQLite3Connection.Close;
-    try
-      SQLite3Connection.DatabaseName := FileName;
-      if not FileExists(SQLite3Connection.DatabaseName) then
-      begin
-        try
-          // Создаём пустую баз данных
-          SQLite3Connection.Open;
-          SQLTransaction.Active := True;
-          SQLite3Connection.ExecuteDirect('CREATE TABLE MAIN (Code integer NOT NULL);');
-          SQLTransaction.Commit;
-          SQLite3Connection.Close;
-          Result := OpenDataBase(FileName);
-        except
-          raise Exception.Create('Не могу создать новую базу данных...');
-        end;
-      end;
-    except
-      raise Exception.Create('Не могу проверить наличие базы данных...');
-    end;
+    if Assigned(SqliteDatabase) then
+      FreeAndNil(SqliteDatabase);
+    SqliteDatabase := TSQLite3Database.Create;
+    SqliteDatabase.Open(WideString(FileName));
+    UpdateGeneralTableStructure;
+    Result := FileExists(FileName);
   finally
     LeaveCriticalsection(CriticalSection);
   end;
@@ -130,11 +90,7 @@ begin
   EnterCriticalsection(CriticalSection);
   try
     try
-      Sqlite3Dataset.Close;
-      Sqlite3Dataset.FileName := DBPath;
-      Sqlite3Dataset.TableName := 'MAIN';
-      Sqlite3Dataset.Open;
-      Result := Sqlite3Dataset.ReturnCode = 101 {NOT A ERROR};
+      Result := CreateDataBase(DBPath);
       if Result then
         UpdateGeneralTableStructure;
     except
@@ -151,10 +107,8 @@ begin
   EnterCriticalsection(CriticalSection);
   try
     try
-      Sqlite3Dataset.Close;
-      Sqlite3Dataset.SQL := SQLText;
-      Sqlite3Dataset.ExecSQL;
-      Result := Sqlite3Dataset.ReturnCode = 101 {NOT A ERROR};
+      Result := True;
+      SqliteDatabase.Execute(WideString(SQLText));
     except
       Result := False;
     end;
@@ -163,33 +117,109 @@ begin
   end;
 end;
 
-function TCustomDataBase.AddUser(NickName, Password, Email: string;
-  AvatarFileName: string): Boolean;
-// Создание нового пользователя
+function TCustomDataBase.AddUser(const NickName, Password, Email: string; const AvatarFileName: string): boolean;
+  // Создание нового пользователя
+var
+  Stmt: TSQLite3Statement;
+  Stream: TMemoryStream;
 begin
   EnterCriticalsection(CriticalSection);
   try
+    Result := True;
     try
-      Sqlite3Dataset.Close;
       if AvatarFileName <> '' then
       begin
-        Sqlite3Dataset.SQL := Format('INERT INTO USERS (NickName, Email, PasswordHash, AVATAR) VALUES (%s, %s, %s, :Avatar);',
-          [NickName, Email, MD5Print(MD5String(Password))]);
-        //        FieldByName('Hash').bloAsString := MD5Print(MD5String(Password));
-        // Не ясно как добавить
+        Stmt := SqliteDatabase.Prepare('INSERT INTO USERS (NickName, Email, PasswordHash, AVATAR) VALUES (?, ?, ?, ?)');
+        Stream := TMemoryStream.Create;
+        Stream.LoadFromFile(AvatarFileName);
+        Stmt.BindText(1, WideString(NickName));
+        Stmt.BindText(2, WideString(EMail));
+        Stmt.BindText(3, WideString(MD5Print(MD5String(Password))));
+        Stmt.BindBlob(4, Stream.Memory, Stream.Size);
+        Stream.Free;
+        Stmt.Step;
+        Stmt.Free;
       end
       else
-        Sqlite3Dataset.SQL := Format('INSERT INTO USERS (NickName, Email, PasswordHash) VALUES (''%s'', ''%s'', ''%s'');',
-          [NickName, Email, MD5Print(MD5String(Password))]);
-
-      Sqlite3Dataset.ExecSQL;
-
-      Result := Sqlite3Dataset.ReturnCode = 101 {NOT A ERROR};
+      begin
+        SqliteDatabase.Execute(WideString(Format('INSERT INTO USERS (NickName, Email, PasswordHash) VALUES (''%s'', ''%s'', ''%s'');',
+          [NickName, Email, MD5Print(MD5String(Password))])));
+      end;
     except
       Result := False;
     end;
   finally
     LeaveCriticalsection(CriticalSection);
+  end;
+end;
+
+function TCustomDataBase.SetUserAvatar(UserID: integer; const AvatarFileName: string): boolean;
+  // Установка новой аватарки пользователю
+var
+  Stmt: TSQLite3Statement;
+  Stream: TMemoryStream;
+begin
+  EnterCriticalsection(CriticalSection);
+  try
+    Result := True;
+    try
+      Stmt := SqliteDatabase.Prepare('UPDATE USERS SET AVATAR = ? WHERE ID = ?');
+      Stream := TMemoryStream.Create;
+      Stream.LoadFromFile(AvatarFileName);
+      Stmt.BindBlob(1, Stream.Memory, Stream.Size);
+      Stmt.BindInt(2, UserID);
+      Stream.Free;
+      Stmt.Step;
+      Stmt.Free;
+    except
+      Result := False;
+    end;
+  finally
+    LeaveCriticalsection(CriticalSection);
+  end;
+end;
+
+function TCustomDataBase.SaveUserAvatarToStream(UserID: integer; Stream: TStream): boolean;
+  // Сохранение пользовательской аватарки в файл
+var
+  Stmt: TSQLite3Statement;
+  MemoryStream: TMemoryStream;
+  Size: integer;
+begin
+  Result := True;
+  Stmt := SqliteDatabase.Prepare('SELECT AVATAR FROM USERS WHERE ID = ' + WideString(IntToStr(UserID)));
+  Stmt.Step;
+  try
+    try
+        Size := Stmt.ColumnBytes(0);
+        MemoryStream := TMemoryStream.Create;
+        MemoryStream.SetSize(Size);
+        MemoryStream.Write(Stmt.ColumnBlob(0)^, Size);
+        MemoryStream.Position := 0;
+        MemoryStream.SaveToStream(Stream);
+        MemoryStream.Free;
+    except
+      Result := False;
+    end;
+  finally
+    Stmt.Free;
+  end;
+end;
+
+function TCustomDataBase.GetUserInfo(UserID: integer; out NickName, PasswordHash, Email: string): boolean;
+// Получить информацию о пользователе
+var
+  Stmt: TSQLite3Statement;
+begin
+  Result := True;
+  try
+    Stmt := SqliteDatabase.Prepare('SELECT NickName, EMail, PasswordHash FROM USERS WHERE ID = ' + WideString(IntToStr(UserID)));
+    Stmt.Step;
+    NickName := string(Stmt.ColumnText(0));
+    Email := string(Stmt.ColumnText(1));
+    PasswordHash := string(Stmt.ColumnText(2));
+  except
+    Result := False;
   end;
 end;
 

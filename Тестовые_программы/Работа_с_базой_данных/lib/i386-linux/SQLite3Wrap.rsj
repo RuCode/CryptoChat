@@ -1,0 +1,6 @@
+{"version":1,"strings":[
+{"hash":62442835,"name":"sqlite3wrap.serrormessage","value":"SQLite3 error: %s"},
+{"hash":240334254,"name":"sqlite3wrap.sdatabasenotconnected","value":"SQLite3 error: database is not connected."},
+{"hash":197924798,"name":"sqlite3wrap.stransactionalreadyopen","value":"Transaction is already opened."},
+{"hash":24907470,"name":"sqlite3wrap.snotransactionopen","value":"No transaction is open"}
+]}

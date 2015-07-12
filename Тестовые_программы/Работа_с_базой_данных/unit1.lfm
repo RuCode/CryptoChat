@@ -44,13 +44,24 @@ object MainForm: TMainForm
       end
       object MenuItem7: TMenuItem
         Caption = 'Установить пользователю аватарку'
+        OnClick = MenuItem7Click
       end
       object MenuItem8: TMenuItem
         Caption = 'Получить аватарку пользователя'
+        OnClick = MenuItem8Click
       end
       object MenuItem9: TMenuItem
         Caption = 'Получить информацию о пользователе'
+        OnClick = MenuItem9Click
       end
     end
+  end
+  object OpenDialog: TOpenDialog
+    left = 288
+    top = 166
+  end
+  object SaveDialog: TSaveDialog
+    left = 288
+    top = 20
   end
 end
