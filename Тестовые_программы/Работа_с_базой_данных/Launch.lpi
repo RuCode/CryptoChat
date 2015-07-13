@@ -63,7 +63,6 @@
       <Unit5>
         <Filename Value="../../Компоненты_системы/SQLiteWrapper/SQLite3Utils.pas"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="SQLite3Utils"/>
       </Unit5>
     </Units>
   </ProjectOptions>

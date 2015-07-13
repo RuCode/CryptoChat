@@ -5,7 +5,10 @@ unit Engine.DataBases;
 interface
 
 uses
-  Classes, SysUtils, sqldb, sqlite3conn, FileUtil, Dialogs, md5, SQLite3Wrap;
+  Classes, SysUtils, sqldb, sqlite3conn, FileUtil, Dialogs, md5, SQLite3, SQLite3Wrap;
+
+const
+  INVALID_VALUE = -1;
 
 type
 
@@ -27,14 +30,31 @@ type
     function OpenDataBase(DBPath: string): boolean;
     {: Выполнить произвольный запрос}
     function ExecSQL(SQLText: string): boolean;
+  public
     {: Добавление нового пользователя}
     function AddUser(const NickName, Password, Email: string; const AvatarFileName: string = ''): boolean;
-    {: Изменение аватарки пользователя}
+    {: Удаление пользователя}
+    function RemoveUser(UserID: integer): boolean;
+    {: Установить NickName пользователю}
+    function SetUserNickName(UserID: integer; const NickName: string): boolean;
+    {: Установить Email пользователю}
+    function SetUserEMail(UserID: integer; const EMail: string): boolean;
+    {: Установить аватарку пользователю из файла}
     function SetUserAvatar(UserID: integer; const AvatarFileName: string = ''): boolean;
-    {: Сохранить аватарку пользоватля}
+    {: Получить NickName пользователя}
+    function GetUserNickName(UserID: integer): string;
+    {: Получить Email пользователя}
+    function GetUserEMail(UserID: integer): string;
+    {: Получить PasswordHash пользователя}
+    function GetUserPasswordHash(UserID: integer): string;
+    {: Сохранить аватарку пользоватля в поток}
     function SaveUserAvatarToStream(UserID: integer; Stream: TStream): boolean;
     {: Получить информацию о пользователе}
     function GetUserInfo(UserID: integer; out NickName, PasswordHash, Email: string): boolean;
+    {: Получить количество пользователей в БД}
+    function GetUsersCount: integer;
+    {: Узнать наличие пользователя в БД}
+    function UserExist(AnyStrData: string): integer;
   end;
 
 implementation
@@ -45,16 +65,13 @@ procedure TCustomDataBase.UpdateGeneralTableStructure;
 // Обновление структур основных таблиц в базе данных
 begin
   // Таблица с описанием пользователей программы
-  SqliteDatabase.Execute(
-    'CREATE TABLE IF NOT EXISTS USERS (''ID'' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, ''NickName'' TEXT, ''Email'' TEXT, ''PasswordHash'' TEXT, ''AVATAR'' BLOB);');
+  ExecSQL('CREATE TABLE IF NOT EXISTS USERS (''ID'' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, ''NickName'' TEXT, ''Email'' TEXT, ''PasswordHash'' TEXT, ''AVATAR'' BLOB);');
 
   // Таблица с описанием друзей
-  SqliteDatabase.Execute(
-    'CREATE TABLE IF NOT EXISTS FRIENDS (''USER'' INTEGER REFERENCES ID(USERS), ''ID'' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, ''NickName'' TEXT, ''Email'' TEXT, ''AVATAR'' BLOB);');
+  ExecSQL('CREATE TABLE IF NOT EXISTS FRIENDS (''USER'' INTEGER REFERENCES ID(USERS), ''ID'' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, ''NickName'' TEXT, ''Email'' TEXT, ''AVATAR'' BLOB);');
 
   // Таблица с сообщениями
-  SqliteDatabase.Execute(
-    'CREATE TABLE IF NOT EXISTS MESSAGES (''User'' INTEGER REFERENCES ID(USERS), ''Friend'' INTEGER REFERENCES ID(Friends), ''ID'' INTEGER, ''MessageDate'' DATETIME, '
+  ExecSQL('CREATE TABLE IF NOT EXISTS MESSAGES (''User'' INTEGER REFERENCES ID(USERS), ''Friend'' INTEGER REFERENCES ID(Friends), ''ID'' INTEGER, ''MessageDate'' DATETIME, '
     + '''Self'' BOOLEAN, ''OpenKey'' BLOB, ''PrivateKey'' BLOB, ''BlowFishKey'' BLOB, ''MessageTar'' BLOB);');
 end;
 
@@ -153,6 +170,56 @@ begin
   end;
 end;
 
+function TCustomDataBase.RemoveUser(UserID: integer): boolean;
+  // Удаление пользователя
+begin
+  Result := ExecSQL(Format('DELETE FROM USERS WHERE ID = %d', [UserID]));
+end;
+
+function TCustomDataBase.SetUserNickName(UserID: integer; const NickName: string): boolean;
+  // Установить NickName пользователю
+var
+  Stmt: TSQLite3Statement;
+begin
+  EnterCriticalsection(CriticalSection);
+  try
+    Result := True;
+    try
+      Stmt := SqliteDatabase.Prepare('UPDATE USERS SET NickName = ? WHERE ID = ?');
+      Stmt.BindText(1, WideString(NickName));
+      Stmt.BindInt(2, UserID);
+      Stmt.Step;
+      Stmt.Free;
+    except
+      Result := False;
+    end;
+  finally
+    LeaveCriticalsection(CriticalSection);
+  end;
+end;
+
+function TCustomDataBase.SetUserEMail(UserID: integer; const EMail: string): boolean;
+  // Установить Email пользователю
+var
+  Stmt: TSQLite3Statement;
+begin
+  EnterCriticalsection(CriticalSection);
+  try
+    Result := True;
+    try
+      Stmt := SqliteDatabase.Prepare('UPDATE USERS SET EMail = ? WHERE ID = ?');
+      Stmt.BindText(1, WideString(EMail));
+      Stmt.BindInt(2, UserID);
+      Stmt.Step;
+      Stmt.Free;
+    except
+      Result := False;
+    end;
+  finally
+    LeaveCriticalsection(CriticalSection);
+  end;
+end;
+
 function TCustomDataBase.SetUserAvatar(UserID: integer; const AvatarFileName: string): boolean;
   // Установка новой аватарки пользователю
 var
@@ -179,6 +246,57 @@ begin
   end;
 end;
 
+function TCustomDataBase.GetUserNickName(UserID: integer): string;
+  // Получить NickName пользователя
+var
+  Stmt: TSQLite3Statement;
+begin
+  Result := '';
+  EnterCriticalsection(CriticalSection);
+  try
+    Stmt := SqliteDatabase.Prepare('SELECT NickName FROM USERS WHERE ID = ' + WideString(IntToStr(UserID)));
+    Stmt.Step;
+    Result := string(Stmt.ColumnText(0));
+  finally
+    Stmt.Free;
+    LeaveCriticalsection(CriticalSection);
+  end;
+end;
+
+function TCustomDataBase.GetUserEMail(UserID: integer): string;
+  // Получить Email пользователя
+var
+  Stmt: TSQLite3Statement;
+begin
+  Result := '';
+  EnterCriticalsection(CriticalSection);
+  try
+    Stmt := SqliteDatabase.Prepare('SELECT Email FROM USERS WHERE ID = ' + WideString(IntToStr(UserID)));
+    Stmt.Step;
+    Result := string(Stmt.ColumnText(0));
+  finally
+    Stmt.Free;
+    LeaveCriticalsection(CriticalSection);
+  end;
+end;
+
+function TCustomDataBase.GetUserPasswordHash(UserID: integer): string;
+  // Получить PasswordHash пользователя
+var
+  Stmt: TSQLite3Statement;
+begin
+  Result := '';
+  EnterCriticalsection(CriticalSection);
+  try
+    Stmt := SqliteDatabase.Prepare('SELECT PasswordHash FROM USERS WHERE ID = ' + WideString(IntToStr(UserID)));
+    Stmt.Step;
+    Result := string(Stmt.ColumnText(0));
+  finally
+    Stmt.Free;
+    LeaveCriticalsection(CriticalSection);
+  end;
+end;
+
 function TCustomDataBase.SaveUserAvatarToStream(UserID: integer; Stream: TStream): boolean;
   // Сохранение пользовательской аватарки в файл
 var
@@ -187,39 +305,88 @@ var
   Size: integer;
 begin
   Result := True;
-  Stmt := SqliteDatabase.Prepare('SELECT AVATAR FROM USERS WHERE ID = ' + WideString(IntToStr(UserID)));
-  Stmt.Step;
+  EnterCriticalsection(CriticalSection);
   try
+    Stmt := SqliteDatabase.Prepare('SELECT AVATAR FROM USERS WHERE ID = ' + WideString(IntToStr(UserID)));
     try
-        Size := Stmt.ColumnBytes(0);
-        MemoryStream := TMemoryStream.Create;
-        MemoryStream.SetSize(Size);
-        MemoryStream.Write(Stmt.ColumnBlob(0)^, Size);
-        MemoryStream.Position := 0;
-        MemoryStream.SaveToStream(Stream);
-        MemoryStream.Free;
+      Stmt.Step;
+      Size := Stmt.ColumnBytes(0);
+      MemoryStream := TMemoryStream.Create;
+      MemoryStream.SetSize(Size);
+      MemoryStream.Write(Stmt.ColumnBlob(0)^, Size);
+      MemoryStream.Position := 0;
+      MemoryStream.SaveToStream(Stream);
+      MemoryStream.Free;
     except
       Result := False;
     end;
   finally
     Stmt.Free;
+    LeaveCriticalsection(CriticalSection);
   end;
 end;
 
 function TCustomDataBase.GetUserInfo(UserID: integer; out NickName, PasswordHash, Email: string): boolean;
-// Получить информацию о пользователе
+  // Получить информацию о пользователе
 var
   Stmt: TSQLite3Statement;
 begin
   Result := True;
+  EnterCriticalsection(CriticalSection);
   try
-    Stmt := SqliteDatabase.Prepare('SELECT NickName, EMail, PasswordHash FROM USERS WHERE ID = ' + WideString(IntToStr(UserID)));
+    try
+      Stmt := SqliteDatabase.Prepare('SELECT NickName, EMail, PasswordHash FROM USERS WHERE ID = ' + WideString(IntToStr(UserID)));
+      Stmt.Step;
+      NickName := string(Stmt.ColumnText(0));
+      Email := string(Stmt.ColumnText(1));
+      PasswordHash := string(Stmt.ColumnText(2));
+    except
+      Result := False;
+    end;
+  finally
+    LeaveCriticalsection(CriticalSection);
+  end;
+end;
+
+function TCustomDataBase.GetUsersCount: integer;
+  // Получить количество пользователей
+var
+  Stmt: TSQLite3Statement;
+begin
+  Result := INVALID_VALUE;
+  EnterCriticalsection(CriticalSection);
+  try
+    Stmt := SqliteDatabase.Prepare('SELECT COUNT(ID) FROM USERS');
     Stmt.Step;
-    NickName := string(Stmt.ColumnText(0));
-    Email := string(Stmt.ColumnText(1));
-    PasswordHash := string(Stmt.ColumnText(2));
-  except
-    Result := False;
+    Result := Stmt.ColumnInt(0);
+  finally
+    LeaveCriticalsection(CriticalSection);
+  end;
+end;
+
+function TCustomDataBase.UserExist(AnyStrData: string): integer;
+  // Узнать наличие пользователя в БД
+var
+  Stmt: TSQLite3Statement;
+begin
+  Result := INVALID_VALUE;
+  EnterCriticalsection(CriticalSection);
+  try
+    Stmt := SqliteDatabase.Prepare('SELECT ID, NickName FROM USERS');
+    while Stmt.Step = SQLITE_ROW do
+      if Stmt.ColumnText(1) = WideString(AnyStrData) then
+        Exit(Stmt.ColumnInt(0));
+    Stmt := SqliteDatabase.Prepare('SELECT ID, Email FROM USERS');
+    while Stmt.Step = SQLITE_ROW do
+      if Stmt.ColumnText(1) = WideString(AnyStrData) then
+        Exit(Stmt.ColumnInt(0));
+    Stmt := SqliteDatabase.Prepare('SELECT ID, PasswordHash FROM USERS');
+    while Stmt.Step = SQLITE_ROW do
+      if Stmt.ColumnText(1) = WideString(AnyStrData) then
+        Exit(Stmt.ColumnInt(0));
+  finally
+    Stmt.Free;
+    LeaveCriticalsection(CriticalSection);
   end;
 end;
 

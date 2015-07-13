@@ -15,6 +15,11 @@ type
     MainMenu: TMainMenu;
     Memo: TMemo;
     MenuItem1: TMenuItem;
+    MenuItem10: TMenuItem;
+    MenuItem11: TMenuItem;
+    MenuItem12: TMenuItem;
+    MenuItem13: TMenuItem;
+    MenuItem14: TMenuItem;
     MenuItem2: TMenuItem;
     MenuItem3: TMenuItem;
     MenuItem4: TMenuItem;
@@ -27,6 +32,11 @@ type
     SaveDialog: TSaveDialog;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
+    procedure MemoChange(Sender: TObject);
+    procedure MenuItem10Click(Sender: TObject);
+    procedure MenuItem11Click(Sender: TObject);
+    procedure MenuItem13Click(Sender: TObject);
+    procedure MenuItem14Click(Sender: TObject);
     procedure MenuItem3Click(Sender: TObject);
     procedure MenuItem4Click(Sender: TObject);
     procedure MenuItem6Click(Sender: TObject);
@@ -84,6 +94,7 @@ begin
 end;
 
 procedure TMainForm.MenuItem9Click(Sender: TObject);
+// Получаем информацию о пользователе
 var
   EMail: string;
   PassHash: string;
@@ -116,6 +127,36 @@ end;
 procedure TMainForm.FormDestroy(Sender: TObject);
 begin
   DB.Free;
+end;
+
+procedure TMainForm.MemoChange(Sender: TObject);
+begin
+
+end;
+
+procedure TMainForm.MenuItem10Click(Sender: TObject);
+// Количество пользователей
+begin
+  Memo.Lines.Add('Пользователей в базе: ' + IntToStr(DB.GetUsersCount));
+end;
+
+procedure TMainForm.MenuItem11Click(Sender: TObject);
+begin
+  Memo.Lines.Add(BoolToStr(DB.RemoveUser(1), 'Удалён', 'Не удалён'));
+end;
+
+procedure TMainForm.MenuItem13Click(Sender: TObject);
+begin
+  Memo.Lines.Add(BoolToStr(DB.SetUserEMail(2, 'NewEmail@NewEmail.NewEmail') and DB.SetUserNickName(2, 'NewNickName'), 'Изменено', 'Не изменено'));
+
+  Memo.Lines.Add(DB.GetUserNickName(2));
+  Memo.Lines.Add(DB.GetUserEMail(2));
+  Memo.Lines.Add(DB.GetUserPasswordHash(2));
+end;
+
+procedure TMainForm.MenuItem14Click(Sender: TObject);
+begin
+  Memo.Lines.Add('ID: ' + IntToStr(db.UserExist('NewEmail@NewEmail.NewEmail')));
 end;
 
 end.
