@@ -55,6 +55,19 @@ type
     function GetUsersCount: integer;
     {: Узнать наличие пользователя в БД}
     function UserExist(AnyStrData: string): integer;
+  public
+    {: Добавить нового друга}
+    function AddFriend(UserID: integer; const NickName, Email: string; const AvatarFileName: string = ''): boolean;
+    {: Удалить друга}
+    function RemoveFriend(UserID, FriendID: integer): boolean;
+    {: Установить новое имя пользователю}
+    function SetFriendNickName(UserID, FriendID: integer; NickName: string): boolean;
+    {: Присвоить новую почту пользователю}
+    function SetFriendEmail(UserID, FriendID: integer; EMail: string): boolean;
+    {: Получить имя пользователя}
+    function GetFriendNickName(UserID, FriendID: integer): string;
+    {: Получить email пользователя}
+    function GetFriendEmail(UserID, FriendID: integer): string;
   end;
 
 implementation
@@ -384,6 +397,128 @@ begin
     while Stmt.Step = SQLITE_ROW do
       if Stmt.ColumnText(1) = WideString(AnyStrData) then
         Exit(Stmt.ColumnInt(0));
+  finally
+    Stmt.Free;
+    LeaveCriticalsection(CriticalSection);
+  end;
+end;
+
+function TCustomDataBase.AddFriend(UserID: integer; const NickName, Email: string; const AvatarFileName: string): boolean;
+  // Добавить нового друга
+var
+  Stmt: TSQLite3Statement;
+  Stream: TMemoryStream;
+begin
+  EnterCriticalsection(CriticalSection);
+  try
+    Result := True;
+    try
+      if AvatarFileName <> '' then
+      begin
+        Stmt := SqliteDatabase.Prepare('INSERT INTO FRIENDS (User, NickName, Email, AVATAR) VALUES (?, ?, ?, ?)');
+        Stream := TMemoryStream.Create;
+        Stream.LoadFromFile(AvatarFileName);
+        Stmt.BindInt(1, UserID);
+        Stmt.BindText(2, WideString(NickName));
+        Stmt.BindText(3, WideString(EMail));
+        Stmt.BindBlob(4, Stream.Memory, Stream.Size);
+        Stream.Free;
+        Stmt.Step;
+        Stmt.Free;
+      end
+      else
+      begin
+        SqliteDatabase.Execute(WideString(Format('INSERT INTO FRIENDS (User, NickName, Email) VALUES (''%d'', ''%s'', ''%s'');',
+          [UserID, NickName, Email])));
+      end;
+    except
+      Result := False;
+    end;
+  finally
+    LeaveCriticalsection(CriticalSection);
+  end;
+end;
+
+function TCustomDataBase.RemoveFriend(UserID, FriendID: integer): boolean;
+  // Удалить друга
+begin
+  Result := ExecSQL(Format('DELETE FROM FRIENDS WHERE USER = %d AND ID = %d', [UserID, FriendID]));
+end;
+
+function TCustomDataBase.SetFriendNickName(UserID, FriendID: integer; NickName: string): boolean;
+  // Установить новое имя пользователю
+var
+  Stmt: TSQLite3Statement;
+begin
+  EnterCriticalsection(CriticalSection);
+  try
+    Result := True;
+    try
+      Stmt := SqliteDatabase.Prepare('UPDATE FRIENDS SET NickName = ? WHERE USER = ? AND ID = ?');
+      Stmt.BindText(1, WideString(NickName));
+      Stmt.BindInt(2, UserID);
+      Stmt.BindInt(3, FriendID);
+      Stmt.Step;
+      Stmt.Free;
+    except
+      Result := False;
+    end;
+  finally
+    LeaveCriticalsection(CriticalSection);
+  end;
+end;
+
+function TCustomDataBase.SetFriendEmail(UserID, FriendID: integer; EMail: string): boolean;
+  // Присвоить новую почту пользователю
+var
+  Stmt: TSQLite3Statement;
+begin
+  EnterCriticalsection(CriticalSection);
+  try
+    Result := True;
+    try
+      Stmt := SqliteDatabase.Prepare('UPDATE FRIENDS SET EMail = ? WHERE USER = ? AND ID = ?');
+      Stmt.BindText(1, WideString(EMail));
+      Stmt.BindInt(2, UserID);
+      Stmt.BindInt(3, FriendID);
+      Stmt.Step;
+      Stmt.Free;
+    except
+      Result := False;
+    end;
+  finally
+    LeaveCriticalsection(CriticalSection);
+  end;
+end;
+
+function TCustomDataBase.GetFriendNickName(UserID, FriendID: integer): string;
+  // Получить имя пользователя
+var
+  Stmt: TSQLite3Statement;
+begin
+  Result := '';
+  EnterCriticalsection(CriticalSection);
+  try
+    Stmt := SqliteDatabase.Prepare(WideString(Format('SELECT NickName FROM FRIENDS WHERE USER = %d AND ID = %d', [UserID, FriendID])));
+    Stmt.Step;
+    Result := string(Stmt.ColumnText(0));
+  finally
+    Stmt.Free;
+    LeaveCriticalsection(CriticalSection);
+  end;
+end;
+
+function TCustomDataBase.GetFriendEmail(UserID, FriendID: integer): string;
+  // Получить email пользователя
+var
+  Stmt: TSQLite3Statement;
+begin
+  Result := '';
+  EnterCriticalsection(CriticalSection);
+  try
+    Stmt := SqliteDatabase.Prepare(WideString(Format('SELECT EMail FROM FRIENDS WHERE USER = %d AND ID = %d', [UserID, FriendID])));
+    Stmt.Step;
+    Result := string(Stmt.ColumnText(0));
   finally
     Stmt.Free;
     LeaveCriticalsection(CriticalSection);

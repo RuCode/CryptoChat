@@ -16,7 +16,6 @@ object MainForm: TMainForm
     Top = 0
     Width = 615
     Align = alClient
-    OnChange = MemoChange
     ReadOnly = True
     TabOrder = 0
   end
@@ -74,6 +73,31 @@ object MainForm: TMainForm
         Caption = 'Найти пользователя с емайлом NewEmail@NewEmail.NewEmail'
         OnClick = MenuItem14Click
       end
+    end
+    object MenuItem15: TMenuItem
+      Caption = 'Друзья'
+      object MenuItem17: TMenuItem
+        Caption = 'Добавить друзей'
+        OnClick = MenuItem17Click
+      end
+      object MenuItem18: TMenuItem
+        Caption = 'Удалить друга'
+        OnClick = MenuItem18Click
+      end
+      object MenuItem19: TMenuItem
+        Caption = '-'
+      end
+      object MenuItem20: TMenuItem
+        Caption = 'Получить информацию о друге'
+        OnClick = MenuItem20Click
+      end
+      object MenuItem21: TMenuItem
+        Caption = 'Установить новые данные другу'
+        OnClick = MenuItem21Click
+      end
+    end
+    object MenuItem16: TMenuItem
+      Caption = 'New Item16'
     end
   end
   object OpenDialog: TOpenDialog

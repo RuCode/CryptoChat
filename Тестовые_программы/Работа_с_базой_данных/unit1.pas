@@ -20,7 +20,14 @@ type
     MenuItem12: TMenuItem;
     MenuItem13: TMenuItem;
     MenuItem14: TMenuItem;
+    MenuItem15: TMenuItem;
+    MenuItem16: TMenuItem;
+    MenuItem17: TMenuItem;
+    MenuItem18: TMenuItem;
+    MenuItem19: TMenuItem;
     MenuItem2: TMenuItem;
+    MenuItem20: TMenuItem;
+    MenuItem21: TMenuItem;
     MenuItem3: TMenuItem;
     MenuItem4: TMenuItem;
     MenuItem5: TMenuItem;
@@ -32,11 +39,14 @@ type
     SaveDialog: TSaveDialog;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
-    procedure MemoChange(Sender: TObject);
     procedure MenuItem10Click(Sender: TObject);
     procedure MenuItem11Click(Sender: TObject);
     procedure MenuItem13Click(Sender: TObject);
     procedure MenuItem14Click(Sender: TObject);
+    procedure MenuItem17Click(Sender: TObject);
+    procedure MenuItem18Click(Sender: TObject);
+    procedure MenuItem20Click(Sender: TObject);
+    procedure MenuItem21Click(Sender: TObject);
     procedure MenuItem3Click(Sender: TObject);
     procedure MenuItem4Click(Sender: TObject);
     procedure MenuItem6Click(Sender: TObject);
@@ -129,11 +139,6 @@ begin
   DB.Free;
 end;
 
-procedure TMainForm.MemoChange(Sender: TObject);
-begin
-
-end;
-
 procedure TMainForm.MenuItem10Click(Sender: TObject);
 // Количество пользователей
 begin
@@ -141,11 +146,13 @@ begin
 end;
 
 procedure TMainForm.MenuItem11Click(Sender: TObject);
+// Удаляем друга
 begin
   Memo.Lines.Add(BoolToStr(DB.RemoveUser(1), 'Удалён', 'Не удалён'));
 end;
 
 procedure TMainForm.MenuItem13Click(Sender: TObject);
+// Изменяем данные пользователя
 begin
   Memo.Lines.Add(BoolToStr(DB.SetUserEMail(2, 'NewEmail@NewEmail.NewEmail') and DB.SetUserNickName(2, 'NewNickName'), 'Изменено', 'Не изменено'));
 
@@ -155,8 +162,37 @@ begin
 end;
 
 procedure TMainForm.MenuItem14Click(Sender: TObject);
+// Узнать наличие пользователя
 begin
-  Memo.Lines.Add('ID: ' + IntToStr(db.UserExist('NewEmail@NewEmail.NewEmail')));
+  Memo.Lines.Add('ID: ' + IntToStr(DB.UserExist('NewEmail@NewEmail.NewEmail')));
+end;
+
+procedure TMainForm.MenuItem17Click(Sender: TObject);
+// Добавление друга
+begin
+  Memo.Lines.Add(BoolToStr(DB.AddFriend(1, 'Friend', 'Friend@Friend.Friend'), 'Создан', 'Ошибка'));
+  if OpenDialog.Execute then
+    Memo.Lines.Add(BoolToStr(DB.AddFriend(1, 'Friend2', 'Friend2@Friend.Friend', OpenDialog.FileName), 'Создан', 'Ошибка'));
+end;
+
+procedure TMainForm.MenuItem18Click(Sender: TObject);
+// Удаление друга
+begin
+  Memo.Lines.Add(BoolToStr(DB.RemoveFriend(1, 2), 'Удален 2', 'Ошибка'));
+end;
+
+procedure TMainForm.MenuItem20Click(Sender: TObject);
+// Получить информацию о друге
+begin
+  Memo.Lines.Add(db.GetFriendEmail(1, 1));
+  Memo.Lines.Add(db.GetFriendNickName(1, 1));
+end;
+
+procedure TMainForm.MenuItem21Click(Sender: TObject);
+// Установить информацию о друге
+begin
+  Memo.Lines.Add(BoolToStr(db.SetFriendEmail(1, 1, 'test@friend.ru'), 'Установлен новый email', 'ошибка'));
+  Memo.Lines.Add(BoolToStr(db.SetFriendNickName(1, 1, 'nick@friend'), 'Установлен новое имя пользователя', 'ошибка'));
 end;
 
 end.
