@@ -28,6 +28,9 @@ type
     MenuItem2: TMenuItem;
     MenuItem20: TMenuItem;
     MenuItem21: TMenuItem;
+    MenuItem22: TMenuItem;
+    MenuItem23: TMenuItem;
+    MenuItem24: TMenuItem;
     MenuItem3: TMenuItem;
     MenuItem4: TMenuItem;
     MenuItem5: TMenuItem;
@@ -47,6 +50,9 @@ type
     procedure MenuItem18Click(Sender: TObject);
     procedure MenuItem20Click(Sender: TObject);
     procedure MenuItem21Click(Sender: TObject);
+    procedure MenuItem22Click(Sender: TObject);
+    procedure MenuItem23Click(Sender: TObject);
+    procedure MenuItem24Click(Sender: TObject);
     procedure MenuItem3Click(Sender: TObject);
     procedure MenuItem4Click(Sender: TObject);
     procedure MenuItem6Click(Sender: TObject);
@@ -184,15 +190,56 @@ end;
 procedure TMainForm.MenuItem20Click(Sender: TObject);
 // Получить информацию о друге
 begin
-  Memo.Lines.Add(db.GetFriendEmail(1, 1));
-  Memo.Lines.Add(db.GetFriendNickName(1, 1));
+  Memo.Lines.Add(DB.GetFriendEmail(1, 1));
+  Memo.Lines.Add(DB.GetFriendNickName(1, 1));
 end;
 
 procedure TMainForm.MenuItem21Click(Sender: TObject);
 // Установить информацию о друге
 begin
-  Memo.Lines.Add(BoolToStr(db.SetFriendEmail(1, 1, 'test@friend.ru'), 'Установлен новый email', 'ошибка'));
-  Memo.Lines.Add(BoolToStr(db.SetFriendNickName(1, 1, 'nick@friend'), 'Установлен новое имя пользователя', 'ошибка'));
+  Memo.Lines.Add(BoolToStr(DB.SetFriendEmail(1, 1, 'test@friend.ru'), 'Установлен новый email', 'ошибка'));
+  Memo.Lines.Add(BoolToStr(DB.SetFriendNickName(1, 1, 'nick@friend'), 'Установлен новое имя пользователя', 'ошибка'));
+end;
+
+procedure TMainForm.MenuItem22Click(Sender: TObject);
+// Добавить сообщения
+var
+  Message: TMemoryStream;
+  BlowFishKey: TMemoryStream;
+  PrivateKey: TMemoryStream;
+  OpenKey: TMemoryStream;
+begin
+  Message := TMemoryStream.Create;
+  BlowFishKey := TMemoryStream.Create;
+  PrivateKey := TMemoryStream.Create;
+  OpenKey := TMemoryStream.Create;
+  try
+    DB.AddMessage(1, 1, TMsgDirection.mdoutgoingMsg, TMsgType.mtAddFriend, Message, OpenKey, PrivateKey, BlowFishKey);
+    DB.AddMessage(1, 1, TMsgDirection.mdoutgoingMsg, TMsgType.mtExchangeKey, Message, OpenKey, PrivateKey, BlowFishKey);
+    DB.AddMessage(1, 1, TMsgDirection.mdoutgoingMsg, TMsgType.mtMessage, Message, OpenKey, PrivateKey, BlowFishKey);
+    DB.AddMessage(1, 1, TMsgDirection.mdIncomingMsg, TMsgType.mtAddFriend, Message, OpenKey, PrivateKey, BlowFishKey);
+    DB.AddMessage(1, 1, TMsgDirection.mdIncomingMsg, TMsgType.mtExchangeKey, Message, OpenKey, PrivateKey, BlowFishKey);
+    DB.AddMessage(1, 1, TMsgDirection.mdIncomingMsg, TMsgType.mtMessage, Message, OpenKey, PrivateKey, BlowFishKey);
+
+  finally
+    Message.Free;
+    BlowFishKey.Free;
+    PrivateKey.Free;
+    OpenKey.Free;
+  end;
+  Memo.Lines.Add('Операция выполнена');
+end;
+
+procedure TMainForm.MenuItem23Click(Sender: TObject);
+// Удалить сообщения
+begin
+  Memo.Lines.Add(BoolToStr(DB.RemoveMessage(1, 1, 1), 'удалено', 'ошибка'));
+end;
+
+procedure TMainForm.MenuItem24Click(Sender: TObject);
+// Получить информацию о сообщении
+begin
+  Memo.Lines.Add(DateTimeToStr(DB.GetMessageDate(1, 1, 2)));
 end;
 
 end.

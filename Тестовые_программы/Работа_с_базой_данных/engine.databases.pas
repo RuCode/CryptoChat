@@ -1,3 +1,11 @@
+{
+    Этот файл является частью библиотеки CryptEngine\CryptoChat
+    Copyright (c) 2015-2015 by Anton Rodin
+
+    Работа с базой данных
+
+ **********************************************************************}
+
 unit Engine.DataBases;
 
 {$mode objfpc}{$H+}
@@ -11,6 +19,9 @@ const
   INVALID_VALUE = -1;
 
 type
+
+  TMsgDirection = (mdIncomingMsg = 1 {Входящее}, mdoutgoingMsg = 2{Исходящее});
+  TMsgType = (mtAddFriend{добавление в друзья}, mtExchangeKey{обмен ключами}, mtMessage {сообщение});
 
   { TCustomDataBase }
 
@@ -68,6 +79,24 @@ type
     function GetFriendNickName(UserID, FriendID: integer): string;
     {: Получить email пользователя}
     function GetFriendEmail(UserID, FriendID: integer): string;
+  public
+    {: Добавление нового сообщения}
+    function AddMessage(UserID, FriendID: integer; Direction: TMsgDirection; TypeMsg: TMsgType;
+      MessageStream, OpenKey, PrivateKey, BlowFishKey: TStream): boolean;
+    {: Удаление сообщения}
+    function RemoveMessage(UserID, FriendID, ID: integer): boolean;
+    {: Получить направление сообщения}
+    function GetMessageDirection(UserID, FriendID, ID: integer): TMsgDirection;
+    {: Получить тип сообщения}
+    function GetMessageType(UserID, FriendID, ID: integer): TMsgType;
+    {: Получить закодированные данные сообщения}
+    function GetMessageDate(UserID, FriendID, ID: integer): TDateTime;
+    {: Получить открытый ключ}
+    function GetMessageOpenKey(UserID, FriendID, ID: integer; Stream: TStream): boolean;
+    {: Получить закрытый ключ}
+    function GetMessagePrivateKey(UserID, FriendID, ID: integer; Stream: TStream): boolean;
+    {: Получить blowfish ключ}
+    function GetMessageBlowFishKey(UserID, FriendID, ID: integer; Stream: TStream): boolean;
   end;
 
 implementation
@@ -78,14 +107,28 @@ procedure TCustomDataBase.UpdateGeneralTableStructure;
 // Обновление структур основных таблиц в базе данных
 begin
   // Таблица с описанием пользователей программы
-  ExecSQL('CREATE TABLE IF NOT EXISTS USERS (''ID'' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, ''NickName'' TEXT, ''Email'' TEXT, ''PasswordHash'' TEXT, ''AVATAR'' BLOB);');
+  ExecSQL('CREATE TABLE IF NOT EXISTS USERS (ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, NickName TEXT, Email TEXT, ' +
+    'PasswordHash TEXT, AVATAR BLOB)');
 
   // Таблица с описанием друзей
-  ExecSQL('CREATE TABLE IF NOT EXISTS FRIENDS (''USER'' INTEGER REFERENCES ID(USERS), ''ID'' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, ''NickName'' TEXT, ''Email'' TEXT, ''AVATAR'' BLOB);');
+  ExecSQL('CREATE TABLE IF NOT EXISTS FRIENDS (USERID INTEGER REFERENCES ID(USERS), ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, ' +
+    'NickName TEXT, Email TEXT, AVATAR BLOB)');
 
   // Таблица с сообщениями
-  ExecSQL('CREATE TABLE IF NOT EXISTS MESSAGES (''User'' INTEGER REFERENCES ID(USERS), ''Friend'' INTEGER REFERENCES ID(Friends), ''ID'' INTEGER, ''MessageDate'' DATETIME, '
-    + '''Self'' BOOLEAN, ''OpenKey'' BLOB, ''PrivateKey'' BLOB, ''BlowFishKey'' BLOB, ''MessageTar'' BLOB);');
+  ///////////////////////////////////////
+  // 1. Пользователь
+  // 2. Друг
+  // 3. Направление сообщения (входящее, исходящее)
+  // 4. Тип (обмен ключами, сообщение, добавление в друзья)
+  // 5. Сообщение в зашифрованном виде
+  // 6. Дата сообщения
+  // 7. Открытый ключ RSA
+  // 8. Закрытый ключ RSA
+  // 9. Ключ BlowFish
+  ///////////////////////////////////////
+  ExecSQL('CREATE TABLE IF NOT EXISTS MESSAGES (USERID INTEGER REFERENCES ID(USERS), FRIENDID INTEGER REFERENCES ID(Friends), ' +
+    'ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, DIRECTION INTEGER, TYPE INTEGER, ENCMESSAGE BLOB, DATE DATETIME, ' +
+    'OPENKEY BLOB, PRIVATEKEY BLOB, BLOWFISHKEY BLOB)');
 end;
 
 constructor TCustomDataBase.Create;
@@ -415,7 +458,7 @@ begin
     try
       if AvatarFileName <> '' then
       begin
-        Stmt := SqliteDatabase.Prepare('INSERT INTO FRIENDS (User, NickName, Email, AVATAR) VALUES (?, ?, ?, ?)');
+        Stmt := SqliteDatabase.Prepare('INSERT INTO FRIENDS (UserID, NickName, Email, AVATAR) VALUES (?, ?, ?, ?)');
         Stream := TMemoryStream.Create;
         Stream.LoadFromFile(AvatarFileName);
         Stmt.BindInt(1, UserID);
@@ -428,7 +471,7 @@ begin
       end
       else
       begin
-        SqliteDatabase.Execute(WideString(Format('INSERT INTO FRIENDS (User, NickName, Email) VALUES (''%d'', ''%s'', ''%s'');',
+        SqliteDatabase.Execute(WideString(Format('INSERT INTO FRIENDS (UserID, NickName, Email) VALUES (''%d'', ''%s'', ''%s'');',
           [UserID, NickName, Email])));
       end;
     except
@@ -442,7 +485,7 @@ end;
 function TCustomDataBase.RemoveFriend(UserID, FriendID: integer): boolean;
   // Удалить друга
 begin
-  Result := ExecSQL(Format('DELETE FROM FRIENDS WHERE USER = %d AND ID = %d', [UserID, FriendID]));
+  Result := ExecSQL(Format('DELETE FROM FRIENDS WHERE USERID = %d AND ID = %d', [UserID, FriendID]));
 end;
 
 function TCustomDataBase.SetFriendNickName(UserID, FriendID: integer; NickName: string): boolean;
@@ -519,6 +562,200 @@ begin
     Stmt := SqliteDatabase.Prepare(WideString(Format('SELECT EMail FROM FRIENDS WHERE USER = %d AND ID = %d', [UserID, FriendID])));
     Stmt.Step;
     Result := string(Stmt.ColumnText(0));
+  finally
+    Stmt.Free;
+    LeaveCriticalsection(CriticalSection);
+  end;
+end;
+
+function TCustomDataBase.AddMessage(UserID, FriendID: integer; Direction: TMsgDirection; TypeMsg: TMsgType;
+  MessageStream, OpenKey, PrivateKey, BlowFishKey: TStream): boolean;
+  // Добавление нового сообщения
+var
+  Stmt: TSQLite3Statement;
+begin
+  EnterCriticalsection(CriticalSection);
+  try
+    Result := True;
+    try
+      Stmt := SqliteDatabase.Prepare(
+        'INSERT INTO MESSAGES (UserID, FriendID, Direction, Type, EncMessage, Date, OpenKey, PrivateKey, BlowFishKey) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)');
+      Stmt.BindInt(1, UserID);
+      Stmt.BindInt(2, FriendID);
+      case Direction of
+        mdIncomingMsg: Stmt.BindInt(3, 1);
+        mdoutgoingMsg: Stmt.BindInt(3, 2);
+      end;
+      case TypeMsg of
+        mtAddFriend: Stmt.BindInt(4, 1);
+        mtExchangeKey: Stmt.BindInt(4, 2);
+        mtMessage: Stmt.BindInt(4, 3);
+      end;
+      Stmt.BindBlob(5, MessageStream, MessageStream.Size);
+      Stmt.BindDouble(6, Now);
+      Stmt.BindBlob(7, OpenKey, OpenKey.Size);
+      Stmt.BindBlob(8, PrivateKey, PrivateKey.Size);
+      Stmt.BindBlob(9, BlowFishKey, BlowFishKey.Size);
+      Stmt.Step;
+      Stmt.Free;
+    except
+      Result := False;
+    end;
+  finally
+    LeaveCriticalsection(CriticalSection);
+  end;
+end;
+
+function TCustomDataBase.RemoveMessage(UserID, FriendID, ID: integer): boolean;
+  // Удаление сообщения
+begin
+  Result := ExecSQL(Format('DELETE FROM MESSAGES WHERE USERID = %d AND FRIENDID = %d AND ID = %d', [UserID, FriendID, ID]));
+end;
+
+function TCustomDataBase.GetMessageDirection(UserID, FriendID, ID: integer): TMsgDirection;
+  // Получить направление сообщения
+var
+  Stmt: TSQLite3Statement;
+begin
+  Result := mdoutgoingMsg;
+  EnterCriticalsection(CriticalSection);
+  try
+    Stmt := SqliteDatabase.Prepare(WideString(Format('SELECT Direction FROM MESSAGES WHERE USERID = %d AND FRIENDID = %d AND ID = %d',
+      [UserID, FriendID, ID])));
+    Stmt.Step;
+    if Stmt.ColumnInt(0) = 1 then
+      Result := mdIncomingMsg;
+  finally
+    Stmt.Free;
+    LeaveCriticalsection(CriticalSection);
+  end;
+end;
+
+function TCustomDataBase.GetMessageType(UserID, FriendID, ID: integer): TMsgType;
+  // Получить тип сообщения
+var
+  Stmt: TSQLite3Statement;
+begin
+  Result := mtMessage;
+  EnterCriticalsection(CriticalSection);
+  try
+    Stmt := SqliteDatabase.Prepare(WideString(Format('SELECT TYPE FROM MESSAGES WHERE USERID = %d AND FRIENDID = %d AND ID = %d',
+      [UserID, FriendID, ID])));
+    Stmt.Step;
+    case Stmt.ColumnInt(0) of
+      1: Result := mtAddFriend;
+      2: Result := mtExchangeKey;
+      else
+        Result := mtMessage;
+    end;
+  finally
+    Stmt.Free;
+    LeaveCriticalsection(CriticalSection);
+  end;
+end;
+
+function TCustomDataBase.GetMessageDate(UserID, FriendID, ID: integer): TDateTime;
+  // Получить закодированные данные сообщения
+var
+  Stmt: TSQLite3Statement;
+begin
+  Result := 0;
+  EnterCriticalsection(CriticalSection);
+  try
+    Stmt := SqliteDatabase.Prepare(WideString(Format('SELECT Date FROM MESSAGES WHERE USERID = %d AND FRIENDID = %d AND ID = %d',
+      [UserID, FriendID, ID])));
+    Stmt.Step;
+    Result := Stmt.ColumnDouble(0);
+  finally
+    Stmt.Free;
+    LeaveCriticalsection(CriticalSection);
+  end;
+end;
+
+function TCustomDataBase.GetMessageOpenKey(UserID, FriendID, ID: integer; Stream: TStream): boolean;
+  // Получить открытый ключ
+var
+  Stmt: TSQLite3Statement;
+  MemoryStream: TMemoryStream;
+  Size: integer;
+begin
+  Result := True;
+  EnterCriticalsection(CriticalSection);
+  try
+    Stmt := SqliteDatabase.Prepare(WideString(Format('SELECT ENCMESSAGE FROM MESSAGES WHERE USERID = %d AND FRIENDID = %d AND ID = %d',
+      [UserID, FriendID, ID])));
+    try
+      Stmt.Step;
+      Size := Stmt.ColumnBytes(0);
+      MemoryStream := TMemoryStream.Create;
+      MemoryStream.SetSize(Size);
+      MemoryStream.Write(Stmt.ColumnBlob(0)^, Size);
+      MemoryStream.Position := 0;
+      MemoryStream.SaveToStream(Stream);
+      MemoryStream.Free;
+    except
+      Result := False;
+    end;
+  finally
+    Stmt.Free;
+    LeaveCriticalsection(CriticalSection);
+  end;
+end;
+
+function TCustomDataBase.GetMessagePrivateKey(UserID, FriendID, ID: integer; Stream: TStream): boolean;
+  // Получить закрытый ключ
+var
+  Stmt: TSQLite3Statement;
+  MemoryStream: TMemoryStream;
+  Size: integer;
+begin
+  Result := True;
+  EnterCriticalsection(CriticalSection);
+  try
+    Stmt := SqliteDatabase.Prepare(WideString(Format('SELECT PrivateKey FROM MESSAGES WHERE USERID = %d AND FRIENDID = %d AND ID = %d',
+      [UserID, FriendID, ID])));
+    try
+      Stmt.Step;
+      Size := Stmt.ColumnBytes(0);
+      MemoryStream := TMemoryStream.Create;
+      MemoryStream.SetSize(Size);
+      MemoryStream.Write(Stmt.ColumnBlob(0)^, Size);
+      MemoryStream.Position := 0;
+      MemoryStream.SaveToStream(Stream);
+      MemoryStream.Free;
+    except
+      Result := False;
+    end;
+  finally
+    Stmt.Free;
+    LeaveCriticalsection(CriticalSection);
+  end;
+end;
+
+function TCustomDataBase.GetMessageBlowFishKey(UserID, FriendID, ID: integer; Stream: TStream): boolean;
+  // Получить blowfish ключ
+var
+  Stmt: TSQLite3Statement;
+  MemoryStream: TMemoryStream;
+  Size: integer;
+begin
+  Result := True;
+  EnterCriticalsection(CriticalSection);
+  try
+    Stmt := SqliteDatabase.Prepare(WideString(Format('SELECT BLOWFISHKEY FROM MESSAGES WHERE USERID = %d AND FRIENDID = %d AND ID = %d',
+      [UserID, FriendID, ID])));
+    try
+      Stmt.Step;
+      Size := Stmt.ColumnBytes(0);
+      MemoryStream := TMemoryStream.Create;
+      MemoryStream.SetSize(Size);
+      MemoryStream.Write(Stmt.ColumnBlob(0)^, Size);
+      MemoryStream.Position := 0;
+      MemoryStream.SaveToStream(Stream);
+      MemoryStream.Free;
+    except
+      Result := False;
+    end;
   finally
     Stmt.Free;
     LeaveCriticalsection(CriticalSection);

@@ -97,7 +97,19 @@ object MainForm: TMainForm
       end
     end
     object MenuItem16: TMenuItem
-      Caption = 'New Item16'
+      Caption = 'Сообщения'
+      object MenuItem22: TMenuItem
+        Caption = 'Создать сообщение'
+        OnClick = MenuItem22Click
+      end
+      object MenuItem23: TMenuItem
+        Caption = 'Удалить сообщение'
+        OnClick = MenuItem23Click
+      end
+      object MenuItem24: TMenuItem
+        Caption = 'Получить инфу о сообщении'
+        OnClick = MenuItem24Click
+      end
     end
   end
   object OpenDialog: TOpenDialog
