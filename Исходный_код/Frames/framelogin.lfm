@@ -1,6 +1,7 @@
 object FrameLogin: TFrameLogin
   Left = 0
   Height = 240
+  Hint = 'Вход в систему'
   Top = 0
   Width = 320
   ClientHeight = 240

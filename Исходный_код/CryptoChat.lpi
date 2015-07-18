@@ -32,16 +32,16 @@
         <PackageName Value="LCL"/>
       </Item1>
     </RequiredPackages>
-    <Units Count="3">
+    <Units Count="5">
       <Unit0>
         <Filename Value="CryptoChat.lpr"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="CryptoChat"/>
       </Unit0>
       <Unit1>
         <Filename Value="main.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="MainForm"/>
+        <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="Main"/>
       </Unit1>
@@ -49,9 +49,26 @@
         <Filename Value="Frames/framelogin.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="FrameLogin"/>
+        <HasResources Value="True"/>
         <ResourceBaseClass Value="Frame"/>
         <UnitName Value="FrameLogin"/>
       </Unit2>
+      <Unit3>
+        <Filename Value="Frames/frameofferregisteruser.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="FrameOfferRegisterUser"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Frame"/>
+        <UnitName Value="FrameOfferRegisterUser"/>
+      </Unit3>
+      <Unit4>
+        <Filename Value="Frames/frameregisteruser.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="FrameRegisterUser"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Frame"/>
+        <UnitName Value="FrameRegisterUser"/>
+      </Unit4>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

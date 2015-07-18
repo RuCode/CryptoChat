@@ -2,8 +2,10 @@ object MainForm: TMainForm
   Left = 289
   Height = 337
   Top = 86
-  Width = 574
+  Width = 600
   Caption = 'MainForm'
+  Constraints.MinHeight = 300
+  Constraints.MinWidth = 600
   OnCreate = FormCreate
   LCLVersion = '1.5'
 end

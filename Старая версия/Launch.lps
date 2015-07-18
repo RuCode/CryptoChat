@@ -23,7 +23,7 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="Main"/>
-        <TopLine Value="115"/>
+        <TopLine Value="113"/>
         <CursorPos X="3" Y="117"/>
         <UsageCount Value="34"/>
         <Loaded Value="True"/>
@@ -66,9 +66,8 @@
         <Filename Value="SRC/DEPRECATED/mailcrypt.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="MailCrypt"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="2"/>
-        <TopLine Value="365"/>
+        <TopLine Value="358"/>
         <CursorPos X="31" Y="380"/>
         <UsageCount Value="32"/>
         <Loaded Value="True"/>
@@ -97,6 +96,7 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="Test"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="1"/>
         <TopLine Value="668"/>
         <CursorPos X="4" Y="670"/>
