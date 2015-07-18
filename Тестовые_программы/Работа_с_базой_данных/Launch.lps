@@ -3,7 +3,7 @@
   <ProjectSession>
     <Version Value="9"/>
     <BuildModes Active="Default"/>
-    <Units Count="22">
+    <Units Count="23">
       <Unit0>
         <Filename Value="Launch.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -80,7 +80,6 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="Test"/>
-        <IsVisibleTab Value="True"/>
         <TopLine Value="127"/>
         <CursorPos Y="147"/>
         <UsageCount Value="23"/>
@@ -90,6 +89,7 @@
       <Unit9>
         <Filename Value="../../Исходный_код/SRC/DEPRECATED/maincrypt.pas"/>
         <UnitName Value="MainCrypt"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="1"/>
         <TopLine Value="459"/>
         <CursorPos X="3" Y="465"/>
@@ -180,6 +180,12 @@
         <UsageCount Value="13"/>
         <Loaded Value="True"/>
       </Unit21>
+      <Unit22>
+        <Filename Value="../../Исходный_код/SRC/contactbox.pas"/>
+        <UnitName Value="ContactBox"/>
+        <EditorIndex Value="-1"/>
+        <UsageCount Value="10"/>
+      </Unit22>
     </Units>
     <JumpHistory Count="30" HistoryIndex="29">
       <Position1>

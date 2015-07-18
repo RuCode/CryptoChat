@@ -1,9 +1,0 @@
-Package: souz
-Version: 2014.28.06-1
-Maintainer: RuCode <i.rcode@yandex.ru>
-Architecture: i386
-Section: utils
-Description: Application for secure chat
- Данное приложение служит для обмена зашифрованной информацией между клиентом 
- , почтовым сервером и адресатом.
-Depends: openssl, tar

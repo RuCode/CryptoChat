@@ -1,8 +1,0 @@
-[Desktop Entry]
-Name=SouzChat
-Comment=SouzChat - Cryptographic chat
-Icon=souz
-Exec=/usr/bin/souz/Launch
-Terminal=false
-Type=Application
-Categories=UTILS;
