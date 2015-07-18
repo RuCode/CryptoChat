@@ -79,6 +79,8 @@ type
     function GetFriendNickName(UserID, FriendID: integer): string;
     {: Получить email пользователя}
     function GetFriendEmail(UserID, FriendID: integer): string;
+    {: Получить количество друзей пользователя}
+    function GetFriendsCount(UserID: integer): integer;
   public
     {: Добавление нового сообщения}
     function AddMessage(UserID, FriendID: integer; Direction: TMsgDirection; TypeMsg: TMsgType;
@@ -90,6 +92,8 @@ type
     {: Получить тип сообщения}
     function GetMessageType(UserID, FriendID, ID: integer): TMsgType;
     {: Получить закодированные данные сообщения}
+    function GetMessage(UserID, FriendID, ID: integer; Stream: TStream): boolean;
+    {: Получить дату сообщения}
     function GetMessageDate(UserID, FriendID, ID: integer): TDateTime;
     {: Получить открытый ключ}
     function GetMessageOpenKey(UserID, FriendID, ID: integer; Stream: TStream): boolean;
@@ -97,6 +101,8 @@ type
     function GetMessagePrivateKey(UserID, FriendID, ID: integer; Stream: TStream): boolean;
     {: Получить blowfish ключ}
     function GetMessageBlowFishKey(UserID, FriendID, ID: integer; Stream: TStream): boolean;
+    {: Получить количество сообщений}
+    function GetMessagesCount(UserID, FriendID: integer): integer;
   end;
 
 implementation
@@ -497,7 +503,7 @@ begin
   try
     Result := True;
     try
-      Stmt := SqliteDatabase.Prepare('UPDATE FRIENDS SET NickName = ? WHERE USER = ? AND ID = ?');
+      Stmt := SqliteDatabase.Prepare('UPDATE FRIENDS SET NickName = ? WHERE USERID = ? AND ID = ?');
       Stmt.BindText(1, WideString(NickName));
       Stmt.BindInt(2, UserID);
       Stmt.BindInt(3, FriendID);
@@ -520,7 +526,7 @@ begin
   try
     Result := True;
     try
-      Stmt := SqliteDatabase.Prepare('UPDATE FRIENDS SET EMail = ? WHERE USER = ? AND ID = ?');
+      Stmt := SqliteDatabase.Prepare('UPDATE FRIENDS SET EMail = ? WHERE USERID = ? AND ID = ?');
       Stmt.BindText(1, WideString(EMail));
       Stmt.BindInt(2, UserID);
       Stmt.BindInt(3, FriendID);
@@ -542,7 +548,7 @@ begin
   Result := '';
   EnterCriticalsection(CriticalSection);
   try
-    Stmt := SqliteDatabase.Prepare(WideString(Format('SELECT NickName FROM FRIENDS WHERE USER = %d AND ID = %d', [UserID, FriendID])));
+    Stmt := SqliteDatabase.Prepare(WideString(Format('SELECT NickName FROM FRIENDS WHERE USERID = %d AND ID = %d', [UserID, FriendID])));
     Stmt.Step;
     Result := string(Stmt.ColumnText(0));
   finally
@@ -559,11 +565,27 @@ begin
   Result := '';
   EnterCriticalsection(CriticalSection);
   try
-    Stmt := SqliteDatabase.Prepare(WideString(Format('SELECT EMail FROM FRIENDS WHERE USER = %d AND ID = %d', [UserID, FriendID])));
+    Stmt := SqliteDatabase.Prepare(WideString(Format('SELECT EMail FROM FRIENDS WHERE USERID = %d AND ID = %d', [UserID, FriendID])));
     Stmt.Step;
     Result := string(Stmt.ColumnText(0));
   finally
     Stmt.Free;
+    LeaveCriticalsection(CriticalSection);
+  end;
+end;
+
+function TCustomDataBase.GetFriendsCount(UserID: integer): integer;
+  // Получить количество друзей
+var
+  Stmt: TSQLite3Statement;
+begin
+  Result := INVALID_VALUE;
+  EnterCriticalsection(CriticalSection);
+  try
+    Stmt := SqliteDatabase.Prepare('SELECT COUNT(ID) FROM FRIENDS WHERE USERID = ' + IntToStr(UserID));
+    Stmt.Step;
+    Result := Stmt.ColumnInt(0);
+  finally
     LeaveCriticalsection(CriticalSection);
   end;
 end;
@@ -654,6 +676,36 @@ begin
   end;
 end;
 
+function TCustomDataBase.GetMessage(UserID, FriendID, ID: integer; Stream: TStream): boolean;
+// Получение сообщения
+var
+  Stmt: TSQLite3Statement;
+  MemoryStream: TMemoryStream;
+  Size: integer;
+begin
+  Result := True;
+  EnterCriticalsection(CriticalSection);
+  try
+    Stmt := SqliteDatabase.Prepare(WideString(Format('SELECT ENCMESSAGE FROM MESSAGES WHERE USERID = %d AND FRIENDID = %d AND ID = %d',
+      [UserID, FriendID, ID])));
+    try
+      Stmt.Step;
+      Size := Stmt.ColumnBytes(0);
+      MemoryStream := TMemoryStream.Create;
+      MemoryStream.SetSize(Size);
+      MemoryStream.Write(Stmt.ColumnBlob(0)^, Size);
+      MemoryStream.Position := 0;
+      MemoryStream.SaveToStream(Stream);
+      MemoryStream.Free;
+    except
+      Result := False;
+    end;
+  finally
+    Stmt.Free;
+    LeaveCriticalsection(CriticalSection);
+  end;
+end;
+
 function TCustomDataBase.GetMessageDate(UserID, FriendID, ID: integer): TDateTime;
   // Получить закодированные данные сообщения
 var
@@ -682,7 +734,7 @@ begin
   Result := True;
   EnterCriticalsection(CriticalSection);
   try
-    Stmt := SqliteDatabase.Prepare(WideString(Format('SELECT ENCMESSAGE FROM MESSAGES WHERE USERID = %d AND FRIENDID = %d AND ID = %d',
+    Stmt := SqliteDatabase.Prepare(WideString(Format('SELECT OPENKEY FROM MESSAGES WHERE USERID = %d AND FRIENDID = %d AND ID = %d',
       [UserID, FriendID, ID])));
     try
       Stmt.Step;
@@ -758,6 +810,24 @@ begin
     end;
   finally
     Stmt.Free;
+    LeaveCriticalsection(CriticalSection);
+  end;
+end;
+
+function TCustomDataBase.GetMessagesCount(UserID, FriendID: integer): integer;
+// Получаем количество сообщений
+var
+  Stmt: TSQLite3Statement;
+begin
+  Result := INVALID_VALUE;
+  EnterCriticalsection(CriticalSection);
+  try
+    Stmt := SqliteDatabase.Prepare('SELECT COUNT(ID) FROM MESSAGES WHERE USERID = ? AND FRIENDID = ?');
+    Stmt.BindInt(1, UserID);
+    Stmt.BindInt(2, FriendID);
+    Stmt.Step;
+    Result := Stmt.ColumnInt(0);
+  finally
     LeaveCriticalsection(CriticalSection);
   end;
 end;

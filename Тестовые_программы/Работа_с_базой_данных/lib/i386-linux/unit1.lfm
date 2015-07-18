@@ -17,98 +17,111 @@ object MainForm: TMainForm
     Width = 615
     Align = alClient
     ReadOnly = True
+    ScrollBars = ssVertical
     TabOrder = 0
   end
   object MainMenu: TMainMenu
-    left = 392
-    top = 120
-    object MenuItem1: TMenuItem
+    left = 288
+    top = 96
+    object MenuItemFile: TMenuItem
       Caption = 'Файл'
-      object MenuItem3: TMenuItem
-        Caption = 'Создать\Открыть БД'
-        OnClick = MenuItem3Click
+      object MenuItemCreateDB: TMenuItem
+        Caption = 'Создать БД'
+        OnClick = MenuItemCreateDBClick
+      end
+      object MenuItemOpenDB: TMenuItem
+        Caption = 'Открыть БД'
+        OnClick = MenuItemOpenDBClick
       end
       object MenuItem5: TMenuItem
         Caption = '-'
       end
-      object MenuItem4: TMenuItem
+      object MenuItemClose: TMenuItem
         Caption = 'Выход'
-        OnClick = MenuItem4Click
+        OnClick = MenuItemCloseClick
       end
     end
-    object MenuItem2: TMenuItem
+    object MenuItemUsers: TMenuItem
       Caption = 'Пользователи'
-      object MenuItem6: TMenuItem
+      object MenuItemNewUser: TMenuItem
         Caption = 'Создать нового пользователя'
-        OnClick = MenuItem6Click
+        OnClick = MenuItemNewUserClick
       end
-      object MenuItem7: TMenuItem
+      object MenuItemSetUserAvatar: TMenuItem
         Caption = 'Установить пользователю аватарку'
-        OnClick = MenuItem7Click
+        OnClick = MenuItemSetUserAvatarClick
       end
-      object MenuItem8: TMenuItem
+      object MenuItemGetUserAvatar: TMenuItem
         Caption = 'Сохранить аватарку пользователя'
-        OnClick = MenuItem8Click
+        OnClick = MenuItemGetUserAvatarClick
       end
-      object MenuItem9: TMenuItem
+      object MenuItemGetUsersInfo: TMenuItem
         Caption = 'Получить информацию о пользователе'
-        OnClick = MenuItem9Click
+        OnClick = MenuItemGetUsersInfoClick
       end
-      object MenuItem10: TMenuItem
+      object MenuItemGetUsersCount: TMenuItem
         Caption = 'Получить количество пользователей'
-        OnClick = MenuItem10Click
+        OnClick = MenuItemGetUsersCountClick
       end
-      object MenuItem11: TMenuItem
+      object MenuItemDeleteUser: TMenuItem
         Caption = 'Удалить пользователя №1'
-        OnClick = MenuItem11Click
+        OnClick = MenuItemDeleteUserClick
       end
       object MenuItem12: TMenuItem
         Caption = '-'
       end
-      object MenuItem13: TMenuItem
+      object MenuItemSetNewUserInfo: TMenuItem
         Caption = 'Изменить данные пользователя 2'
-        OnClick = MenuItem13Click
+        OnClick = MenuItemSetNewUserInfoClick
       end
-      object MenuItem14: TMenuItem
+      object MenuItemFindUser: TMenuItem
         Caption = 'Найти пользователя с емайлом NewEmail@NewEmail.NewEmail'
-        OnClick = MenuItem14Click
+        OnClick = MenuItemFindUserClick
       end
     end
-    object MenuItem15: TMenuItem
+    object MenuItemFriends: TMenuItem
       Caption = 'Друзья'
-      object MenuItem17: TMenuItem
+      object MenuItemNewFriend: TMenuItem
         Caption = 'Добавить друзей'
-        OnClick = MenuItem17Click
+        OnClick = MenuItemNewFriendClick
       end
-      object MenuItem18: TMenuItem
+      object MenuItemRemoveFriend: TMenuItem
         Caption = 'Удалить друга'
-        OnClick = MenuItem18Click
+        OnClick = MenuItemRemoveFriendClick
       end
       object MenuItem19: TMenuItem
         Caption = '-'
       end
-      object MenuItem20: TMenuItem
-        Caption = 'Получить информацию о друге'
-        OnClick = MenuItem20Click
+      object MenuItemGetFriendCount: TMenuItem
+        Caption = 'Получить количество друзей'
+        OnClick = MenuItemGetFriendCountClick
       end
-      object MenuItem21: TMenuItem
+      object MenuItemGetFriendInfo: TMenuItem
+        Caption = 'Получить информацию о друге'
+        OnClick = MenuItemGetFriendInfoClick
+      end
+      object MenuItemSetFriendInfo: TMenuItem
         Caption = 'Установить новые данные другу'
-        OnClick = MenuItem21Click
+        OnClick = MenuItemSetFriendInfoClick
       end
     end
-    object MenuItem16: TMenuItem
+    object MenuItemMsgs: TMenuItem
       Caption = 'Сообщения'
-      object MenuItem22: TMenuItem
+      object MenuItemNewMsg: TMenuItem
         Caption = 'Создать сообщение'
-        OnClick = MenuItem22Click
+        OnClick = MenuItemNewMsgClick
       end
-      object MenuItem23: TMenuItem
+      object MenuItemRemoveMsg: TMenuItem
         Caption = 'Удалить сообщение'
-        OnClick = MenuItem23Click
+        OnClick = MenuItemRemoveMsgClick
       end
-      object MenuItem24: TMenuItem
+      object MenuItemGetMsgInfo: TMenuItem
         Caption = 'Получить инфу о сообщении'
-        OnClick = MenuItem24Click
+        OnClick = MenuItemGetMsgInfoClick
+      end
+      object MenuItemGetCountMsgs: TMenuItem
+        Caption = 'Получить количество сообщений'
+        OnClick = MenuItemGetCountMsgsClick
       end
     end
   end
