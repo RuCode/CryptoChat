@@ -5,7 +5,7 @@ object FrameWithDialogs: TFrameWithDialogs
   Width = 473
   ClientHeight = 275
   ClientWidth = 473
-  OnClick = FrameClick
+  OnResize = FrameResize
   TabOrder = 0
   DesignLeft = 290
   DesignTop = 86
@@ -16,5 +16,30 @@ object FrameWithDialogs: TFrameWithDialogs
     Width = 75
     Caption = 'Button1'
     TabOrder = 0
+  end
+  object ListView: TListView
+    Left = 0
+    Height = 275
+    Top = 0
+    Width = 192
+    Align = alLeft
+    Columns = <    
+      item
+        Width = 100
+      end>
+    GridLines = True
+    Items.LazData = {
+      B700000005000000FFFFFFFFFFFFFFFFFFFFFFFF000000000F000000D0ADD0BB
+      D0B5D0BCD0B5D0BDD18230FFFFFFFFFFFFFFFFFFFFFFFF000000000F000000D0
+      ADD0BBD0B5D0BCD0B5D0BDD18231FFFFFFFFFFFFFFFFFFFFFFFF000000000F00
+      0000D0ADD0BBD0B5D0BCD0B5D0BDD18232FFFFFFFFFFFFFFFFFFFFFFFF000000
+      000F000000D0ADD0BBD0B5D0BCD0B5D0BDD18233FFFFFFFFFFFFFFFFFFFFFFFF
+      000000000F000000D0ADD0BBD0B5D0BCD0B5D0BDD18234
+    }
+    ReadOnly = True
+    RowSelect = True
+    SortType = stText
+    TabOrder = 1
+    ViewStyle = vsReport
   end
 end

@@ -5,7 +5,7 @@ unit FrameDialogs;
 interface
 
 uses
-  Classes, SysUtils, FileUtil, Forms, Controls, StdCtrls;
+  Classes, SysUtils, FileUtil, Forms, Controls, StdCtrls, ComCtrls;
 
 type
 
@@ -13,7 +13,8 @@ type
 
   TFrameWithDialogs = class(TFrame)
     Button1: TButton;
-    procedure FrameClick(Sender: TObject);
+    ListView: TListView;
+    procedure FrameResize(Sender: TObject);
   private
     { private declarations }
   public
@@ -26,9 +27,9 @@ implementation
 
 { TFrameWithDialogs }
 
-procedure TFrameWithDialogs.FrameClick(Sender: TObject);
+procedure TFrameWithDialogs.FrameResize(Sender: TObject);
 begin
-
+  ListView.Column[0].Width := ListView.Width - 14;
 end;
 
 end.
