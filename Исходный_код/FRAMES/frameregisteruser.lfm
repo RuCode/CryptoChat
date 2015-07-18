@@ -1,0 +1,134 @@
+object FrameRegisterUser: TFrameRegisterUser
+  Left = 0
+  Height = 348
+  Hint = 'Регистрация нового пользователя'
+  Top = 0
+  Width = 656
+  ClientHeight = 348
+  ClientWidth = 656
+  OnResize = FrameResize
+  TabOrder = 0
+  DesignLeft = 289
+  DesignTop = 86
+  object Panel: TPanel
+    Left = 112
+    Height = 184
+    Top = 64
+    Width = 420
+    BevelInner = bvRaised
+    BevelOuter = bvNone
+    ClientHeight = 184
+    ClientWidth = 420
+    TabOrder = 0
+    object Bevel: TBevel
+      Left = 16
+      Height = 138
+      Top = 24
+      Width = 168
+    end
+    object Image: TImage
+      Left = 16
+      Height = 138
+      Top = 24
+      Width = 168
+      Center = True
+      Proportional = True
+      Stretch = True
+    end
+    object EditName: TLabeledEdit
+      Left = 200
+      Height = 27
+      Top = 24
+      Width = 208
+      EditLabel.AnchorSideLeft.Control = EditName
+      EditLabel.AnchorSideRight.Control = EditName
+      EditLabel.AnchorSideRight.Side = asrBottom
+      EditLabel.AnchorSideBottom.Control = EditName
+      EditLabel.Left = 200
+      EditLabel.Height = 17
+      EditLabel.Top = 4
+      EditLabel.Width = 208
+      EditLabel.Caption = 'Имя'
+      EditLabel.ParentColor = False
+      TabOrder = 0
+    end
+    object EditMail: TLabeledEdit
+      Left = 200
+      Height = 27
+      Top = 80
+      Width = 208
+      EditLabel.AnchorSideLeft.Control = EditMail
+      EditLabel.AnchorSideRight.Control = EditMail
+      EditLabel.AnchorSideRight.Side = asrBottom
+      EditLabel.AnchorSideBottom.Control = EditMail
+      EditLabel.Left = 200
+      EditLabel.Height = 17
+      EditLabel.Top = 60
+      EditLabel.Width = 208
+      EditLabel.Caption = 'EMail'
+      EditLabel.ParentColor = False
+      TabOrder = 1
+    end
+    object EditPassword: TLabeledEdit
+      Left = 200
+      Height = 27
+      Top = 136
+      Width = 208
+      EchoMode = emPassword
+      EditLabel.AnchorSideLeft.Control = EditPassword
+      EditLabel.AnchorSideRight.Control = EditPassword
+      EditLabel.AnchorSideRight.Side = asrBottom
+      EditLabel.AnchorSideBottom.Control = EditPassword
+      EditLabel.Left = 200
+      EditLabel.Height = 17
+      EditLabel.Top = 116
+      EditLabel.Width = 208
+      EditLabel.Caption = 'Пароль'
+      EditLabel.ParentColor = False
+      PasswordChar = '*'
+      TabOrder = 2
+    end
+    object LabelAvatar: TLabel
+      Left = 16
+      Height = 17
+      Top = 4
+      Width = 55
+      Caption = 'Аватарка'
+      ParentColor = False
+    end
+  end
+  object ButtonCancel: TButton
+    Left = 472
+    Height = 25
+    Top = 312
+    Width = 168
+    Anchors = [akRight, akBottom]
+    Caption = 'Отмена'
+    OnClick = ButtonCancelClick
+    TabOrder = 1
+  end
+  object ButtonAvatar: TButton
+    Left = 8
+    Height = 25
+    Top = 312
+    Width = 168
+    Anchors = [akLeft, akBottom]
+    Caption = 'Загрузить изображение'
+    OnClick = ButtonAvatarClick
+    TabOrder = 2
+  end
+  object ButtonRegister: TButton
+    Left = 296
+    Height = 25
+    Top = 312
+    Width = 168
+    Anchors = [akRight, akBottom]
+    Caption = 'Зарегистрировать'
+    OnClick = ButtonRegisterClick
+    TabOrder = 3
+  end
+  object OpenPictureDialog: TOpenPictureDialog
+    left = 561
+    top = 207
+  end
+end

@@ -7,7 +7,8 @@ uses
   cthreads,
   {$ENDIF}{$ENDIF}
   Interfaces, // this includes the LCL widgetset
-  Forms, Main, FrameLogin, FrameRegisterUser, FrameOfferRegisterUser;
+  Forms, Main, SQLite3, SQLite3Utils, SQLite3Wrap, FrameLogin,
+  FrameRegisterUser, FrameOfferRegisterUser, engine.databases, FrameDialogs;
 
 {$R *.res}
 

@@ -5,7 +5,8 @@ unit Main;
 interface
 
 uses
-  Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, FrameLogin, FrameOfferRegisterUser, FrameRegisterUser;
+  Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, FrameLogin, FrameOfferRegisterUser,
+  FrameRegisterUser, FrameDialogs, engine.DataBases;
 
 type
 
@@ -20,16 +21,22 @@ type
     FrameLogin: TFrameLogin;
     FrameOfferRegister: TFrameOfferRegisterUser;
     FrameRegister: TFrameRegisterUser;
+    FrameDialogs: TFrameWithDialogs;
     {: Показать фрэйм предложения регистрации пользователя}
     procedure ShowOfferRegisterFrame;
     {: Показать фрэйм регистрации пользователя}
     procedure ShowRegisterFrame;
     {: Показать фрэйм входа пользователя}
     procedure ShowLoginFrame;
+    {: Показать фрэйм диалогов}
+    procedure ShowFrameDialogs;
     {: Скрыть все фрэймы}
     procedure HideAllFrames;
     {: Установить заголовок основного окна}
     procedure SetCaptionWithForm(Frame: TFrame);
+  public
+    {: Восстановление системы}
+    procedure LoadingSystem;
   end;
 
 var
@@ -42,9 +49,9 @@ implementation
 { TMainForm }
 
 procedure TMainForm.FormCreate(Sender: TObject);
+// Запуск приложения
 begin
-  //  ShowLoginFrame;
-  ShowOfferRegisterFrame;
+  LoadingSystem;
 end;
 
 procedure TMainForm.ShowOfferRegisterFrame;
@@ -89,6 +96,20 @@ begin
   SetCaptionWithForm(FrameLogin);
 end;
 
+procedure TMainForm.ShowFrameDialogs;
+// Показать фрэйм диалогов
+begin
+  HideAllFrames;
+  if not Assigned(FrameDialogs) then
+  begin
+    FrameDialogs := TFrameWithDialogs.Create(MainForm);
+    FrameDialogs.Align := alClient;
+  end;
+  FrameDialogs.Parent := MainForm;
+  FrameDialogs.Visible := True;
+  SetCaptionWithForm(FrameDialogs);
+end;
+
 procedure TMainForm.HideAllFrames;
 // Скрыть все фрэймы
 begin
@@ -98,12 +119,30 @@ begin
     FrameRegister.Visible := False;
   if Assigned(FrameLogin) then
     FrameLogin.Visible := False;
+  if Assigned(FrameDialogs) then
+    FrameDialogs.Visible := False;
 end;
 
 procedure TMainForm.SetCaptionWithForm(Frame: TFrame);
 // Установить заголовок основного окна
 begin
-  Caption:= 'CryptoChat: ' + Frame.Hint;
+  Caption := 'CryptoChat: ' + Frame.Hint;
+end;
+
+procedure TMainForm.LoadingSystem;
+// Восстановление всех настроек и параметров
+begin
+  // Если надо, генерируем новый путь к базе данных
+  // Если бд нет на диске, то создаём
+  if not FileExists(DataBase.FileName) then
+    DataBase.CreateDataBase(DataBase.FileName)
+  else
+    DataBase.OpenDataBase(DataBase.FileName);
+  // Узнаём количество пользователей, если их нет
+  if (DataBase.GetUsersCount = INVALID_VALUE) or (DataBase.GetUsersCount = 0) then
+    ShowOfferRegisterFrame // показываем предложение зарегистрироваться
+  else
+    ShowLoginFrame;// показываем предложение войти
 end;
 
 end.

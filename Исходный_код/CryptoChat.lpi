@@ -32,7 +32,7 @@
         <PackageName Value="LCL"/>
       </Item1>
     </RequiredPackages>
-    <Units Count="5">
+    <Units Count="10">
       <Unit0>
         <Filename Value="CryptoChat.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -46,7 +46,7 @@
         <UnitName Value="Main"/>
       </Unit1>
       <Unit2>
-        <Filename Value="Frames/framelogin.pas"/>
+        <Filename Value="FRAMES/framelogin.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="FrameLogin"/>
         <HasResources Value="True"/>
@@ -54,7 +54,7 @@
         <UnitName Value="FrameLogin"/>
       </Unit2>
       <Unit3>
-        <Filename Value="Frames/frameofferregisteruser.pas"/>
+        <Filename Value="FRAMES/frameofferregisteruser.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="FrameOfferRegisterUser"/>
         <HasResources Value="True"/>
@@ -62,13 +62,38 @@
         <UnitName Value="FrameOfferRegisterUser"/>
       </Unit3>
       <Unit4>
-        <Filename Value="Frames/frameregisteruser.pas"/>
+        <Filename Value="FRAMES/frameregisteruser.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="FrameRegisterUser"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Frame"/>
         <UnitName Value="FrameRegisterUser"/>
       </Unit4>
+      <Unit5>
+        <Filename Value="ENGINE/engine.databases.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="Engine.DataBases"/>
+      </Unit5>
+      <Unit6>
+        <Filename Value="SQLITEWRAPPER/SQLite3.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit6>
+      <Unit7>
+        <Filename Value="SQLITEWRAPPER/SQLite3Utils.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit7>
+      <Unit8>
+        <Filename Value="SQLITEWRAPPER/SQLite3Wrap.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit8>
+      <Unit9>
+        <Filename Value="FRAMES/framedialogs.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="FrameWithDialogs"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Frame"/>
+        <UnitName Value="FrameDialogs"/>
+      </Unit9>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
@@ -78,7 +103,7 @@
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>
-      <OtherUnitFiles Value="Frames"/>
+      <OtherUnitFiles Value="Frames;FRAMES;ENGINE;SQLITEWRAPPER"/>
       <UnitOutputDirectory Value="lib/$(TargetCPU)-$(TargetOS)"/>
     </SearchPaths>
     <Linking>
