@@ -105,6 +105,7 @@ begin
     FrameDialogs := TFrameWithDialogs.Create(MainForm);
     FrameDialogs.Align := alClient;
   end;
+  FrameDialogs.LoadUsers; // Загружаем пользователей
   FrameDialogs.Parent := MainForm;
   FrameDialogs.Visible := True;
   SetCaptionWithForm(FrameDialogs);

@@ -66,11 +66,11 @@
         <ComponentName Value="FrameRegisterUser"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Frame"/>
-        <UnitName Value="FrameRegisterUser"/>
       </Unit4>
       <Unit5>
         <Filename Value="ENGINE/engine.databases.pas"/>
         <IsPartOfProject Value="True"/>
+        <UnitName Value="Engine.DataBases"/>
       </Unit5>
       <Unit6>
         <Filename Value="SQLITEWRAPPER/SQLite3.pas"/>

@@ -1,25 +1,17 @@
 object FrameWithDialogs: TFrameWithDialogs
   Left = 0
-  Height = 275
+  Height = 288
+  Hint = 'Диалоги'
   Top = 0
-  Width = 473
-  ClientHeight = 275
-  ClientWidth = 473
-  OnResize = FrameResize
+  Width = 606
+  ClientHeight = 288
+  ClientWidth = 606
   TabOrder = 0
   DesignLeft = 290
   DesignTop = 86
-  object Button1: TButton
-    Left = 261
-    Height = 25
-    Top = 120
-    Width = 75
-    Caption = 'Button1'
-    TabOrder = 0
-  end
   object ListView: TListView
     Left = 0
-    Height = 275
+    Height = 288
     Top = 0
     Width = 192
     Align = alLeft
@@ -36,10 +28,41 @@ object FrameWithDialogs: TFrameWithDialogs
       000F000000D0ADD0BBD0B5D0BCD0B5D0BDD18233FFFFFFFFFFFFFFFFFFFFFFFF
       000000000F000000D0ADD0BBD0B5D0BCD0B5D0BDD18234
     }
+    LargeImages = ImageList
     ReadOnly = True
     RowSelect = True
+    SmallImages = ImageList
     SortType = stText
-    TabOrder = 1
+    StateImages = ImageList
+    TabOrder = 0
     ViewStyle = vsReport
+    OnResize = ListViewResize
+  end
+  object PageControl: TPageControl
+    Left = 197
+    Height = 288
+    Top = 0
+    Width = 409
+    ActivePage = TabSheet1
+    Align = alClient
+    TabIndex = 0
+    TabOrder = 1
+    TabPosition = tpBottom
+    Options = [nboShowCloseButtons]
+    object TabSheet1: TTabSheet
+      Caption = 'TabSheet1'
+    end
+  end
+  object Splitter1: TSplitter
+    Left = 192
+    Height = 288
+    Top = 0
+    Width = 5
+  end
+  object ImageList: TImageList
+    Height = 22
+    Width = 22
+    left = 362
+    top = 80
   end
 end

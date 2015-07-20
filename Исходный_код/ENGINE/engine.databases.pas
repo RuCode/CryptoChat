@@ -81,6 +81,8 @@ type
     function GetFriendEmail(UserID, FriendID: integer): string;
     {: Получить количество друзей пользователя}
     function GetFriendsCount(UserID: integer): integer;
+    {: Сохранить аватарку друга в поток}
+    function SaveFriendAvatarToStream(UserID, FriendID: integer; Stream: TStream): boolean;
   public
     {: Добавление нового сообщения}
     function AddMessage(UserID, FriendID: integer; Direction: TMsgDirection; TypeMsg: TMsgType;
@@ -111,6 +113,7 @@ type
 
   TDataBase = class(TCustomDataBase)
   private
+    fCurrentUserID: integer;
     fFileName: string;
   public
     constructor Create; override;
@@ -119,6 +122,7 @@ type
     {: Вход в систему}
     function Login(EMail, Password: string): boolean;
   public
+    property CurrentUserID: integer read fCurrentUserID;
     property FileName: string read fFileName write fFileName;
   end;
 
@@ -150,6 +154,7 @@ begin
   if UserID <> INVALID_VALUE then
     if MD5Print(MD5String(Password)) = GetUserPasswordHash(UserID) then
       Result := True;
+  fCurrentUserID := UserID;
 end;
 
 { TCustomDataBase }
@@ -631,6 +636,37 @@ begin
     Stmt.Step;
     Result := Stmt.ColumnInt(0);
   finally
+    LeaveCriticalsection(CriticalSection);
+  end;
+end;
+
+function TCustomDataBase.SaveFriendAvatarToStream(UserID, FriendID: integer; Stream: TStream): boolean;
+// Сохранить аватарку друга в поток
+var
+  Stmt: TSQLite3Statement;
+  MemoryStream: TMemoryStream;
+  Size: integer;
+begin
+  Result := True;
+  EnterCriticalsection(CriticalSection);
+  try
+    Stmt := SqliteDatabase.Prepare('SELECT AVATAR FROM FRIENDS WHERE USERID = ? AND ID = ?');
+    try
+      Stmt.BindInt(1, UserID);
+      Stmt.BindInt(2, FriendID);
+      Stmt.Step;
+      Size := Stmt.ColumnBytes(0);
+      MemoryStream := TMemoryStream.Create;
+      MemoryStream.SetSize(Size);
+      MemoryStream.Write(Stmt.ColumnBlob(0)^, Size);
+      MemoryStream.Position := 0;
+      MemoryStream.SaveToStream(Stream);
+      MemoryStream.Free;
+    except
+      Result := False;
+    end;
+  finally
+    Stmt.Free;
     LeaveCriticalsection(CriticalSection);
   end;
 end;
