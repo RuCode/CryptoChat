@@ -1,0 +1,117 @@
+object FormAddFriend: TFormAddFriend
+  Left = 290
+  Height = 226
+  Top = 86
+  Width = 520
+  BorderStyle = bsDialog
+  Caption = 'FormAddFriend'
+  ClientHeight = 226
+  ClientWidth = 520
+  Constraints.MaxHeight = 226
+  Constraints.MaxWidth = 520
+  Constraints.MinHeight = 226
+  Constraints.MinWidth = 520
+  LCLVersion = '1.5'
+  object Panel: TPanel
+    Left = 48
+    Height = 176
+    Top = 8
+    Width = 420
+    BevelInner = bvRaised
+    BevelOuter = bvNone
+    ClientHeight = 176
+    ClientWidth = 420
+    TabOrder = 0
+    object Bevel: TBevel
+      Left = 16
+      Height = 138
+      Top = 24
+      Width = 168
+    end
+    object Image: TImage
+      Left = 16
+      Height = 138
+      Top = 24
+      Width = 168
+      Center = True
+      Proportional = True
+      Stretch = True
+    end
+    object EditName: TLabeledEdit
+      Left = 200
+      Height = 27
+      Top = 24
+      Width = 208
+      EditLabel.AnchorSideLeft.Control = EditName
+      EditLabel.AnchorSideRight.Control = EditName
+      EditLabel.AnchorSideRight.Side = asrBottom
+      EditLabel.AnchorSideBottom.Control = EditName
+      EditLabel.Left = 200
+      EditLabel.Height = 17
+      EditLabel.Top = 4
+      EditLabel.Width = 208
+      EditLabel.Caption = 'Имя'
+      EditLabel.ParentColor = False
+      TabOrder = 0
+    end
+    object EditMail: TLabeledEdit
+      Left = 200
+      Height = 27
+      Top = 80
+      Width = 208
+      EditLabel.AnchorSideLeft.Control = EditMail
+      EditLabel.AnchorSideRight.Control = EditMail
+      EditLabel.AnchorSideRight.Side = asrBottom
+      EditLabel.AnchorSideBottom.Control = EditMail
+      EditLabel.Left = 200
+      EditLabel.Height = 17
+      EditLabel.Top = 60
+      EditLabel.Width = 208
+      EditLabel.Caption = 'EMail'
+      EditLabel.ParentColor = False
+      TabOrder = 1
+    end
+    object LabelAvatar: TLabel
+      Left = 16
+      Height = 17
+      Top = 4
+      Width = 55
+      Caption = 'Аватарка'
+      ParentColor = False
+    end
+  end
+  object ButtonAvatar: TButton
+    Left = 8
+    Height = 25
+    Top = 200
+    Width = 168
+    Anchors = [akLeft, akBottom]
+    Caption = 'Загрузить изображение'
+    OnClick = ButtonAvatarClick
+    TabOrder = 1
+  end
+  object ButtonRegister: TButton
+    Left = 176
+    Height = 25
+    Top = 201
+    Width = 168
+    Anchors = [akRight, akBottom]
+    Caption = 'Добавить'
+    ModalResult = 1
+    TabOrder = 2
+  end
+  object ButtonCancel: TButton
+    Left = 344
+    Height = 25
+    Top = 201
+    Width = 168
+    Anchors = [akRight, akBottom]
+    Caption = 'Отмена'
+    ModalResult = 2
+    TabOrder = 3
+  end
+  object OpenPictureDialog: TOpenPictureDialog
+    left = 400
+    top = 128
+  end
+end

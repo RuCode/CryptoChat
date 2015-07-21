@@ -27,12 +27,15 @@
         <FormatVersion Value="1"/>
       </local>
     </RunParams>
-    <RequiredPackages Count="1">
+    <RequiredPackages Count="2">
       <Item1>
-        <PackageName Value="LCL"/>
+        <PackageName Value="pl_richmemo"/>
       </Item1>
+      <Item2>
+        <PackageName Value="LCL"/>
+      </Item2>
     </RequiredPackages>
-    <Units Count="10">
+    <Units Count="11">
       <Unit0>
         <Filename Value="CryptoChat.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -66,6 +69,7 @@
         <ComponentName Value="FrameRegisterUser"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Frame"/>
+        <UnitName Value="FrameRegisterUser"/>
       </Unit4>
       <Unit5>
         <Filename Value="ENGINE/engine.databases.pas"/>
@@ -92,6 +96,13 @@
         <ResourceBaseClass Value="Frame"/>
         <UnitName Value="FrameDialogs"/>
       </Unit9>
+      <Unit10>
+        <Filename Value="FORMS/addfrienddlg.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="FormAddFriend"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="AddFriendDlg"/>
+      </Unit10>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
@@ -101,7 +112,7 @@
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>
-      <OtherUnitFiles Value="Frames;FRAMES;ENGINE;SQLITEWRAPPER"/>
+      <OtherUnitFiles Value="Frames;FRAMES;ENGINE;SQLITEWRAPPER;FORMS"/>
       <UnitOutputDirectory Value="lib/$(TargetCPU)-$(TargetOS)"/>
     </SearchPaths>
     <Linking>

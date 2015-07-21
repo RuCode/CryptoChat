@@ -19,9 +19,15 @@ type
     ButtonRegister: TButton;
     ButtonAvatar: TButton;
     ButtonCancel: TButton;
+    CheckBox: TCheckBox;
     EditName: TLabeledEdit;
     EditMail: TLabeledEdit;
     EditPassword: TLabeledEdit;
+    EditPasswordEmail: TLabeledEdit;
+    EditHostIncoming: TLabeledEdit;
+    EditHostOutgoing: TLabeledEdit;
+    EditPortImap: TLabeledEdit;
+    EditPortSmtp: TLabeledEdit;
     Image: TImage;
     LabelAvatar: TLabel;
     OpenPictureDialog: TOpenPictureDialog;
@@ -49,7 +55,7 @@ uses Main;
 procedure TFrameRegisterUser.FrameResize(Sender: TObject);
 begin
   Panel.Left := TFrame(Sender).Width div 2 - Panel.Width div 2;
-  Panel.Top := TFrame(Sender).Height div 2 - Panel.Height div 2 - 40;
+  Panel.Top := TFrame(Sender).Height div 2 - Panel.Height div 2 - 30;
 end;
 
 procedure TFrameRegisterUser.FirstRegistration;

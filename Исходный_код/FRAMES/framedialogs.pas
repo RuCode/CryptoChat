@@ -5,8 +5,8 @@ unit FrameDialogs;
 interface
 
 uses
-  Classes, SysUtils, FileUtil, Forms, Controls, StdCtrls, ComCtrls, Graphics,
-  ExtCtrls, Engine.DataBases;
+  Classes, SysUtils, FileUtil, Forms, Controls, ComCtrls, Graphics, Dialogs,
+  ExtCtrls, Engine.DataBases, RichMemo, AddFriendDlg;
 
 type
 
@@ -16,9 +16,15 @@ type
     ImageList: TImageList;
     ListView: TListView;
     PageControl: TPageControl;
-    Splitter1: TSplitter;
+    PanelLeft: TPanel;
+    PanelLeftBottom: TPanel;
+    RichMemo: TRichMemo;
+    Splitter: TSplitter;
     TabSheet1: TTabSheet;
+    ToolBar: TToolBar;
+    ToolButtonAdd: TToolButton;
     procedure ListViewResize(Sender: TObject);
+    procedure ToolButtonAddClick(Sender: TObject);
   private
     { private declarations }
   public
@@ -37,7 +43,20 @@ begin
   ListView.Column[0].Width := ListView.Width - 14;
 end;
 
+procedure TFrameWithDialogs.ToolButtonAddClick(Sender: TObject);
+// Добавляем нового друга
+begin
+  with FormAddFriend do
+  begin
+    if ShowModal = mrOk then
+      if DataBase.AddFriend(DataBase.CurrentUserID, EditName.Text, EditMail.Text, OpenPictureDialog.FileName) then
+        MessageDlg('Информация', Format('На почту %s отправлен запрос открытого ключа, после получения ответа, Вы можете начать переписку...',
+          [EditMail.Text]), mtInformation, [mbOK], '');
+  end;
+end;
+
 procedure TFrameWithDialogs.LoadUsers;
+// Загружаем пользователей из БД
 var
   i: integer;
   Stream: TMemoryStream;
@@ -64,7 +83,7 @@ begin
         Buf += char(AnsiChar(Stream.ReadByte));
         Stream.Seek(0, TSeekOrigin.soBeginning);
         if AnsiLowerCase(Buf) = 'bm' then
-        // Грузим BMP
+          // Грузим BMP
           BMP.LoadFromStream(Stream, Stream.Size)
         else
         begin
@@ -86,7 +105,7 @@ begin
     except
     end;
     item := ListView.Items.Add;
-    item.Caption := DataBase.GetUserNickName(i);
+    item.Caption := DataBase.GetFriendNickName(DataBase.CurrentUserID, i);
     item.ImageIndex := 1;
   end;
   Stream.Free;

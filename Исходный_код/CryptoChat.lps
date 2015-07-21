@@ -3,13 +3,13 @@
   <ProjectSession>
     <Version Value="9"/>
     <BuildModes Active="Default"/>
-    <Units Count="21">
+    <Units Count="22">
       <Unit0>
         <Filename Value="CryptoChat.lpr"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <CursorPos Y="20"/>
-        <UsageCount Value="33"/>
+        <UsageCount Value="35"/>
       </Unit0>
       <Unit1>
         <Filename Value="main.pas"/>
@@ -20,7 +20,7 @@
         <UnitName Value="Main"/>
         <TopLine Value="99"/>
         <CursorPos X="53" Y="108"/>
-        <UsageCount Value="33"/>
+        <UsageCount Value="35"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit1>
@@ -34,7 +34,7 @@
         <EditorIndex Value="1"/>
         <TopLine Value="18"/>
         <CursorPos X="30" Y="49"/>
-        <UsageCount Value="28"/>
+        <UsageCount Value="30"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit2>
@@ -46,7 +46,7 @@
         <ResourceBaseClass Value="Frame"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="40" Y="41"/>
-        <UsageCount Value="28"/>
+        <UsageCount Value="30"/>
       </Unit3>
       <Unit4>
         <Filename Value="FRAMES/frameregisteruser.pas"/>
@@ -54,19 +54,23 @@
         <ComponentName Value="FrameRegisterUser"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Frame"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="67"/>
-        <CursorPos X="41" Y="82"/>
-        <UsageCount Value="28"/>
+        <UnitName Value="FrameRegisterUser"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="4"/>
+        <TopLine Value="43"/>
+        <CursorPos X="68" Y="58"/>
+        <UsageCount Value="30"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
       </Unit4>
       <Unit5>
         <Filename Value="ENGINE/engine.databases.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="Engine.DataBases"/>
-        <EditorIndex Value="3"/>
+        <EditorIndex Value="5"/>
         <TopLine Value="637"/>
         <CursorPos X="50" Y="643"/>
-        <UsageCount Value="28"/>
+        <UsageCount Value="30"/>
         <Loaded Value="True"/>
       </Unit5>
       <Unit6>
@@ -76,7 +80,7 @@
         <WindowIndex Value="-1"/>
         <TopLine Value="-1"/>
         <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="28"/>
+        <UsageCount Value="30"/>
       </Unit6>
       <Unit7>
         <Filename Value="SQLITEWRAPPER/SQLite3Utils.pas"/>
@@ -85,7 +89,7 @@
         <WindowIndex Value="-1"/>
         <TopLine Value="-1"/>
         <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="28"/>
+        <UsageCount Value="30"/>
       </Unit7>
       <Unit8>
         <Filename Value="SQLITEWRAPPER/SQLite3Wrap.pas"/>
@@ -94,7 +98,7 @@
         <WindowIndex Value="-1"/>
         <TopLine Value="-1"/>
         <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="28"/>
+        <UsageCount Value="30"/>
       </Unit8>
       <Unit9>
         <Filename Value="FRAMES/framedialogs.pas"/>
@@ -103,11 +107,10 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Frame"/>
         <UnitName Value="FrameDialogs"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="2"/>
-        <TopLine Value="24"/>
-        <CursorPos X="22" Y="40"/>
-        <UsageCount Value="26"/>
+        <TopLine Value="102"/>
+        <CursorPos X="72" Y="108"/>
+        <UsageCount Value="28"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit9>
@@ -191,127 +194,140 @@
         <CursorPos X="36" Y="258"/>
         <UsageCount Value="10"/>
       </Unit20>
+      <Unit21>
+        <Filename Value="FORMS/addfrienddlg.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="FormAddFriend"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="AddFriendDlg"/>
+        <EditorIndex Value="3"/>
+        <TopLine Value="12"/>
+        <CursorPos X="52" Y="26"/>
+        <UsageCount Value="21"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+      </Unit21>
     </Units>
     <JumpHistory Count="30" HistoryIndex="29">
       <Position1>
         <Filename Value="FRAMES/framedialogs.pas"/>
-        <Caret Line="54" TopLine="42"/>
+        <Caret Line="47" Column="3" TopLine="45"/>
       </Position1>
       <Position2>
         <Filename Value="FRAMES/framedialogs.pas"/>
-        <Caret Line="55" TopLine="42"/>
+        <Caret Line="48" Column="3" TopLine="46"/>
       </Position2>
       <Position3>
         <Filename Value="FRAMES/framedialogs.pas"/>
-        <Caret Line="56" TopLine="42"/>
+        <Caret Line="47" Column="3" TopLine="45"/>
       </Position3>
       <Position4>
         <Filename Value="FRAMES/framedialogs.pas"/>
-        <Caret Line="58" TopLine="42"/>
+        <Caret Line="9" Column="18"/>
       </Position4>
       <Position5>
         <Filename Value="FRAMES/framedialogs.pas"/>
-        <Caret Line="59" TopLine="48"/>
+        <Caret Line="23" Column="27" TopLine="6"/>
       </Position5>
       <Position6>
         <Filename Value="FRAMES/framedialogs.pas"/>
-        <Caret Line="60" TopLine="48"/>
+        <Caret Line="21" Column="5" TopLine="6"/>
       </Position6>
       <Position7>
         <Filename Value="FRAMES/framedialogs.pas"/>
-        <Caret Line="61" TopLine="48"/>
+        <Caret Line="9" Column="39" TopLine="6"/>
       </Position7>
       <Position8>
         <Filename Value="FRAMES/framedialogs.pas"/>
-        <Caret Line="62" TopLine="48"/>
+        <Caret Line="8" Column="59"/>
       </Position8>
       <Position9>
         <Filename Value="FRAMES/framedialogs.pas"/>
-        <Caret Line="63" TopLine="48"/>
+        <Caret Line="9" Column="53"/>
       </Position9>
       <Position10>
-        <Filename Value="FRAMES/framedialogs.pas"/>
-        <Caret Line="67" TopLine="48"/>
+        <Filename Value="FORMS/addfrienddlg.pas"/>
+        <Caret Line="9" Column="11"/>
       </Position10>
       <Position11>
-        <Filename Value="FRAMES/framedialogs.pas"/>
-        <Caret Line="68" TopLine="48"/>
+        <Filename Value="FORMS/addfrienddlg.pas"/>
+        <Caret Line="10" Column="11"/>
       </Position11>
       <Position12>
-        <Filename Value="FRAMES/framedialogs.pas"/>
-        <Caret Line="69" TopLine="48"/>
+        <Filename Value="FORMS/addfrienddlg.pas"/>
+        <Caret Line="46" Column="58" TopLine="43"/>
       </Position12>
       <Position13>
-        <Filename Value="FRAMES/framedialogs.pas"/>
-        <Caret Line="70" TopLine="48"/>
+        <Filename Value="FORMS/addfrienddlg.pas"/>
+        <Caret Line="32" Column="21" TopLine="17"/>
       </Position13>
       <Position14>
-        <Filename Value="FRAMES/framedialogs.pas"/>
-        <Caret Line="71" TopLine="48"/>
+        <Filename Value="FORMS/addfrienddlg.pas"/>
+        <Caret Line="55" Column="36" TopLine="38"/>
       </Position14>
       <Position15>
         <Filename Value="FRAMES/framedialogs.pas"/>
-        <Caret Line="72" TopLine="48"/>
+        <Caret Line="54" Column="272" TopLine="39"/>
       </Position15>
       <Position16>
         <Filename Value="FRAMES/framedialogs.pas"/>
-        <Caret Line="73" TopLine="48"/>
+        <Caret Line="56" Column="7" TopLine="42"/>
       </Position16>
       <Position17>
-        <Filename Value="FRAMES/framedialogs.pas"/>
-        <Caret Line="74" TopLine="48"/>
+        <Filename Value="FRAMES/frameregisteruser.pas"/>
+        <Caret Line="82" Column="41" TopLine="67"/>
       </Position17>
       <Position18>
-        <Filename Value="FRAMES/framedialogs.pas"/>
-        <Caret Line="75" TopLine="48"/>
+        <Filename Value="FRAMES/frameregisteruser.pas"/>
+        <Caret Line="89" Column="41" TopLine="74"/>
       </Position18>
       <Position19>
-        <Filename Value="FRAMES/framedialogs.pas"/>
-        <Caret Line="76" TopLine="48"/>
+        <Filename Value="FRAMES/frameregisteruser.pas"/>
+        <Caret Line="88" Column="41" TopLine="73"/>
       </Position19>
       <Position20>
-        <Filename Value="FRAMES/framedialogs.pas"/>
-        <Caret Line="78" TopLine="48"/>
+        <Filename Value="FRAMES/frameregisteruser.pas"/>
+        <Caret Line="87" Column="41" TopLine="72"/>
       </Position20>
       <Position21>
-        <Filename Value="ENGINE/engine.databases.pas"/>
-        <Caret Line="123" Column="57" TopLine="92"/>
+        <Filename Value="FRAMES/frameregisteruser.pas"/>
+        <Caret Line="86" Column="41" TopLine="71"/>
       </Position21>
       <Position22>
-        <Filename Value="FRAMES/framedialogs.pas"/>
-        <Caret Line="54" Column="26" TopLine="39"/>
+        <Filename Value="FRAMES/frameregisteruser.pas"/>
+        <Caret Line="85" Column="41" TopLine="70"/>
       </Position22>
       <Position23>
-        <Filename Value="ENGINE/engine.databases.pas"/>
-        <Caret Line="84" Column="114" TopLine="56"/>
+        <Filename Value="FRAMES/frameregisteruser.pas"/>
+        <Caret Line="84" Column="41" TopLine="69"/>
       </Position23>
       <Position24>
-        <Filename Value="ENGINE/engine.databases.pas"/>
-        <Caret Line="85" Column="17" TopLine="57"/>
+        <Filename Value="FRAMES/frameregisteruser.pas"/>
+        <Caret Line="83" Column="41" TopLine="68"/>
       </Position24>
       <Position25>
-        <Filename Value="FRAMES/framedialogs.pas"/>
-        <Caret Line="54" TopLine="59"/>
+        <Filename Value="FRAMES/frameregisteruser.pas"/>
+        <Caret Line="82" Column="41" TopLine="67"/>
       </Position25>
       <Position26>
-        <Filename Value="FRAMES/framedialogs.pas"/>
-        <Caret Line="53" TopLine="53"/>
+        <Filename Value="FRAMES/frameregisteruser.pas"/>
+        <Caret Line="83" Column="41" TopLine="68"/>
       </Position26>
       <Position27>
-        <Filename Value="FRAMES/framedialogs.pas"/>
-        <Caret Line="54" TopLine="54"/>
+        <Filename Value="FRAMES/frameregisteruser.pas"/>
+        <Caret Line="84" Column="41" TopLine="69"/>
       </Position27>
       <Position28>
-        <Filename Value="FRAMES/framedialogs.pas"/>
-        <Caret Line="61" TopLine="61"/>
+        <Filename Value="FRAMES/frameregisteruser.pas"/>
+        <Caret Line="85" Column="41" TopLine="70"/>
       </Position28>
       <Position29>
-        <Filename Value="FRAMES/framedialogs.pas"/>
-        <Caret Line="41" Column="3" TopLine="39"/>
+        <Filename Value="FRAMES/frameregisteruser.pas"/>
+        <Caret Line="86" Column="41" TopLine="71"/>
       </Position29>
       <Position30>
-        <Filename Value="FRAMES/framedialogs.pas"/>
-        <Caret Line="49" Column="3" TopLine="47"/>
+        <Filename Value="FRAMES/frameregisteruser.pas"/>
+        <Caret Line="87" Column="41" TopLine="72"/>
       </Position30>
     </JumpHistory>
   </ProjectSession>
