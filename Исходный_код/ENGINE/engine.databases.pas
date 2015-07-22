@@ -4,6 +4,12 @@
 
     Работа с базой данных
 
+    Назначение таблиц:
+    - USERS       - Список пользователей системы
+    - FRIENDS     - Список друзей пользователя
+    - MESSAGES    - Список сообщений
+    - TRANSPORT   - Настройки транспорта
+
  **********************************************************************}
 
 unit Engine.DataBases;
@@ -66,6 +72,25 @@ type
     function GetUsersCount: integer;
     {: Узнать наличие пользователя в БД}
     function UserExist(AnyStrData: string): integer;
+  public
+    {: Добавить способ передачи данных}
+    function AddTransport(UserID, TypeConnection, PortIncoming, PortOutgoing: integer; HostIncoming, HostOutgoing, User, Password: string): boolean;
+    {: Удаление транспорта}
+    function RemoveTransport(UserID: integer): boolean;
+    {: Получить тип сетевого соединения}
+    function GetTransportType(UserID: integer): integer;
+    {: Получить порт входящих сообщений}
+    function GetTransportPortIn(UserID: integer): integer;
+    {: Получить порт исходящих сообщений}
+    function GetTransportPortOut(UserID: integer): integer;
+    {: Получить хост входящих}
+    function GetTransportHostIn(UserID: integer): string;
+    {: Получить хост исходящих}
+    function GetTransportHostOut(UserID: integer): string;
+    {: Получить имя пользователя\логин для авторизации на хосте}
+    function GetTransportUserName(UserID: integer): string;
+    {: Получить пароль для авторизации на хосте}
+    function GetTransportPassword(UserID: integer): string;
   public
     {: Добавить нового друга}
     function AddFriend(UserID: integer; const NickName, Email: string; const AvatarFileName: string = ''): boolean;
@@ -185,6 +210,9 @@ begin
   ExecSQL('CREATE TABLE IF NOT EXISTS MESSAGES (USERID INTEGER REFERENCES ID(USERS), FRIENDID INTEGER REFERENCES ID(Friends), ' +
     'ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, DIRECTION INTEGER, TYPE INTEGER, ENCMESSAGE BLOB, DATE DATETIME, ' +
     'OPENKEY BLOB, PRIVATEKEY BLOB, BLOWFISHKEY BLOB)');
+
+  ExecSQL('CREATE TABLE IF NOT EXISTS TRANSPORTS (USERID INTEGER REFERENCES ID(USERS), TYPE INTEGER, PORTIN INTEGER, ' +
+    'PORTOUT INTEGER, HOSTIN TEXT, HOSTOUT TEXT, USERNAME TEXT, PASSWORD TEXT)');
 end;
 
 constructor TCustomDataBase.Create;
@@ -502,6 +530,161 @@ begin
   end;
 end;
 
+function TCustomDataBase.AddTransport(UserID, TypeConnection, PortIncoming, PortOutgoing: integer;
+  HostIncoming, HostOutgoing, User, Password: string): boolean;
+  // Добавление настроек соединения
+var
+  Stmt: TSQLite3Statement;
+begin
+  EnterCriticalsection(CriticalSection);
+  try
+    Result := True;
+    try
+      Stmt := SqliteDatabase.Prepare(
+        'INSERT INTO TRANSPORTS (USERID, TYPE, PORTIN, PORTOUT, HOSTIN, HOSTOUT, USERNAME, PASSWORD) VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
+      Stmt.BindInt(1, UserID);
+      Stmt.BindInt(2, TypeConnection);
+      Stmt.BindInt(3, PortIncoming);
+      Stmt.BindInt(4, PortOutgoing);
+      Stmt.BindText(5, WideString(HostIncoming));
+      Stmt.BindText(6, WideString(HostOutgoing));
+      Stmt.BindText(7, WideString(User));
+      Stmt.BindText(8, WideString(Password));
+      Stmt.Step;
+      Stmt.Free;
+    except
+      Result := False;
+    end;
+  finally
+    LeaveCriticalsection(CriticalSection);
+  end;
+end;
+
+function TCustomDataBase.RemoveTransport(UserID: integer): boolean;
+  // Удаление транспорта
+begin
+  Result := ExecSQL(Format('DELETE FROM TRANSPORTS WHERE USERID = %d', [UserID]));
+end;
+
+function TCustomDataBase.GetTransportType(UserID: integer): integer;
+  // Получить тип сетевого соединения
+var
+  Stmt: TSQLite3Statement;
+begin
+  Result := INVALID_VALUE;
+  EnterCriticalsection(CriticalSection);
+  try
+    Stmt := SqliteDatabase.Prepare('SELECT TYPE FROM TRANSPORTS WHERE USERID = ' + WideString(IntToStr(UserID)));
+    Stmt.Step;
+    Result := Stmt.ColumnInt(0);
+  finally
+    Stmt.Free;
+    LeaveCriticalsection(CriticalSection);
+  end;
+end;
+
+function TCustomDataBase.GetTransportPortIn(UserID: integer): integer;
+  // Получить порт входящих сообщений
+var
+  Stmt: TSQLite3Statement;
+begin
+  Result := INVALID_VALUE;
+  EnterCriticalsection(CriticalSection);
+  try
+    Stmt := SqliteDatabase.Prepare('SELECT PORTIN FROM TRANSPORTS WHERE USERID = ' + WideString(IntToStr(UserID)));
+    Stmt.Step;
+    Result := Stmt.ColumnInt(0);
+  finally
+    Stmt.Free;
+    LeaveCriticalsection(CriticalSection);
+  end;
+end;
+
+function TCustomDataBase.GetTransportPortOut(UserID: integer): integer;
+  // Получить порт исходящих сообщений
+var
+  Stmt: TSQLite3Statement;
+begin
+  Result := INVALID_VALUE;
+  EnterCriticalsection(CriticalSection);
+  try
+    Stmt := SqliteDatabase.Prepare('SELECT PORTOUT FROM TRANSPORTS WHERE USERID = ' + WideString(IntToStr(UserID)));
+    Stmt.Step;
+    Result := Stmt.ColumnInt(0);
+  finally
+    Stmt.Free;
+    LeaveCriticalsection(CriticalSection);
+  end;
+end;
+
+function TCustomDataBase.GetTransportHostIn(UserID: integer): string;
+  // Получить хост входящих
+var
+  Stmt: TSQLite3Statement;
+begin
+  Result := '';
+  EnterCriticalsection(CriticalSection);
+  try
+    Stmt := SqliteDatabase.Prepare('SELECT HOSTIN FROM TRANSPORTS WHERE USERID = ' + WideString(IntToStr(UserID)));
+    Stmt.Step;
+    Result := string(Stmt.ColumnText(0));
+  finally
+    Stmt.Free;
+    LeaveCriticalsection(CriticalSection);
+  end;
+end;
+
+function TCustomDataBase.GetTransportHostOut(UserID: integer): string;
+  // Получить хост исходящих
+var
+  Stmt: TSQLite3Statement;
+begin
+  Result := '';
+  EnterCriticalsection(CriticalSection);
+  try
+    Stmt := SqliteDatabase.Prepare('SELECT HOSTOUT FROM TRANSPORTS WHERE USERID = ' + WideString(IntToStr(UserID)));
+    Stmt.Step;
+    Result := string(Stmt.ColumnText(0));
+  finally
+    Stmt.Free;
+    LeaveCriticalsection(CriticalSection);
+  end;
+end;
+
+function TCustomDataBase.GetTransportUserName(UserID: integer): string;
+  // Получить имя пользователя\логин для авторизации на хосте
+var
+  Stmt: TSQLite3Statement;
+begin
+  Result := '';
+  EnterCriticalsection(CriticalSection);
+  try
+    Stmt := SqliteDatabase.Prepare('SELECT USER FROM TRANSPORTS WHERE USERID = ' + WideString(IntToStr(UserID)));
+    Stmt.Step;
+    Result := string(Stmt.ColumnText(0));
+  finally
+    Stmt.Free;
+    LeaveCriticalsection(CriticalSection);
+  end;
+end;
+
+function TCustomDataBase.GetTransportPassword(UserID: integer): string;
+  // Получить пароль для авторизации на хосте
+var
+  Stmt: TSQLite3Statement;
+begin
+  Result := '';
+  EnterCriticalsection(CriticalSection);
+  try
+    Stmt := SqliteDatabase.Prepare('SELECT PASSWORD FROM TRANSPORTS WHERE USERID = ' + WideString(IntToStr(UserID)));
+    Stmt.Step;
+    Result := string(Stmt.ColumnText(0));
+  finally
+    Stmt.Free;
+    LeaveCriticalsection(CriticalSection);
+  end;
+end;
+
 function TCustomDataBase.AddFriend(UserID: integer; const NickName, Email: string; const AvatarFileName: string): boolean;
   // Добавить нового друга
 var
@@ -632,7 +815,7 @@ begin
   Result := INVALID_VALUE;
   EnterCriticalsection(CriticalSection);
   try
-    Stmt := SqliteDatabase.Prepare('SELECT COUNT(ID) FROM FRIENDS WHERE USERID = ' + IntToStr(UserID));
+    Stmt := SqliteDatabase.Prepare(WideString('SELECT COUNT(ID) FROM FRIENDS WHERE USERID = ' + IntToStr(UserID)));
     Stmt.Step;
     Result := Stmt.ColumnInt(0);
   finally
@@ -641,7 +824,7 @@ begin
 end;
 
 function TCustomDataBase.SaveFriendAvatarToStream(UserID, FriendID: integer; Stream: TStream): boolean;
-// Сохранить аватарку друга в поток
+  // Сохранить аватарку друга в поток
 var
   Stmt: TSQLite3Statement;
   MemoryStream: TMemoryStream;

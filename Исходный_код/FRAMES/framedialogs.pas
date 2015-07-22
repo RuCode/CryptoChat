@@ -48,6 +48,7 @@ procedure TFrameWithDialogs.ToolButtonAddClick(Sender: TObject);
 begin
   with FormAddFriend do
   begin
+    Clear;
     if ShowModal = mrOk then
       if DataBase.AddFriend(DataBase.CurrentUserID, EditName.Text, EditMail.Text, OpenPictureDialog.FileName) then
         MessageDlg('Информация', Format('На почту %s отправлен запрос открытого ключа, после получения ответа, Вы можете начать переписку...',
