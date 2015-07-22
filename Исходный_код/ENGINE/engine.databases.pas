@@ -19,10 +19,11 @@ unit Engine.DataBases;
 interface
 
 uses
-  Classes, SysUtils, sqldb, sqlite3conn, FileUtil, Dialogs, md5, SQLite3, SQLite3Wrap;
+  Classes, SysUtils, sqldb, sqlite3conn, FileUtil, Dialogs, md5, SQLite3, SQLite3Wrap, LazUTF8;
 
 const
   INVALID_VALUE = -1;
+  CONNECTIONTYPE_EMAIL = 0;
 
 type
 

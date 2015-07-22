@@ -35,6 +35,7 @@ type
     procedure ButtonAvatarClick(Sender: TObject);
     procedure ButtonCancelClick(Sender: TObject);
     procedure ButtonRegisterClick(Sender: TObject);
+    procedure CheckBoxChange(Sender: TObject);
     procedure FrameResize(Sender: TObject);
   private
     { private declarations }
@@ -98,9 +99,26 @@ begin
   else
   // Пользователь создан требуется войти в систему
   if DataBase.Login(EditMail.Text, EditPassword.Text) then
+  begin
+    DataBase.AddTransport(DataBase.CurrentUserID, CONNECTIONTYPE_EMAIL, StrToInt(EditPortImap.Text), StrToInt(EditPortSmtp.Text),
+      EditHostIncoming.Text, EditHostOutgoing.Text, EditMail.Text, EditPasswordEmail.Text);
     MainForm.ShowFrameDialogs;
+  end;
+end;
+
+procedure TFrameRegisterUser.CheckBoxChange(Sender: TObject);
+// Показать скрыть пароль
+begin
+  if CheckBox.Checked then
+  begin
+    EditPassword.EchoMode := emPassword;
+    EditPasswordEmail.EchoMode := emPassword;
+  end
+  else
+  begin
+    EditPassword.EchoMode := emNormal;
+    EditPasswordEmail.EchoMode := emNormal;
+  end;
 end;
 
 end.
-
-

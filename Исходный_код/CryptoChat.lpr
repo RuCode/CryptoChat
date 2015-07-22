@@ -2,22 +2,31 @@ program CryptoChat;
 
 {$mode objfpc}{$H+}
 
-uses
-  {$IFDEF UNIX}{$IFDEF UseCThreads}
-  cthreads,
-  {$ENDIF}{$ENDIF}
+{ $DEFINE UseCThreads} // Чёта не работает
+
+uses {$IFDEF UNIX} {$IFDEF UseCThreads}
+  cthreads, {$ENDIF} {$ENDIF}
   Interfaces, // this includes the LCL widgetset
-  Forms, pl_richmemo, Main, SQLite3, SQLite3Utils, SQLite3Wrap, FrameLogin,
-  FrameRegisterUser, FrameOfferRegisterUser, engine.databases, FrameDialogs,
-  AddFriendDlg;
+  Forms,
+  pl_richmemo,
+  Main,
+  SQLite3,
+  SQLite3Utils,
+  SQLite3Wrap,
+  FrameLogin,
+  FrameRegisterUser,
+  FrameOfferRegisterUser,
+  engine.databases,
+  FrameDialogs,
+  AddFriendDlg,
+  Engine.Transport;
 
 {$R *.res}
 
 begin
-  RequireDerivedFormResource:=True;
+  RequireDerivedFormResource := True;
   Application.Initialize;
   Application.CreateForm(TMainForm, MainForm);
   Application.CreateForm(TFormAddFriend, FormAddFriend);
   Application.Run;
 end.
-

@@ -35,7 +35,7 @@
         <PackageName Value="LCL"/>
       </Item2>
     </RequiredPackages>
-    <Units Count="11">
+    <Units Count="12">
       <Unit0>
         <Filename Value="CryptoChat.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -104,6 +104,11 @@
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="AddFriendDlg"/>
       </Unit10>
+      <Unit11>
+        <Filename Value="ENGINE/engine.transport.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="Engine.Transport"/>
+      </Unit11>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
