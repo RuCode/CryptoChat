@@ -2,7 +2,7 @@ program CryptoChat;
 
 {$mode objfpc}{$H+}
 
-{ $DEFINE UseCThreads} // Чёта не работает
+{$DEFINE UseCThreads} // Чёта не работает
 
 uses {$IFDEF UNIX} {$IFDEF UseCThreads}
   cthreads, {$ENDIF} {$ENDIF}
