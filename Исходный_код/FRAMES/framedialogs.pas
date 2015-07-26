@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, ComCtrls, Graphics, Dialogs,
-  ExtCtrls, Engine.DataBases, RichMemo, AddFriendDlg;
+  ExtCtrls, DataBases, AddFriendDlg;
 
 type
 
@@ -18,7 +18,6 @@ type
     PageControl: TPageControl;
     PanelLeft: TPanel;
     PanelLeftBottom: TPanel;
-    RichMemo: TRichMemo;
     Splitter: TSplitter;
     TabSheet1: TTabSheet;
     ToolBar: TToolBar;

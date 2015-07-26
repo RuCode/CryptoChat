@@ -8,8 +8,8 @@ object FrameLogin: TFrameLogin
   ClientWidth = 607
   OnResize = FrameResize
   TabOrder = 0
-  DesignLeft = 289
-  DesignTop = 86
+  DesignLeft = 288
+  DesignTop = 60
   object LabelUps: TLabel
     Left = 0
     Height = 100

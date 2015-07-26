@@ -5,7 +5,7 @@ unit FrameRegisterUser;
 interface
 
 uses
-  Classes, SysUtils, FileUtil, Forms, Controls, StdCtrls, ExtCtrls, ExtDlgs, Engine.DataBases, Dialogs;
+  Classes, SysUtils, FileUtil, Forms, Controls, StdCtrls, ExtCtrls, ExtDlgs, DataBases, Dialogs;
 
 const
   FRAME_LOGIN = 1;

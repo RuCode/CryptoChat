@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, FrameLogin, FrameOfferRegisterUser,
-  FrameRegisterUser, FrameDialogs, engine.DataBases;
+  FrameRegisterUser, FrameDialogs, DataBases, Transports;
 
 type
 
@@ -109,6 +109,7 @@ begin
   FrameDialogs.Parent := MainForm;
   FrameDialogs.Visible := True;
   SetCaptionWithForm(FrameDialogs);
+  Transport.Enqueue(CMD_CONNECTION);
 end;
 
 procedure TMainForm.HideAllFrames;

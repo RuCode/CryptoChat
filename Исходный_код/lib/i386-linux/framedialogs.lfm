@@ -24,18 +24,6 @@ object FrameWithDialogs: TFrameWithDialogs
       Caption = 'TabSheet1'
       ClientHeight = 284
       ClientWidth = 427
-      object RichMemo: TRichMemo
-        Left = 18
-        Height = 208
-        Top = 24
-        Width = 382
-        HideSelection = False
-        Lines.Strings = (
-          'RichMemo'
-        )
-        TabOrder = 0
-        ZoomFactor = 1
-      end
     end
   end
   object Splitter: TSplitter

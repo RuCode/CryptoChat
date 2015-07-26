@@ -2,24 +2,27 @@ program CryptoChat;
 
 {$mode objfpc}{$H+}
 
-{$DEFINE UseCThreads} // Чёта не работает
+{$DEFINE UseCThreads}// Чёта не работает
 
 uses {$IFDEF UNIX} {$IFDEF UseCThreads}
   cthreads, {$ENDIF} {$ENDIF}
   Interfaces, // this includes the LCL widgetset
-  Forms,
-  pl_richmemo,
-  Main,
+  // Нижний уровень
   SQLite3,
   SQLite3Utils,
   SQLite3Wrap,
+  // Двигатель
+  databases,
+  transports,
+  mails,
+  // Формочки
+  Forms,
+  Main,
   FrameLogin,
   FrameRegisterUser,
   FrameOfferRegisterUser,
-  engine.databases,
   FrameDialogs,
-  AddFriendDlg,
-  Engine.Transport;
+  AddFriendDlg;
 
 {$R *.res}
 

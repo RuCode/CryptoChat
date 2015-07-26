@@ -5,7 +5,7 @@ unit FrameLogin;
 interface
 
 uses
-  Classes, SysUtils, FileUtil, Forms, Controls, StdCtrls, ExtCtrls, Dialogs, Engine.DataBases;
+  Classes, SysUtils, FileUtil, Forms, Controls, StdCtrls, ExtCtrls, Dialogs, DataBases;
 
 type
 
@@ -48,7 +48,8 @@ begin
   if DataBase.Login(EditEmail.Text, EditPassword.Text) then
     MainForm.ShowFrameDialogs
   else
-    MessageDlg('Ошибка', 'Ошибка входа в систему, вероятно не верно введены данные...', mtWarning, [mbOK], 0);
+    MessageDlg('Ошибка', 'Ошибка входа в систему, вероятно не верно введены данные...',
+      mtWarning, [mbOK], 0);
 end;
 
 procedure TFrameLogin.ButtonRegistrationClick(Sender: TObject);
