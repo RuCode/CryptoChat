@@ -96,6 +96,7 @@ type
     constructor Create; virtual;
     destructor Destroy; override;
 
+    procedure Nop;
     {:Узнать список директорий на сервере.}
     procedure GetFolderList(var ListFolders: TStringList);
     {:Получить заголовок сообщения.}
@@ -528,7 +529,6 @@ begin
 end;
 
 function TCustomMail.SendMail(ToAddr, Subject, Text: string; FileName: string): boolean;
-
   // Отправка письма
 var
   MailMessage: TMimeMess;
@@ -591,8 +591,6 @@ begin
   fMailData := TStringList.Create;
   fFullResult := TStringList.Create;
   fConnected := False;
-  UserName := 'i.rcode';
-  Password := 'LQexIX1';
 end;
 
 destructor TCustomMail.Destroy;
@@ -607,6 +605,15 @@ begin
     fIMAPClient.Logout;
   fIMAPClient.Free;
   inherited Destroy;
+end;
+
+procedure TCustomMail.Nop;
+begin
+  if Assigned(fSMTPClient) and Assigned(fIMAPClient) then
+  begin
+    fIMAPClient.NoOp;
+    fSMTPClient.NoOp;
+  end;
 end;
 
 end.

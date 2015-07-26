@@ -38,17 +38,20 @@ unit Mails;
 interface
 
 uses
-  Classes, Dialogs, SysUtils, ExtCtrls, Forms, Controls, imapsend, ssl_openssl, synautil, synacode, synaicnv,
+  Classes, Dialogs, SysUtils, ExtCtrls, Forms, Controls, imapsend,
+  ssl_openssl, synautil, synacode, synaicnv,
   mimemess, mimepart, synachar, smtpsend;
 
 const
   ERROR_CAPTION = 'Ошибка';
-  ERROR_INDEX_MESSAGE = 'Индекс сообщения должен быть от 1 до числа равного количеству писем...';
+  ERROR_INDEX_MESSAGE =
+    'Индекс сообщения должен быть от 1 до числа равного количеству писем...';
   ERROR_RECIEVE_HEADER = 'Ошибка получения заголовка письма #%d';
   ERROR_RECIEVE_BODY = 'Ошибка получения тела письма #%d';
 
 type
-  TMailState = ({:Не загружено пиьсмо}msNone, {:Загружен заголовок}msMailHead, {:Загружено целиком}msMailAll);
+  TMailState = ({:Не загружено пиьсмо}msNone, {:Загружен заголовок}msMailHead,
+    {:Загружено целиком}msMailAll);
 
   { TCustomMail }
 
@@ -93,6 +96,7 @@ type
     constructor Create; virtual;
     destructor Destroy; override;
 
+    procedure Nop;
     {:Узнать список директорий на сервере.}
     procedure GetFolderList(var ListFolders: TStringList);
     {:Получить заголовок сообщения.}
@@ -143,6 +147,34 @@ type
     property FullResult: TStringList read GetFullResult;
     {:Результаты команды.}
     property ResultString: string read GetResultString;
+  end;
+
+  TMail = class(TCustomMail)
+  public
+    {:Имя пользователя для авторизации.}
+    property UserName;
+    {:Пароль для авторизации.}
+    property Password;
+    {:Адрес сервера IMAP.}
+    property IMAPHost;
+    {:Порт на котором вертиться протокол IMAP.}
+    property IMAPPort;
+    {:Адрес сервера SMTP.}
+    property SMTPHost;
+    {:Порт на котором вертиться протокол SMTP.}
+    property SMTPPort;
+    {:Управление соединением и получение состояния соединения.}
+    property Connected;
+    {:Узнать или указать текущую директорию.}
+    property SelectedFolder;
+    {:Количество новых писем}
+    property CountOfNewMails;
+    {:Количество писем в директории}
+    property CountOfMails;
+    {:Результаты команды.}
+    property FullResult;
+    {:Результаты команды.}
+    property ResultString;
   end;
 
 implementation
@@ -243,7 +275,8 @@ function TCustomMail.GetPassword: string;
   // Получить пароль
 begin
   if fIMAPClient.Password <> fSMTPClient.Password then
-    raise Exception.Create('Фатальная ошибка: Пароль пользователя должен быть одинаковым и для входящей и для исходящей почты...');
+    raise Exception.Create(
+      'Фатальная ошибка: Пароль пользователя должен быть одинаковым и для входящей и для исходящей почты...');
   Result := fIMAPClient.Password;
 end;
 
@@ -287,7 +320,8 @@ function TCustomMail.GetUserName: string;
   // Получить имя пользователя
 begin
   if fIMAPClient.UserName <> fSMTPClient.UserName then
-    raise Exception.Create('Фатальная ошибка: Имя пользователя должно быть одинаковым и для входящей и для исходящей почты...');
+    raise Exception.Create(
+      'Фатальная ошибка: Имя пользователя должно быть одинаковым и для входящей и для исходящей почты...');
   Result := fIMAPClient.UserName;
 end;
 
@@ -298,7 +332,8 @@ var
 begin
   fIMAPClient.List('', ListFolders);
   for i := 0 to ListFolders.Count - 1 do
-    ListFolders[i] := CharsetConversion(ListFolders[i], TMimeChar.UTF_7mod, TMimeChar.UTF_8);
+    ListFolders[i] := CharsetConversion(ListFolders[i], TMimeChar.UTF_7mod,
+      TMimeChar.UTF_8);
 end;
 
 function TCustomMail.GetMailHeader(Index: integer): string;
@@ -312,7 +347,8 @@ begin
   end;
   if not fIMAPClient.FetchHeader(Index, fMailData) then
   begin
-    MessageDlg(ERROR_CAPTION, Format(ERROR_RECIEVE_HEADER, [Index]), mtError, [mbOK], '');
+    MessageDlg(ERROR_CAPTION, Format(ERROR_RECIEVE_HEADER, [Index]),
+      mtError, [mbOK], '');
     Exit;
   end;
   Result := fMailData.Text;
@@ -493,7 +529,6 @@ begin
 end;
 
 function TCustomMail.SendMail(ToAddr, Subject, Text: string; FileName: string): boolean;
-
   // Отправка письма
 var
   MailMessage: TMimeMess;
@@ -522,7 +557,8 @@ begin
     // Кодируем и отправляем
     MailMessage.EncodeMessage;
     Result := True;
-    Result := Result and fSMTPClient.MailFrom(fSMTPClient.UserName, Length(fSMTPClient.UserName));
+    Result := Result and fSMTPClient.MailFrom(fSMTPClient.UserName,
+      Length(fSMTPClient.UserName));
     Result := Result and fSMTPClient.MailTo(ToAddr);
     Result := Result and fSMTPClient.MailData(MailMessage.Lines);
   finally
@@ -555,8 +591,6 @@ begin
   fMailData := TStringList.Create;
   fFullResult := TStringList.Create;
   fConnected := False;
-  UserName := 'i.rcode';
-  Password := 'LQexIX1';
 end;
 
 destructor TCustomMail.Destroy;
@@ -571,6 +605,15 @@ begin
     fIMAPClient.Logout;
   fIMAPClient.Free;
   inherited Destroy;
+end;
+
+procedure TCustomMail.Nop;
+begin
+  if fConnected then
+  begin
+    fIMAPClient.NoOp;
+    fSMTPClient.NoOp;
+  end;
 end;
 
 end.

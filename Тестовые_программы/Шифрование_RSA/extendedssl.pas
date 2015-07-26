@@ -53,8 +53,8 @@ type
     destructor Destroy; override;
   public
     PrivateKey: string;
-    PublicKey:  string;
-    KeySize:    integer;
+    PublicKey: string;
+    KeySize: integer;
     procedure GenKeys;
     function Encrypt(var OrigMsg: PByte; LenMsg: integer; var EncMsg: PByte;
       var EncLen: integer): integer;
@@ -71,10 +71,13 @@ type
     procedure LoadPriKeyFromMem(PEM: string);
   end;
 
+type
+  TRsa = TCustomRSA;
+
 var
   PEM_write_bio_RSAPrivateKey: TPEM_write_bio_RSAPrivateKey;
-  PEM_write_bio_RSAPublicKey:  TPEM_write_bio_RSAPublicKey;
-  PEM_read_bio_RSA_PUBKEY:     TPEM_read_bio_RSA_PUBKEY;
+  PEM_write_bio_RSAPublicKey: TPEM_write_bio_RSAPublicKey;
+  PEM_read_bio_RSA_PUBKEY: TPEM_read_bio_RSA_PUBKEY;
 
   PEM_read_bio_RSAPublicKey: TPEM_read_bio_RSAPublicKey;
   PEM_read_bio_RSAPrivateKey: TPEM_read_bio_RSAPrivateKey;
@@ -131,12 +134,12 @@ function GenRsaKeys(KeySize: integer; var PriKey: string; var PubKey: string): P
 var
   PriLen, PubLen: integer;
   KeyPair: PRSA;
-  Pri:     PBIO;
-  Pub:     PBIO;
+  Pri: PBIO;
+  Pub: PBIO;
 begin
   KeyPair := RsaGenerateKey(KeySize, PUB_EXP, nil, nil);
-  Pri     := BioNew(BioSMem);
-  Pub     := BioNew(BioSMem);
+  Pri := BioNew(BioSMem);
+  Pub := BioNew(BioSMem);
   PEM_write_bio_RSAPrivateKey(pri, keypair, nil, nil, nil, nil, nil);
   PEM_write_bio_RSAPublicKey(pub, keypair);
   Prilen := BioCtrlPending(pri);
@@ -196,10 +199,8 @@ begin
   FreeMem(ErrMsg);
 end;
 
- //******************************************************************************
- // Генерация RSA ключей
- //******************************************************************************
 procedure TCustomRSA.GenKeys;
+// Генерация RSA ключей
 var
   KeyPair: PRSA;
 begin
@@ -209,41 +210,33 @@ begin
   LoadPubKeyFromMem(PublicKey);
 end;
 
- //******************************************************************************
- // RSA шифрование
- //******************************************************************************
 function TCustomRSA.Encrypt(var OrigMsg: PByte; LenMsg: integer;
   var EncMsg: PByte; var EncLen: integer): integer;
+// RSA шифрование
 begin
   Result := EncryptRsa(PubKey, OrigMsg, LenMsg, EncMsg, EncLen, ErrMsg);
 end;
 
- //******************************************************************************
- // RSA расшифровка
- //******************************************************************************
 function TCustomRSA.Decrypt(var OrigMsg: PByte; LenMsg: integer;
   var EncMsg: PByte; var EncLen: integer): integer;
+// RSA расшифровка
 begin
   Result := DecryptRsa(PriKey, OrigMsg, LenMsg, EncMsg, EncLen, ErrMsg);
 end;
 
- //******************************************************************************
- // RSA закрытие и освобождение ключей и структур RSA
- //******************************************************************************
 procedure TCustomRSA.CloseKeys;
+// RSA закрытие и освобождение ключей и структур RSA
 begin
   CloseRSA(PubKey);
   CloseRSA(PriKey);
 end;
 
- //******************************************************************************
- // Преобразование формата PEM в структуру PRSA
- //******************************************************************************
 function TCustomRSA.PemToRsa(Pem: Pointer; Flag: integer): PRSA;
+// Преобразование формата PEM в структуру PRSA
 var
   KeyBIO: PBIO;
   TmpRsa: PRSA;
-  err:    PChar;
+  err: PChar;
 begin
   GetMem(err, MAX_PATH);
   ERR_load_crypto_strings();
@@ -270,10 +263,8 @@ begin
   end;
 end;
 
- //******************************************************************************
- // RSA сохранение ключей в PEM формате
- //******************************************************************************
 procedure TCustomRSA.SaveKeyPair(PathToPubKey, PathToPriKey: string);
+// RSA сохранение ключей в PEM формате
 var
   hfile: TextFile;
 begin
@@ -293,10 +284,8 @@ begin
   end;
 end;
 
- //******************************************************************************
- // Загрузка открытого ключа
- //******************************************************************************
 procedure TCustomRSA.LoadPubKeyFromFile(FileName: string);
+// Загрузка открытого ключа
 var
   StringList: TStringList;
 begin
@@ -304,7 +293,7 @@ begin
   StringList := TStringList.Create;
   StringList.LoadFromFile(FileName);
   PublicKey := StringList.Text;
-  PubKey    := PemToRsa(PChar(PublicKey), 0);
+  PubKey := PemToRsa(PChar(PublicKey), 0);
   StringList.Free;
 end;
 
@@ -312,13 +301,11 @@ procedure TCustomRSA.LoadPubKeyFromMem(PEM: string);
 begin
   CloseRSA(PubKey);
   PublicKey := PEM;
-  PubKey    := PemToRsa(PChar(PublicKey), 0);
+  PubKey := PemToRsa(PChar(PublicKey), 0);
 end;
 
- //******************************************************************************
- // Загрузка приватного ключа
- //******************************************************************************
 procedure TCustomRSA.LoadPriKeyFromFile(FileName: string);
+// Загрузка приватного ключа
 var
   StringList: TStringList;
 begin
@@ -326,7 +313,7 @@ begin
   StringList := TStringList.Create;
   StringList.LoadFromFile(FileName);
   PrivateKey := StringList.Text;
-  PriKey     := PemToRsa(PChar(PrivateKey), 1);
+  PriKey := PemToRsa(PChar(PrivateKey), 1);
   StringList.Free;
 end;
 
@@ -334,7 +321,7 @@ procedure TCustomRSA.LoadPriKeyFromMem(PEM: string);
 begin
   CloseRSA(PriKey);
   PrivateKey := PEM;
-  PriKey     := PemToRsa(PChar(PrivateKey), 1);
+  PriKey := PemToRsa(PChar(PrivateKey), 1);
 end;
 
 initialization

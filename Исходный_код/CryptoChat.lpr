@@ -22,7 +22,7 @@ uses {$IFDEF UNIX} {$IFDEF UseCThreads}
   FrameRegisterUser,
   FrameOfferRegisterUser,
   FrameDialogs,
-  AddFriendDlg;
+  AddFriendDlg, BlowFishEx, RsaEx;
 
 {$R *.res}
 

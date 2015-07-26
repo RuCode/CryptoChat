@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, ComCtrls, Graphics, Dialogs,
-  ExtCtrls, DataBases, AddFriendDlg;
+  ExtCtrls, DataBases, AddFriendDlg, RsaEx;
 
 type
 
@@ -49,9 +49,16 @@ begin
   begin
     Clear;
     if ShowModal = mrOk then
-      if DataBase.AddFriend(DataBase.CurrentUserID, EditName.Text, EditMail.Text, OpenPictureDialog.FileName) then
-        MessageDlg('Информация', Format('На почту %s отправлен запрос открытого ключа, после получения ответа, Вы можете начать переписку...',
+      if DataBase.AddFriend(DataBase.CurrentUserID, EditName.Text,
+        EditMail.Text, OpenPictureDialog.FileName) then
+      begin
+        // Генерируем ключи
+        // Пихаем в тар
+        // Отправляем
+        MessageDlg('Информация', Format(
+          'На почту %s отправлен запрос открытого ключа, после получения ответа, Вы можете начать переписку...',
           [EditMail.Text]), mtInformation, [mbOK], '');
+      end;
   end;
 end;
 

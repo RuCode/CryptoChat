@@ -40,12 +40,14 @@ implementation
 constructor TTransport.Create(CreateSuspended: boolean);
 begin
   FreeOnTerminate := True;
+  Mail := TMail.Create;
   Queue := TQueueInteger.Create;
   inherited Create(CreateSuspended);
 end;
 
 destructor TTransport.Destroy;
 begin
+  Mail.Free;
   Queue.Free;
   inherited Destroy;
 end;
@@ -58,18 +60,19 @@ begin
     if Queue.Count <= 0 then
     begin
       if TransportType = CONNECTIONTYPE_EMAIL then
-        // Mail.nop;
-      ;
+      begin
+        Sleep(100);
+        Mail.nop;
+      end;
     end
     else
       case Queue.Dequeue of
         // Подключиться
-        CMD_CONNECTION:
+        CMD_CONNECT:
         begin
           TransportType := Database.GetTransportType(DataBase.CurrentUserID);
           if TransportType = CONNECTIONTYPE_EMAIL then
           begin
-            Mail := TMail.Create;
             Mail.IMAPHost := DataBase.GetTransportHostIn(DataBase.CurrentUserID);
             Mail.IMAPPort := DataBase.GetTransportPortIn(DataBase.CurrentUserID);
             Mail.SMTPHost := DataBase.GetTransportHostOut(DataBase.CurrentUserID);
@@ -83,7 +86,7 @@ begin
         CMD_DISCONNECT:
         begin
           if TransportType = CONNECTIONTYPE_EMAIL then
-            Mail.Free;
+            Mail.Connected := False;
         end;
           // Не смогли определить комманду
         else

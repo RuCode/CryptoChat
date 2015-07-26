@@ -109,7 +109,7 @@ begin
   FrameDialogs.Parent := MainForm;
   FrameDialogs.Visible := True;
   SetCaptionWithForm(FrameDialogs);
-  Transport.Enqueue(CMD_CONNECTION);
+  Transport.Enqueue(CMD_CONNECT);
 end;
 
 procedure TMainForm.HideAllFrames;

@@ -35,7 +35,7 @@
         <PackageName Value="LCL"/>
       </Item2>
     </RequiredPackages>
-    <Units Count="83">
+    <Units Count="85">
       <Unit0>
         <Filename Value="CryptoChat.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -394,6 +394,16 @@
         <Filename Value="GENERICS/Additional/UBinarySerializer.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit82>
+      <Unit83>
+        <Filename Value="ENGINE/blowfishex.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="BlowFishEx"/>
+      </Unit83>
+      <Unit84>
+        <Filename Value="ENGINE/rsaex.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="RsaEx"/>
+      </Unit84>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
