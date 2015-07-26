@@ -16,3 +16,5 @@ __history
 bin/*
 backup/*
 *.txt~
+*.bak
+*.SQLite3
