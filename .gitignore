@@ -2,6 +2,7 @@
 *.~*~
 CryptoChat
 Launch
+ArchiveLaunch
 *.local
 *.identcache
 __history
