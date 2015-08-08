@@ -1,5 +1,6 @@
 *.dcu
 *.~*~
+CryptoChat
 Launch
 *.local
 *.identcache
