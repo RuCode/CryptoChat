@@ -2,7 +2,7 @@ program CryptoChat;
 
 {$mode objfpc}{$H+}
 
-{ $DEFINE UseCThreads}// Чёта не работает
+{$DEFINE UseCThreads}// Чёта не работает
 
 uses {$IFDEF UNIX} {$IFDEF UseCThreads}
   cthreads, {$ENDIF} {$ENDIF}
@@ -22,7 +22,7 @@ uses {$IFDEF UNIX} {$IFDEF UseCThreads}
   FrameRegisterUser,
   FrameOfferRegisterUser,
   FrameDialogs,
-  AddFriendDlg;
+  AddFriendDlg, BlowFishEx, RsaEx, GUIDCommands, generics.collections;
 
 {$R *.res}
 

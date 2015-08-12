@@ -22,7 +22,7 @@ uses {$IFDEF UNIX} {$IFDEF UseCThreads}
   FrameRegisterUser,
   FrameOfferRegisterUser,
   FrameDialogs,
-  AddFriendDlg, BlowFishEx, RsaEx;
+  AddFriendDlg, BlowFishEx, RsaEx, GUIDCommands, WaitForm;
 
 {$R *.res}
 
@@ -31,5 +31,6 @@ begin
   Application.Initialize;
   Application.CreateForm(TMainForm, MainForm);
   Application.CreateForm(TFormAddFriend, FormAddFriend);
+  Application.CreateForm(TFormWait, FormWait);
   Application.Run;
 end.

@@ -194,6 +194,7 @@ end;
 constructor TCustomRSA.Create;
 begin
   GetMem(ErrMsg, MAX_PATH);
+  KeySize := 8 * 1024;
 end;
 
 destructor TCustomRSA.Destroy;

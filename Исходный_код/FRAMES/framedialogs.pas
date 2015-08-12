@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, ComCtrls, Graphics, Dialogs,
-  ExtCtrls, DataBases, AddFriendDlg, RsaEx;
+  ExtCtrls, DataBases, AddFriendDlg, Transports;
 
 type
 
@@ -29,11 +29,18 @@ type
   public
     { public declarations }
     procedure LoadUsers;
+    procedure ShowWaitForm;
+    procedure HideWaitForm;
   end;
 
 implementation
 
 {$R *.lfm}
+
+uses WaitForm;
+
+var
+  FormWait: TFormWait;
 
 { TFrameWithDialogs }
 
@@ -44,6 +51,8 @@ end;
 
 procedure TFrameWithDialogs.ToolButtonAddClick(Sender: TObject);
 // Добавляем нового друга
+var
+  Info: TDataInfo;
 begin
   with FormAddFriend do
   begin
@@ -52,12 +61,16 @@ begin
       if DataBase.AddFriend(DataBase.CurrentUserID, EditName.Text,
         EditMail.Text, OpenPictureDialog.FileName) then
       begin
-        // Генерируем ключи
-        // Пихаем в тар
-        // Отправляем
-        MessageDlg('Информация', Format(
-          'На почту %s отправлен запрос открытого ключа, после получения ответа, Вы можете начать переписку...',
-          [EditMail.Text]), mtInformation, [mbOK], '');
+        with Info do
+        begin
+          Command := CMD_ADDFRIEND;
+          Name := EditName.Text;
+          Email := EditMail.Text;
+          AvatarPath := OpenPictureDialog.FileName;
+          OnEndOperation := @HideWaitForm;
+        end;
+        Transport.Enqueue(Info);
+        ShowWaitForm;
       end;
   end;
 end;
@@ -118,6 +131,24 @@ begin
   Stream.Free;
   BMP.Free;
   JPG.Free;
+end;
+
+procedure TFrameWithDialogs.ShowWaitForm;
+begin
+  if Assigned(FormWait) then
+    exit;
+  FormWait := TFormWait.Create(Self);
+  FormWait.ShowModal;
+end;
+
+procedure TFrameWithDialogs.HideWaitForm;
+begin
+  if not Assigned(FormWait) then
+    Exit;
+  FormWait.Close;
+  MessageDlg('Информация', Format(
+    'На почту %s отправлен запрос открытого ключа, после получения ответа, Вы можете начать переписку...',
+    [FormAddFriend.EditMail.Text]), mtInformation, [mbOK], '');
 end;
 
 end.

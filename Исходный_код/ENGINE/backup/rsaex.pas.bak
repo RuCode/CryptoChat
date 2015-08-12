@@ -73,6 +73,9 @@ type
     procedure LoadPriKeyFromMem(PEM: string);
   end;
 
+type
+  TRsa = TCustomRSA;
+
 var
   PEM_write_bio_RSAPrivateKey: TPEM_write_bio_RSAPrivateKey;
   PEM_write_bio_RSAPublicKey: TPEM_write_bio_RSAPublicKey;

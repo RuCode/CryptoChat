@@ -3,14 +3,14 @@
   <ProjectSession>
     <Version Value="9"/>
     <BuildModes Active="Default"/>
-    <Units Count="110">
+    <Units Count="121">
       <Unit0>
         <Filename Value="CryptoChat.lpr"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="11"/>
-        <CursorPos Y="30"/>
-        <UsageCount Value="42"/>
+        <CursorPos X="48" Y="25"/>
+        <UsageCount Value="47"/>
       </Unit0>
       <Unit1>
         <Filename Value="main.pas"/>
@@ -19,9 +19,9 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="Main"/>
-        <TopLine Value="99"/>
-        <CursorPos Y="112"/>
-        <UsageCount Value="42"/>
+        <TopLine Value="130"/>
+        <CursorPos X="47" Y="144"/>
+        <UsageCount Value="47"/>
         <Loaded Value="True"/>
       </Unit1>
       <Unit2>
@@ -31,11 +31,10 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Frame"/>
         <UnitName Value="FrameLogin"/>
-        <EditorIndex Value="2"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="34"/>
         <CursorPos X="29" Y="52"/>
-        <UsageCount Value="37"/>
-        <Loaded Value="True"/>
+        <UsageCount Value="42"/>
       </Unit2>
       <Unit3>
         <Filename Value="FRAMES/frameofferregisteruser.pas"/>
@@ -45,7 +44,7 @@
         <ResourceBaseClass Value="Frame"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="40" Y="41"/>
-        <UsageCount Value="37"/>
+        <UsageCount Value="42"/>
       </Unit3>
       <Unit4>
         <Filename Value="FRAMES/frameregisteruser.pas"/>
@@ -56,17 +55,16 @@
         <UnitName Value="FrameRegisterUser"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="78" Y="8"/>
-        <UsageCount Value="37"/>
+        <UsageCount Value="42"/>
       </Unit4>
       <Unit5>
         <Filename Value="ENGINE/databases.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="Databases"/>
-        <EditorIndex Value="1"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="667"/>
         <CursorPos X="52" Y="688"/>
-        <UsageCount Value="37"/>
-        <Loaded Value="True"/>
+        <UsageCount Value="42"/>
       </Unit5>
       <Unit6>
         <Filename Value="SQLITEWRAPPER/SQLite3.pas"/>
@@ -75,7 +73,7 @@
         <WindowIndex Value="-1"/>
         <TopLine Value="-1"/>
         <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="37"/>
+        <UsageCount Value="42"/>
       </Unit6>
       <Unit7>
         <Filename Value="SQLITEWRAPPER/SQLite3Utils.pas"/>
@@ -84,7 +82,7 @@
         <WindowIndex Value="-1"/>
         <TopLine Value="-1"/>
         <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="37"/>
+        <UsageCount Value="42"/>
       </Unit7>
       <Unit8>
         <Filename Value="SQLITEWRAPPER/SQLite3Wrap.pas"/>
@@ -92,7 +90,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="160"/>
         <CursorPos X="89" Y="171"/>
-        <UsageCount Value="37"/>
+        <UsageCount Value="42"/>
       </Unit8>
       <Unit9>
         <Filename Value="FRAMES/framedialogs.pas"/>
@@ -101,12 +99,11 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Frame"/>
         <UnitName Value="FrameDialogs"/>
-        <IsVisibleTab Value="True"/>
-        <EditorIndex Value="3"/>
-        <CursorPos X="43" Y="9"/>
-        <UsageCount Value="35"/>
+        <EditorIndex Value="1"/>
+        <TopLine Value="130"/>
+        <CursorPos X="40" Y="140"/>
+        <UsageCount Value="40"/>
         <Loaded Value="True"/>
-        <LoadedDesigner Value="True"/>
       </Unit9>
       <Unit10>
         <Filename Value="FORMS/addfrienddlg.pas"/>
@@ -116,28 +113,30 @@
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="AddFriendDlg"/>
         <EditorIndex Value="-1"/>
-        <TopLine Value="55"/>
-        <CursorPos X="44" Y="50"/>
-        <UsageCount Value="28"/>
+        <TopLine Value="34"/>
+        <CursorPos X="35" Y="33"/>
+        <UsageCount Value="33"/>
       </Unit10>
       <Unit11>
         <Filename Value="ENGINE/transports.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="Transports"/>
-        <EditorIndex Value="5"/>
-        <TopLine Value="74"/>
-        <CursorPos Y="58"/>
-        <UsageCount Value="26"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="3"/>
+        <TopLine Value="114"/>
+        <CursorPos X="38" Y="126"/>
+        <UsageCount Value="31"/>
         <Loaded Value="True"/>
       </Unit11>
       <Unit12>
         <Filename Value="ENGINE/mails.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="Mails"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="595"/>
-        <CursorPos Y="612"/>
-        <UsageCount Value="25"/>
+        <EditorIndex Value="5"/>
+        <TopLine Value="593"/>
+        <CursorPos X="49" Y="598"/>
+        <UsageCount Value="30"/>
+        <Loaded Value="True"/>
       </Unit12>
       <Unit13>
         <Filename Value="SYNAPSE/source/lib/asn1util.pas"/>
@@ -146,14 +145,14 @@
         <WindowIndex Value="-1"/>
         <TopLine Value="-1"/>
         <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="25"/>
+        <UsageCount Value="30"/>
       </Unit13>
       <Unit14>
         <Filename Value="SYNAPSE/source/lib/blcksock.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="13" Y="2"/>
-        <UsageCount Value="25"/>
+        <UsageCount Value="30"/>
       </Unit14>
       <Unit15>
         <Filename Value="SYNAPSE/source/lib/clamsend.pas"/>
@@ -162,7 +161,7 @@
         <WindowIndex Value="-1"/>
         <TopLine Value="-1"/>
         <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="25"/>
+        <UsageCount Value="30"/>
       </Unit15>
       <Unit16>
         <Filename Value="SYNAPSE/source/lib/dnssend.pas"/>
@@ -171,7 +170,7 @@
         <WindowIndex Value="-1"/>
         <TopLine Value="-1"/>
         <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="25"/>
+        <UsageCount Value="30"/>
       </Unit16>
       <Unit17>
         <Filename Value="SYNAPSE/source/lib/ftpsend.pas"/>
@@ -180,7 +179,7 @@
         <WindowIndex Value="-1"/>
         <TopLine Value="-1"/>
         <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="25"/>
+        <UsageCount Value="30"/>
       </Unit17>
       <Unit18>
         <Filename Value="SYNAPSE/source/lib/ftptsend.pas"/>
@@ -189,7 +188,7 @@
         <WindowIndex Value="-1"/>
         <TopLine Value="-1"/>
         <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="25"/>
+        <UsageCount Value="30"/>
       </Unit18>
       <Unit19>
         <Filename Value="SYNAPSE/source/lib/httpsend.pas"/>
@@ -198,7 +197,7 @@
         <WindowIndex Value="-1"/>
         <TopLine Value="-1"/>
         <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="25"/>
+        <UsageCount Value="30"/>
       </Unit19>
       <Unit20>
         <Filename Value="SYNAPSE/source/lib/imapsend.pas"/>
@@ -206,7 +205,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="582"/>
         <CursorPos X="3" Y="586"/>
-        <UsageCount Value="25"/>
+        <UsageCount Value="30"/>
       </Unit20>
       <Unit21>
         <Filename Value="SYNAPSE/source/lib/laz_synapse.lpk"/>
@@ -215,7 +214,7 @@
         <WindowIndex Value="-1"/>
         <TopLine Value="-1"/>
         <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="25"/>
+        <UsageCount Value="30"/>
         <DefaultSyntaxHighlighter Value="XML"/>
       </Unit21>
       <Unit22>
@@ -225,7 +224,7 @@
         <WindowIndex Value="-1"/>
         <TopLine Value="-1"/>
         <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="25"/>
+        <UsageCount Value="30"/>
       </Unit22>
       <Unit23>
         <Filename Value="SYNAPSE/source/lib/ldapsend.pas"/>
@@ -234,7 +233,7 @@
         <WindowIndex Value="-1"/>
         <TopLine Value="-1"/>
         <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="25"/>
+        <UsageCount Value="30"/>
       </Unit23>
       <Unit24>
         <Filename Value="SYNAPSE/source/lib/mimeinln.pas"/>
@@ -243,16 +242,15 @@
         <WindowIndex Value="-1"/>
         <TopLine Value="-1"/>
         <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="25"/>
+        <UsageCount Value="30"/>
       </Unit24>
       <Unit25>
         <Filename Value="SYNAPSE/source/lib/mimemess.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
-        <WindowIndex Value="-1"/>
-        <TopLine Value="-1"/>
-        <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="25"/>
+        <TopLine Value="228"/>
+        <CursorPos X="31" Y="231"/>
+        <UsageCount Value="30"/>
       </Unit25>
       <Unit26>
         <Filename Value="SYNAPSE/source/lib/mimepart.pas"/>
@@ -261,7 +259,7 @@
         <WindowIndex Value="-1"/>
         <TopLine Value="-1"/>
         <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="25"/>
+        <UsageCount Value="30"/>
       </Unit26>
       <Unit27>
         <Filename Value="SYNAPSE/source/lib/nntpsend.pas"/>
@@ -270,7 +268,7 @@
         <WindowIndex Value="-1"/>
         <TopLine Value="-1"/>
         <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="25"/>
+        <UsageCount Value="30"/>
       </Unit27>
       <Unit28>
         <Filename Value="SYNAPSE/source/lib/pingsend.pas"/>
@@ -279,7 +277,7 @@
         <WindowIndex Value="-1"/>
         <TopLine Value="-1"/>
         <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="25"/>
+        <UsageCount Value="30"/>
       </Unit28>
       <Unit29>
         <Filename Value="SYNAPSE/source/lib/pop3send.pas"/>
@@ -288,7 +286,7 @@
         <WindowIndex Value="-1"/>
         <TopLine Value="-1"/>
         <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="25"/>
+        <UsageCount Value="30"/>
       </Unit29>
       <Unit30>
         <Filename Value="SYNAPSE/source/lib/slogsend.pas"/>
@@ -297,7 +295,7 @@
         <WindowIndex Value="-1"/>
         <TopLine Value="-1"/>
         <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="25"/>
+        <UsageCount Value="30"/>
       </Unit30>
       <Unit31>
         <Filename Value="SYNAPSE/source/lib/smtpsend.pas"/>
@@ -306,7 +304,7 @@
         <WindowIndex Value="-1"/>
         <TopLine Value="-1"/>
         <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="25"/>
+        <UsageCount Value="30"/>
       </Unit31>
       <Unit32>
         <Filename Value="SYNAPSE/source/lib/snmpsend.pas"/>
@@ -315,7 +313,7 @@
         <WindowIndex Value="-1"/>
         <TopLine Value="-1"/>
         <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="25"/>
+        <UsageCount Value="30"/>
       </Unit32>
       <Unit33>
         <Filename Value="SYNAPSE/source/lib/sntpsend.pas"/>
@@ -324,7 +322,7 @@
         <WindowIndex Value="-1"/>
         <TopLine Value="-1"/>
         <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="25"/>
+        <UsageCount Value="30"/>
       </Unit33>
       <Unit34>
         <Filename Value="SYNAPSE/source/lib/ssdotnet.inc"/>
@@ -333,7 +331,7 @@
         <WindowIndex Value="-1"/>
         <TopLine Value="-1"/>
         <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="25"/>
+        <UsageCount Value="30"/>
       </Unit34>
       <Unit35>
         <Filename Value="SYNAPSE/source/lib/ssfpc.inc"/>
@@ -342,7 +340,7 @@
         <WindowIndex Value="-1"/>
         <TopLine Value="-1"/>
         <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="25"/>
+        <UsageCount Value="30"/>
       </Unit35>
       <Unit36>
         <Filename Value="SYNAPSE/source/lib/ssl_cryptlib.pas"/>
@@ -351,7 +349,7 @@
         <WindowIndex Value="-1"/>
         <TopLine Value="-1"/>
         <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="25"/>
+        <UsageCount Value="30"/>
       </Unit36>
       <Unit37>
         <Filename Value="SYNAPSE/source/lib/sslinux.inc"/>
@@ -360,23 +358,22 @@
         <WindowIndex Value="-1"/>
         <TopLine Value="-1"/>
         <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="25"/>
+        <UsageCount Value="30"/>
       </Unit37>
       <Unit38>
         <Filename Value="SYNAPSE/source/lib/ssl_openssl.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="13" Y="2"/>
-        <UsageCount Value="25"/>
+        <UsageCount Value="30"/>
       </Unit38>
       <Unit39>
         <Filename Value="SYNAPSE/source/lib/ssl_openssl_lib.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
-        <WindowIndex Value="-1"/>
-        <TopLine Value="-1"/>
-        <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="25"/>
+        <TopLine Value="1249"/>
+        <CursorPos Y="1262"/>
+        <UsageCount Value="30"/>
       </Unit39>
       <Unit40>
         <Filename Value="SYNAPSE/source/lib/ssl_sbb.pas"/>
@@ -385,7 +382,7 @@
         <WindowIndex Value="-1"/>
         <TopLine Value="-1"/>
         <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="25"/>
+        <UsageCount Value="30"/>
       </Unit40>
       <Unit41>
         <Filename Value="SYNAPSE/source/lib/ssl_streamsec.pas"/>
@@ -394,7 +391,7 @@
         <WindowIndex Value="-1"/>
         <TopLine Value="-1"/>
         <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="25"/>
+        <UsageCount Value="30"/>
       </Unit41>
       <Unit42>
         <Filename Value="SYNAPSE/source/lib/sswin32.inc"/>
@@ -403,13 +400,13 @@
         <WindowIndex Value="-1"/>
         <TopLine Value="-1"/>
         <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="25"/>
+        <UsageCount Value="30"/>
       </Unit42>
       <Unit43>
         <Filename Value="SYNAPSE/source/lib/synachar.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
-        <UsageCount Value="25"/>
+        <UsageCount Value="30"/>
       </Unit43>
       <Unit44>
         <Filename Value="SYNAPSE/source/lib/synacode.pas"/>
@@ -418,7 +415,7 @@
         <WindowIndex Value="-1"/>
         <TopLine Value="-1"/>
         <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="25"/>
+        <UsageCount Value="30"/>
       </Unit44>
       <Unit45>
         <Filename Value="SYNAPSE/source/lib/synacrypt.pas"/>
@@ -427,7 +424,7 @@
         <WindowIndex Value="-1"/>
         <TopLine Value="-1"/>
         <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="25"/>
+        <UsageCount Value="30"/>
       </Unit45>
       <Unit46>
         <Filename Value="SYNAPSE/source/lib/synadbg.pas"/>
@@ -436,7 +433,7 @@
         <WindowIndex Value="-1"/>
         <TopLine Value="-1"/>
         <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="25"/>
+        <UsageCount Value="30"/>
       </Unit46>
       <Unit47>
         <Filename Value="SYNAPSE/source/lib/synafpc.pas"/>
@@ -444,7 +441,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="67"/>
         <CursorPos X="28" Y="80"/>
-        <UsageCount Value="25"/>
+        <UsageCount Value="30"/>
       </Unit47>
       <Unit48>
         <Filename Value="SYNAPSE/source/lib/synaicnv.pas"/>
@@ -453,7 +450,7 @@
         <WindowIndex Value="-1"/>
         <TopLine Value="-1"/>
         <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="25"/>
+        <UsageCount Value="30"/>
       </Unit48>
       <Unit49>
         <Filename Value="SYNAPSE/source/lib/synaip.pas"/>
@@ -462,7 +459,7 @@
         <WindowIndex Value="-1"/>
         <TopLine Value="-1"/>
         <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="25"/>
+        <UsageCount Value="30"/>
       </Unit49>
       <Unit50>
         <Filename Value="SYNAPSE/source/lib/synamisc.pas"/>
@@ -471,7 +468,7 @@
         <WindowIndex Value="-1"/>
         <TopLine Value="-1"/>
         <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="25"/>
+        <UsageCount Value="30"/>
       </Unit50>
       <Unit51>
         <Filename Value="SYNAPSE/source/lib/synaser.pas"/>
@@ -480,7 +477,7 @@
         <WindowIndex Value="-1"/>
         <TopLine Value="-1"/>
         <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="25"/>
+        <UsageCount Value="30"/>
       </Unit51>
       <Unit52>
         <Filename Value="SYNAPSE/source/lib/synautil.pas"/>
@@ -488,7 +485,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="1912"/>
         <CursorPos X="5" Y="1928"/>
-        <UsageCount Value="25"/>
+        <UsageCount Value="30"/>
       </Unit52>
       <Unit53>
         <Filename Value="SYNAPSE/source/lib/synsock.pas"/>
@@ -497,7 +494,7 @@
         <WindowIndex Value="-1"/>
         <TopLine Value="-1"/>
         <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="25"/>
+        <UsageCount Value="30"/>
       </Unit53>
       <Unit54>
         <Filename Value="SYNAPSE/source/lib/tlntsend.pas"/>
@@ -506,258 +503,247 @@
         <WindowIndex Value="-1"/>
         <TopLine Value="-1"/>
         <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="25"/>
+        <UsageCount Value="30"/>
       </Unit54>
       <Unit55>
         <Filename Value="GENERICS/Specialized/SpecializedBitmap.pas"/>
-        <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <WindowIndex Value="-1"/>
         <TopLine Value="-1"/>
         <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="23"/>
+        <UsageCount Value="25"/>
       </Unit55>
       <Unit56>
         <Filename Value="GENERICS/Specialized/SpecializedDictionary.pas"/>
-        <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <WindowIndex Value="-1"/>
         <TopLine Value="-1"/>
         <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="23"/>
+        <UsageCount Value="25"/>
       </Unit56>
       <Unit57>
         <Filename Value="GENERICS/Specialized/SpecializedList.pas"/>
-        <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <WindowIndex Value="-1"/>
         <TopLine Value="-1"/>
         <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="23"/>
+        <UsageCount Value="25"/>
       </Unit57>
       <Unit58>
         <Filename Value="GENERICS/Specialized/SpecializedMatrix.pas"/>
-        <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <WindowIndex Value="-1"/>
         <TopLine Value="-1"/>
         <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="23"/>
+        <UsageCount Value="25"/>
       </Unit58>
       <Unit59>
         <Filename Value="GENERICS/Specialized/SpecializedPoint.pas"/>
-        <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <WindowIndex Value="-1"/>
         <TopLine Value="-1"/>
         <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="23"/>
+        <UsageCount Value="25"/>
       </Unit59>
       <Unit60>
         <Filename Value="GENERICS/Specialized/SpecializedQueue.pas"/>
-        <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
-        <TopLine Value="4"/>
-        <CursorPos X="21" Y="16"/>
-        <UsageCount Value="23"/>
+        <TopLine Value="42"/>
+        <CursorPos X="52" Y="23"/>
+        <UsageCount Value="25"/>
       </Unit60>
       <Unit61>
         <Filename Value="GENERICS/Specialized/SpecializedRectangle.pas"/>
-        <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <WindowIndex Value="-1"/>
         <TopLine Value="-1"/>
         <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="23"/>
+        <UsageCount Value="25"/>
       </Unit61>
       <Unit62>
         <Filename Value="GENERICS/Specialized/SpecializedSet.pas"/>
-        <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <WindowIndex Value="-1"/>
         <TopLine Value="-1"/>
         <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="23"/>
+        <UsageCount Value="25"/>
       </Unit62>
       <Unit63>
         <Filename Value="GENERICS/Specialized/SpecializedStack.pas"/>
-        <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <WindowIndex Value="-1"/>
         <TopLine Value="-1"/>
         <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="23"/>
+        <UsageCount Value="25"/>
       </Unit63>
       <Unit64>
         <Filename Value="GENERICS/Specialized/SpecializedStream.pas"/>
-        <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <WindowIndex Value="-1"/>
         <TopLine Value="-1"/>
         <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="23"/>
+        <UsageCount Value="25"/>
       </Unit64>
       <Unit65>
         <Filename Value="GENERICS/Specialized/SpecializedTree.pas"/>
-        <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <WindowIndex Value="-1"/>
         <TopLine Value="-1"/>
         <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="23"/>
+        <UsageCount Value="25"/>
       </Unit65>
       <Unit66>
         <Filename Value="GENERICS/Generic/GenericBitmap.inc"/>
-        <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <WindowIndex Value="-1"/>
         <TopLine Value="-1"/>
         <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="23"/>
+        <UsageCount Value="25"/>
       </Unit66>
       <Unit67>
         <Filename Value="GENERICS/Generic/GenericDictionary.inc"/>
-        <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <WindowIndex Value="-1"/>
         <TopLine Value="-1"/>
         <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="23"/>
+        <UsageCount Value="25"/>
       </Unit67>
       <Unit68>
         <Filename Value="GENERICS/Generic/GenericFileList.inc"/>
-        <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <WindowIndex Value="-1"/>
         <TopLine Value="-1"/>
         <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="23"/>
+        <UsageCount Value="25"/>
       </Unit68>
       <Unit69>
         <Filename Value="GENERICS/Generic/GenericList.inc"/>
-        <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="424"/>
         <CursorPos Y="437"/>
-        <UsageCount Value="23"/>
+        <UsageCount Value="25"/>
       </Unit69>
       <Unit70>
         <Filename Value="GENERICS/Generic/GenericListAbstract.inc"/>
-        <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <WindowIndex Value="-1"/>
         <TopLine Value="-1"/>
         <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="23"/>
+        <UsageCount Value="25"/>
       </Unit70>
       <Unit71>
         <Filename Value="GENERICS/Generic/GenericListObject.inc"/>
-        <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <WindowIndex Value="-1"/>
         <TopLine Value="-1"/>
         <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="23"/>
+        <UsageCount Value="25"/>
       </Unit71>
       <Unit72>
         <Filename Value="GENERICS/Generic/GenericListString.inc"/>
-        <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <WindowIndex Value="-1"/>
         <TopLine Value="-1"/>
         <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="23"/>
+        <UsageCount Value="25"/>
       </Unit72>
       <Unit73>
         <Filename Value="GENERICS/Generic/GenericMatrix.inc"/>
-        <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <WindowIndex Value="-1"/>
         <TopLine Value="-1"/>
         <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="23"/>
+        <UsageCount Value="25"/>
       </Unit73>
       <Unit74>
         <Filename Value="GENERICS/Generic/GenericPoint.inc"/>
-        <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <WindowIndex Value="-1"/>
         <TopLine Value="-1"/>
         <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="23"/>
+        <UsageCount Value="25"/>
       </Unit74>
       <Unit75>
         <Filename Value="GENERICS/Generic/GenericQueue.inc"/>
-        <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="64"/>
         <CursorPos Y="80"/>
-        <UsageCount Value="23"/>
+        <UsageCount Value="25"/>
       </Unit75>
       <Unit76>
         <Filename Value="GENERICS/Generic/GenericRange.inc"/>
-        <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <WindowIndex Value="-1"/>
         <TopLine Value="-1"/>
         <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="23"/>
+        <UsageCount Value="25"/>
       </Unit76>
       <Unit77>
         <Filename Value="GENERICS/Generic/GenericRectangle.inc"/>
-        <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <WindowIndex Value="-1"/>
         <TopLine Value="-1"/>
         <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="23"/>
+        <UsageCount Value="25"/>
       </Unit77>
       <Unit78>
         <Filename Value="GENERICS/Generic/GenericSet.inc"/>
-        <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <WindowIndex Value="-1"/>
         <TopLine Value="-1"/>
         <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="23"/>
+        <UsageCount Value="25"/>
       </Unit78>
       <Unit79>
         <Filename Value="GENERICS/Generic/GenericStack.inc"/>
-        <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <WindowIndex Value="-1"/>
         <TopLine Value="-1"/>
         <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="23"/>
+        <UsageCount Value="25"/>
       </Unit79>
       <Unit80>
         <Filename Value="GENERICS/Generic/GenericStream.inc"/>
-        <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <WindowIndex Value="-1"/>
         <TopLine Value="-1"/>
         <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="23"/>
+        <UsageCount Value="25"/>
       </Unit80>
       <Unit81>
         <Filename Value="GENERICS/Generic/GenericTree.inc"/>
-        <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <WindowIndex Value="-1"/>
         <TopLine Value="-1"/>
         <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="23"/>
+        <UsageCount Value="25"/>
       </Unit81>
       <Unit82>
         <Filename Value="GENERICS/Additional/UBinarySerializer.pas"/>
-        <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <WindowIndex Value="-1"/>
         <TopLine Value="-1"/>
         <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="23"/>
+        <UsageCount Value="25"/>
       </Unit82>
       <Unit83>
+        <Filename Value="ENGINE/blowfishex.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="BlowFishEx"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="63" Y="11"/>
+        <UsageCount Value="26"/>
+      </Unit83>
+      <Unit84>
+        <Filename Value="ENGINE/rsaex.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="RsaEx"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="34"/>
+        <CursorPos X="17" Y="46"/>
+        <UsageCount Value="26"/>
+      </Unit84>
+      <Unit85>
         <Filename Value="Frames/framelogin.pas"/>
         <ComponentName Value="FrameLogin"/>
         <HasResources Value="True"/>
@@ -765,8 +751,8 @@
         <EditorIndex Value="-1"/>
         <CursorPos X="25" Y="8"/>
         <UsageCount Value="25"/>
-      </Unit83>
-      <Unit84>
+      </Unit85>
+      <Unit86>
         <Filename Value="Frames/frameofferregisteruser.pas"/>
         <ComponentName Value="FrameOfferRegisterUser"/>
         <HasResources Value="True"/>
@@ -775,8 +761,8 @@
         <TopLine Value="39"/>
         <CursorPos X="3" Y="41"/>
         <UsageCount Value="25"/>
-      </Unit84>
-      <Unit85>
+      </Unit86>
+      <Unit87>
         <Filename Value="Frames/frameregisteruser.pas"/>
         <ComponentName Value="FrameRegisterUser"/>
         <HasResources Value="True"/>
@@ -784,155 +770,138 @@
         <EditorIndex Value="-1"/>
         <CursorPos X="56" Y="18"/>
         <UsageCount Value="24"/>
-      </Unit85>
-      <Unit86>
+      </Unit87>
+      <Unit88>
         <Filename Value="CryptoChat.res"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="355"/>
         <UsageCount Value="10"/>
         <DefaultSyntaxHighlighter Value="None"/>
-      </Unit86>
-      <Unit87>
+      </Unit88>
+      <Unit89>
         <Filename Value="Frames/frameofferregisteruser.lfm"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="31"/>
         <CursorPos X="15" Y="44"/>
         <UsageCount Value="11"/>
         <DefaultSyntaxHighlighter Value="LFM"/>
-      </Unit87>
-      <Unit88>
+      </Unit89>
+      <Unit90>
         <Filename Value="/usr/lib/codetyphon/typhon/components/BaseUtils/fileutil.pas"/>
         <EditorIndex Value="-1"/>
         <UsageCount Value="10"/>
-      </Unit88>
-      <Unit89>
+      </Unit90>
+      <Unit91>
         <Filename Value="../Тестовые_программы/Работа_с_базой_данных/engine.databases.pas"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="5" Y="840"/>
         <UsageCount Value="10"/>
-      </Unit89>
-      <Unit90>
+      </Unit91>
+      <Unit92>
         <Filename Value="/usr/lib/codetyphon/typhon/lcl/dialogs.pp"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="15"/>
         <CursorPos X="3" Y="35"/>
         <UsageCount Value="11"/>
-      </Unit90>
-      <Unit91>
+      </Unit92>
+      <Unit93>
         <Filename Value="/usr/lib/codetyphon/fpcsrc/packages/libpng/src/png.pp"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="388"/>
         <UsageCount Value="10"/>
-      </Unit91>
-      <Unit92>
+      </Unit93>
+      <Unit94>
         <Filename Value="/usr/lib/codetyphon/fpcsrc/packages/fcl-image/src/pngcomn.pp"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="10"/>
         <UsageCount Value="10"/>
-      </Unit92>
-      <Unit93>
+      </Unit94>
+      <Unit95>
         <Filename Value="/usr/lib/codetyphon/fpcsrc/packages/fcl-image/src/fpimage.pp"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="517"/>
         <CursorPos X="36" Y="258"/>
         <UsageCount Value="10"/>
-      </Unit93>
-      <Unit94>
+      </Unit95>
+      <Unit96>
         <Filename Value="/usr/lib/codetyphon/fpcsrc/rtl/objpas/classes/classesh.inc"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="1592"/>
         <CursorPos X="44" Y="1612"/>
         <UsageCount Value="10"/>
-      </Unit94>
-      <Unit95>
+      </Unit96>
+      <Unit97>
         <Filename Value="/usr/share/fpcsrc/2.6.4/rtl/objpas/classes/classesh.inc"/>
         <EditorIndex Value="-1"/>
-        <TopLine Value="1586"/>
-        <CursorPos X="5" Y="1595"/>
+        <TopLine Value="934"/>
+        <CursorPos X="16" Y="947"/>
         <UsageCount Value="10"/>
-      </Unit95>
-      <Unit96>
+      </Unit97>
+      <Unit98>
         <Filename Value="/usr/share/fpcsrc/2.6.4/rtl/objpas/fgl.pp"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="34"/>
         <CursorPos X="42" Y="52"/>
         <UsageCount Value="10"/>
-      </Unit96>
-      <Unit97>
+      </Unit98>
+      <Unit99>
         <Filename Value="GENERICS/src/inc/generics.dictionaries.inc"/>
         <EditorIndex Value="-1"/>
         <WindowIndex Value="-1"/>
         <TopLine Value="-1"/>
         <CursorPos X="-1" Y="-1"/>
         <UsageCount Value="21"/>
-      </Unit97>
-      <Unit98>
+      </Unit99>
+      <Unit100>
         <Filename Value="GENERICS/src/inc/generics.dictionariesh.inc"/>
         <EditorIndex Value="-1"/>
         <WindowIndex Value="-1"/>
         <TopLine Value="-1"/>
         <CursorPos X="-1" Y="-1"/>
         <UsageCount Value="21"/>
-      </Unit98>
-      <Unit99>
+      </Unit100>
+      <Unit101>
         <Filename Value="GENERICS/src/generics_collections.pas"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="21"/>
         <CursorPos X="32" Y="34"/>
         <UsageCount Value="21"/>
-      </Unit99>
-      <Unit100>
+      </Unit101>
+      <Unit102>
         <Filename Value="GENERICS/src/generics_defaults.pas"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="20"/>
         <CursorPos X="73" Y="32"/>
         <UsageCount Value="21"/>
-      </Unit100>
-      <Unit101>
+      </Unit102>
+      <Unit103>
         <Filename Value="GENERICS/src/generics_hashes.pas"/>
         <EditorIndex Value="-1"/>
         <UsageCount Value="21"/>
-      </Unit101>
-      <Unit102>
+      </Unit103>
+      <Unit104>
         <Filename Value="GENERICS/src/generics_helpers.pas"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="21"/>
         <CursorPos X="39" Y="30"/>
         <UsageCount Value="21"/>
-      </Unit102>
-      <Unit103>
+      </Unit104>
+      <Unit105>
         <Filename Value="GENERICS/src/generics_memoryexpanders.pas"/>
         <EditorIndex Value="-1"/>
         <UsageCount Value="21"/>
-      </Unit103>
-      <Unit104>
+      </Unit105>
+      <Unit106>
         <Filename Value="GENERICS/src/generics_strings.pas"/>
         <EditorIndex Value="-1"/>
         <UsageCount Value="21"/>
-      </Unit104>
-      <Unit105>
+      </Unit106>
+      <Unit107>
         <Filename Value="GENERICS/Demo/UMainForm.pas"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="193"/>
         <CursorPos X="50" Y="213"/>
         <UsageCount Value="10"/>
-      </Unit105>
-      <Unit106>
-        <Filename Value="ENGINE/blowfishex.pas"/>
-        <IsPartOfProject Value="True"/>
-        <UnitName Value="BlowFishEx"/>
-        <EditorIndex Value="-1"/>
-        <CursorPos X="63" Y="11"/>
-        <UsageCount Value="21"/>
-      </Unit106>
-      <Unit107>
-        <Filename Value="ENGINE/rsaex.pas"/>
-        <IsPartOfProject Value="True"/>
-        <UnitName Value="RsaEx"/>
-        <EditorIndex Value="4"/>
-        <CursorPos X="15" Y="71"/>
-        <UsageCount Value="21"/>
-        <Loaded Value="True"/>
       </Unit107>
       <Unit108>
         <Filename Value="../Тестовые_программы/Шифрование_RSA/extendedssl.pas"/>
@@ -948,112 +917,162 @@
         <TopLine Value="67"/>
         <UsageCount Value="10"/>
       </Unit109>
+      <Unit110>
+        <Filename Value="ENGINE/tar.pas"/>
+        <UnitName Value="Tar"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="10" Y="14"/>
+        <UsageCount Value="20"/>
+      </Unit110>
+      <Unit111>
+        <Filename Value="ENGINE/tars.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="Tars"/>
+        <EditorIndex Value="4"/>
+        <TopLine Value="179"/>
+        <CursorPos X="3" Y="188"/>
+        <UsageCount Value="25"/>
+        <Loaded Value="True"/>
+      </Unit111>
+      <Unit112>
+        <Filename Value="/usr/share/fpcsrc/2.6.4/rtl/inc/objpash.inc"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="180"/>
+        <CursorPos X="23" Y="192"/>
+        <UsageCount Value="10"/>
+      </Unit112>
+      <Unit113>
+        <Filename Value="/usr/share/fpcsrc/2.6.4/rtl/inc/objpas.inc"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="265"/>
+        <CursorPos X="9" Y="267"/>
+        <UsageCount Value="10"/>
+      </Unit113>
+      <Unit114>
+        <Filename Value="ENGINE/guidcommands.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="GUIDCommands"/>
+        <EditorIndex Value="7"/>
+        <CursorPos X="21" Y="9"/>
+        <UsageCount Value="24"/>
+        <Loaded Value="True"/>
+      </Unit114>
+      <Unit115>
+        <Filename Value="/usr/share/fpcsrc/2.6.4/rtl/objpas/classes/streams.inc"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="620"/>
+        <CursorPos X="3" Y="623"/>
+        <UsageCount Value="10"/>
+      </Unit115>
+      <Unit116>
+        <Filename Value="/usr/share/fpcsrc/2.6.4/packages/fcl-base/src/libtar.pp"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="188"/>
+        <CursorPos X="37" Y="200"/>
+        <UsageCount Value="10"/>
+      </Unit116>
+      <Unit117>
+        <Filename Value="GENERICS/generics.collections.pas"/>
+        <UnitName Value="Generics.Collections"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="13"/>
+        <CursorPos X="3" Y="28"/>
+        <UsageCount Value="20"/>
+      </Unit117>
+      <Unit118>
+        <Filename Value="GENERICS/DelphiGenerics.pas"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="8"/>
+        <TopLine Value="26"/>
+        <CursorPos X="14" Y="27"/>
+        <UsageCount Value="22"/>
+        <Loaded Value="True"/>
+      </Unit118>
+      <Unit119>
+        <Filename Value="FORMS/waitform.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="FormWait"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="WaitForm"/>
+        <EditorIndex Value="2"/>
+        <TopLine Value="18"/>
+        <CursorPos X="91" Y="18"/>
+        <UsageCount Value="21"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+      </Unit119>
+      <Unit120>
+        <Filename Value="/usr/share/lazarus/1.4.2/lcl/forms.pp"/>
+        <UnitName Value="Forms"/>
+        <EditorIndex Value="6"/>
+        <TopLine Value="37"/>
+        <CursorPos X="21" Y="49"/>
+        <UsageCount Value="11"/>
+        <Loaded Value="True"/>
+      </Unit120>
     </Units>
-    <JumpHistory Count="26" HistoryIndex="25">
+    <JumpHistory Count="15" HistoryIndex="14">
       <Position1>
-        <Filename Value="ENGINE/transports.pas"/>
-        <Caret Line="64" Column="11" TopLine="57"/>
+        <Filename Value="main.pas"/>
+        <Caret Line="144" Column="47" TopLine="130"/>
       </Position1>
       <Position2>
-        <Filename Value="ENGINE/transports.pas"/>
-        <Caret Line="56" TopLine="46"/>
+        <Filename Value="FRAMES/framedialogs.pas"/>
+        <Caret Line="73" TopLine="62"/>
       </Position2>
       <Position3>
-        <Filename Value="ENGINE/transports.pas"/>
-        <Caret Line="58" TopLine="46"/>
+        <Filename Value="FRAMES/framedialogs.pas"/>
+        <Caret Line="148" Column="18" TopLine="128"/>
       </Position3>
       <Position4>
-        <Filename Value="ENGINE/transports.pas"/>
-        <Caret Line="60" TopLine="46"/>
+        <Filename Value="FORMS/waitform.pas"/>
+        <Caret Line="38" Column="28" TopLine="19"/>
       </Position4>
       <Position5>
-        <Filename Value="ENGINE/transports.pas"/>
-        <Caret Line="62" TopLine="46"/>
+        <Filename Value="FORMS/waitform.pas"/>
+        <Caret Line="17" Column="70" TopLine="6"/>
       </Position5>
       <Position6>
-        <Filename Value="ENGINE/transports.pas"/>
-        <Caret Line="63" TopLine="46"/>
+        <Filename Value="FORMS/waitform.pas"/>
+        <Caret Line="24" Column="5" TopLine="6"/>
       </Position6>
       <Position7>
-        <Filename Value="ENGINE/transports.pas"/>
-        <Caret Line="56" TopLine="46"/>
+        <Filename Value="FORMS/waitform.pas"/>
+        <Caret Line="46" Column="23" TopLine="26"/>
       </Position7>
       <Position8>
-        <Filename Value="ENGINE/transports.pas"/>
-        <Caret Line="58" TopLine="46"/>
+        <Filename Value="FRAMES/framedialogs.pas"/>
+        <Caret Line="149" Column="31" TopLine="130"/>
       </Position8>
       <Position9>
-        <Filename Value="ENGINE/transports.pas"/>
-        <Caret Line="60" TopLine="46"/>
+        <Filename Value="FORMS/waitform.pas"/>
+        <Caret Line="24" Column="29" TopLine="12"/>
       </Position9>
       <Position10>
         <Filename Value="ENGINE/transports.pas"/>
-        <Caret Line="62" TopLine="46"/>
+        <Caret Line="124" Column="64" TopLine="106"/>
       </Position10>
       <Position11>
-        <Filename Value="ENGINE/transports.pas"/>
-        <Caret Line="63" TopLine="46"/>
+        <Filename Value="ENGINE/mails.pas"/>
+        <Caret Line="124" Column="69" TopLine="112"/>
       </Position11>
       <Position12>
-        <Filename Value="ENGINE/transports.pas"/>
-        <Caret Line="56" TopLine="46"/>
+        <Filename Value="ENGINE/mails.pas"/>
+        <Caret Line="596" Column="37" TopLine="539"/>
       </Position12>
       <Position13>
         <Filename Value="ENGINE/transports.pas"/>
-        <Caret Line="58" TopLine="46"/>
+        <Caret Line="125" Column="30" TopLine="114"/>
       </Position13>
       <Position14>
         <Filename Value="ENGINE/transports.pas"/>
-        <Caret Line="60" TopLine="46"/>
+        <Caret Line="126" Column="35" TopLine="114"/>
       </Position14>
       <Position15>
-        <Filename Value="ENGINE/transports.pas"/>
-        <Caret Line="62" TopLine="46"/>
+        <Filename Value="ENGINE/tars.pas"/>
+        <Caret Line="188" Column="3" TopLine="179"/>
       </Position15>
-      <Position16>
-        <Filename Value="ENGINE/transports.pas"/>
-        <Caret Line="63" TopLine="46"/>
-      </Position16>
-      <Position17>
-        <Filename Value="ENGINE/transports.pas"/>
-        <Caret Line="50" Column="13" TopLine="30"/>
-      </Position17>
-      <Position18>
-        <Filename Value="ENGINE/transports.pas"/>
-        <Caret Line="58" TopLine="46"/>
-      </Position18>
-      <Position19>
-        <Filename Value="ENGINE/transports.pas"/>
-        <Caret Line="60" TopLine="46"/>
-      </Position19>
-      <Position20>
-        <Filename Value="ENGINE/transports.pas"/>
-        <Caret Line="62" TopLine="46"/>
-      </Position20>
-      <Position21>
-        <Filename Value="ENGINE/transports.pas"/>
-        <Caret Line="64" TopLine="46"/>
-      </Position21>
-      <Position22>
-        <Filename Value="ENGINE/transports.pas"/>
-        <Caret Line="65" TopLine="46"/>
-      </Position22>
-      <Position23>
-        <Filename Value="main.pas"/>
-        <Caret Line="111" TopLine="99"/>
-      </Position23>
-      <Position24>
-        <Filename Value="main.pas"/>
-        <Caret Line="112" TopLine="99"/>
-      </Position24>
-      <Position25>
-        <Filename Value="ENGINE/transports.pas"/>
-        <Caret Line="104" TopLine="89"/>
-      </Position25>
-      <Position26>
-        <Filename Value="FRAMES/framedialogs.pas"/>
-        <Caret Line="64" Column="33" TopLine="52"/>
-      </Position26>
     </JumpHistory>
   </ProjectSession>
   <Debugging>
@@ -1062,8 +1081,8 @@
         <Kind Value="bpkSource"/>
         <WatchScope Value="wpsLocal"/>
         <WatchKind Value="wpkWrite"/>
-        <Source Value="main.pas"/>
-        <Line Value="111"/>
+        <Source Value="ENGINE/transports.pas"/>
+        <Line Value="65"/>
       </Item1>
     </BreakPoints>
   </Debugging>

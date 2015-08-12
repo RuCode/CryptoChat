@@ -121,6 +121,9 @@ type
     function GetEmailDate: TDateTime;
     {:Отправка письма}
     function SendMail(ToAddr, Subject, Text: string; FileName: string = ''): boolean;
+      overload;
+    function SendMail(ToAddr, Subject, Text: string; AttachName: string;
+      Stream: TStream): boolean; overload;
 
   public
     {:Имя пользователя для авторизации.}
@@ -567,6 +570,45 @@ begin
   end;
 end;
 
+function TCustomMail.SendMail(ToAddr, Subject, Text: string;
+  AttachName: string; Stream: TStream): boolean;
+  // Отправка письма
+var
+  MailMessage: TMimeMess;
+  MIMEPart: TMimePart;
+  StringList: TStringList;
+begin
+  Result := False;
+  MailMessage := TMimeMess.Create;
+  StringList := TStringList.Create;
+  try
+    // Заголовок письма
+    MailMessage.Header.Subject := Subject;// тема сообщения
+    MailMessage.Header.From := fSMTPClient.UserName; // имя и адрес отправителя
+    MailMessage.Header.ToList.Add(ToAddr); // имя и адрес получателя
+    // Корневой элемент
+    MIMEPart := MailMessage.AddPartMultipart('alternative', nil);
+    if length(Text) <> 0 then
+    begin
+      StringList.Text := Text;
+      MailMessage.AddPartText(StringList, MIMEPart);
+    end;
+    // Вложение
+    MIMEPart := MailMessage.AddPartMultipart('attachment', nil);
+    MailMessage.AddPartBinary(Stream, FileName, MIMEPart);
+    // Кодируем и отправляем
+    MailMessage.EncodeMessage;
+    Result := True;
+    Result := Result and fSMTPClient.MailFrom(fSMTPClient.UserName,
+      Length(fSMTPClient.UserName));
+    Result := Result and fSMTPClient.MailTo(ToAddr);
+    Result := Result and fSMTPClient.MailData(MailMessage.Lines);
+  finally
+    MailMessage.Free;
+    StringList.Free;
+  end;
+end;
+
 constructor TCustomMail.Create;
   // Создание обьекта
 begin
@@ -609,11 +651,10 @@ end;
 
 procedure TCustomMail.Nop;
 begin
-  if fConnected then
-  begin
-    fIMAPClient.NoOp;
+  if Assigned(fSMTPClient) then
     fSMTPClient.NoOp;
-  end;
+  if Assigned(fIMAPClient) then
+    fIMAPClient.NoOp;
 end;
 
 end.

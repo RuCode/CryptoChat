@@ -5,7 +5,8 @@ unit Main;
 interface
 
 uses
-  Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, FrameLogin, FrameOfferRegisterUser,
+  Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs,
+  FrameLogin, FrameOfferRegisterUser,
   FrameRegisterUser, FrameDialogs, DataBases, Transports;
 
 type
@@ -98,6 +99,8 @@ end;
 
 procedure TMainForm.ShowFrameDialogs;
 // Показать фрэйм диалогов
+var
+  Info: TDataInfo;
 begin
   HideAllFrames;
   if not Assigned(FrameDialogs) then
@@ -109,7 +112,8 @@ begin
   FrameDialogs.Parent := MainForm;
   FrameDialogs.Visible := True;
   SetCaptionWithForm(FrameDialogs);
-  Transport.Enqueue(CMD_CONNECT);
+  Info.Command := CMD_CONNECT;
+  Transport.Enqueue(Info);
 end;
 
 procedure TMainForm.HideAllFrames;
@@ -148,4 +152,3 @@ begin
 end;
 
 end.
-
