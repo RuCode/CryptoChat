@@ -1,6 +1,9 @@
 *.dcu
 *.~*~
+CryptoChat
 Launch
+ArchiveLaunch 
+project1
 *.local
 *.identcache
 __history
