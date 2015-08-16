@@ -14,6 +14,8 @@ const
   CMD_DISCONNECT = 2;
   {:Отправить запрос на добавления в друзья}
   CMD_ADDFRIEND = 3;
+  {:Синхронизация сырых сообщений, нужна для анализа ссылочной целостности и получения новых сообщений на лету}
+  CMD_SYNCH_RAWMESSAGES = 4;
 
 type
   TDataInfo = record
@@ -24,7 +26,8 @@ type
         Name,
         Email,
         AvatarPath: ShortString;
-        OnEndOperation: TProcedureOfObject)
+        OnEndOperation: TProcedureOfObject);
+      CMD_SYNCH_RAWMESSAGES: ();
   end;
 
 type
@@ -73,6 +76,7 @@ var
   Rsa: TRsa;
   Tar: TTar;
   Stream: TMemoryStream;
+  i: Integer;
 begin
   // Основной цикл сетевого транспорта
   while not Terminated do
@@ -130,6 +134,14 @@ begin
           Tar.Free;
           Stream.Free;
         end;
+        // Синхронизация сообщений
+        CMD_SYNCH_RAWMESSAGES:
+        begin
+          { TODO : Нужно сделать фичу синхронизации }
+          if mail.Connected then
+            for i := 0 to mail.CountOfMails do
+              mail.GetMailHeader(i);
+        end
           // Не смогли определить комманду
         else
           raise Exception.Create('Не известная комманда');

@@ -123,8 +123,8 @@
         <UnitName Value="Transports"/>
         <IsVisibleTab Value="True"/>
         <EditorIndex Value="3"/>
-        <TopLine Value="114"/>
-        <CursorPos X="85" Y="126"/>
+        <TopLine Value="129"/>
+        <CursorPos X="17" Y="142"/>
         <UsageCount Value="31"/>
         <Loaded Value="True"/>
       </Unit11>
@@ -132,7 +132,7 @@
         <Filename Value="ENGINE/mails.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="Mails"/>
-        <EditorIndex Value="4"/>
+        <EditorIndex Value="5"/>
         <TopLine Value="593"/>
         <CursorPos X="49" Y="598"/>
         <UsageCount Value="30"/>
@@ -506,235 +506,14 @@
         <UsageCount Value="30"/>
       </Unit54>
       <Unit55>
-        <Filename Value="GENERICS/Specialized/SpecializedBitmap.pas"/>
-        <EditorIndex Value="-1"/>
-        <WindowIndex Value="-1"/>
-        <TopLine Value="-1"/>
-        <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="25"/>
-      </Unit55>
-      <Unit56>
-        <Filename Value="GENERICS/Specialized/SpecializedDictionary.pas"/>
-        <EditorIndex Value="-1"/>
-        <WindowIndex Value="-1"/>
-        <TopLine Value="-1"/>
-        <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="25"/>
-      </Unit56>
-      <Unit57>
-        <Filename Value="GENERICS/Specialized/SpecializedList.pas"/>
-        <EditorIndex Value="-1"/>
-        <WindowIndex Value="-1"/>
-        <TopLine Value="-1"/>
-        <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="25"/>
-      </Unit57>
-      <Unit58>
-        <Filename Value="GENERICS/Specialized/SpecializedMatrix.pas"/>
-        <EditorIndex Value="-1"/>
-        <WindowIndex Value="-1"/>
-        <TopLine Value="-1"/>
-        <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="25"/>
-      </Unit58>
-      <Unit59>
-        <Filename Value="GENERICS/Specialized/SpecializedPoint.pas"/>
-        <EditorIndex Value="-1"/>
-        <WindowIndex Value="-1"/>
-        <TopLine Value="-1"/>
-        <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="25"/>
-      </Unit59>
-      <Unit60>
-        <Filename Value="GENERICS/Specialized/SpecializedQueue.pas"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="42"/>
-        <CursorPos X="52" Y="23"/>
-        <UsageCount Value="25"/>
-      </Unit60>
-      <Unit61>
-        <Filename Value="GENERICS/Specialized/SpecializedRectangle.pas"/>
-        <EditorIndex Value="-1"/>
-        <WindowIndex Value="-1"/>
-        <TopLine Value="-1"/>
-        <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="25"/>
-      </Unit61>
-      <Unit62>
-        <Filename Value="GENERICS/Specialized/SpecializedSet.pas"/>
-        <EditorIndex Value="-1"/>
-        <WindowIndex Value="-1"/>
-        <TopLine Value="-1"/>
-        <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="25"/>
-      </Unit62>
-      <Unit63>
-        <Filename Value="GENERICS/Specialized/SpecializedStack.pas"/>
-        <EditorIndex Value="-1"/>
-        <WindowIndex Value="-1"/>
-        <TopLine Value="-1"/>
-        <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="25"/>
-      </Unit63>
-      <Unit64>
-        <Filename Value="GENERICS/Specialized/SpecializedStream.pas"/>
-        <EditorIndex Value="-1"/>
-        <WindowIndex Value="-1"/>
-        <TopLine Value="-1"/>
-        <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="25"/>
-      </Unit64>
-      <Unit65>
-        <Filename Value="GENERICS/Specialized/SpecializedTree.pas"/>
-        <EditorIndex Value="-1"/>
-        <WindowIndex Value="-1"/>
-        <TopLine Value="-1"/>
-        <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="25"/>
-      </Unit65>
-      <Unit66>
-        <Filename Value="GENERICS/Generic/GenericBitmap.inc"/>
-        <EditorIndex Value="-1"/>
-        <WindowIndex Value="-1"/>
-        <TopLine Value="-1"/>
-        <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="25"/>
-      </Unit66>
-      <Unit67>
-        <Filename Value="GENERICS/Generic/GenericDictionary.inc"/>
-        <EditorIndex Value="-1"/>
-        <WindowIndex Value="-1"/>
-        <TopLine Value="-1"/>
-        <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="25"/>
-      </Unit67>
-      <Unit68>
-        <Filename Value="GENERICS/Generic/GenericFileList.inc"/>
-        <EditorIndex Value="-1"/>
-        <WindowIndex Value="-1"/>
-        <TopLine Value="-1"/>
-        <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="25"/>
-      </Unit68>
-      <Unit69>
-        <Filename Value="GENERICS/Generic/GenericList.inc"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="424"/>
-        <CursorPos Y="437"/>
-        <UsageCount Value="25"/>
-      </Unit69>
-      <Unit70>
-        <Filename Value="GENERICS/Generic/GenericListAbstract.inc"/>
-        <EditorIndex Value="-1"/>
-        <WindowIndex Value="-1"/>
-        <TopLine Value="-1"/>
-        <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="25"/>
-      </Unit70>
-      <Unit71>
-        <Filename Value="GENERICS/Generic/GenericListObject.inc"/>
-        <EditorIndex Value="-1"/>
-        <WindowIndex Value="-1"/>
-        <TopLine Value="-1"/>
-        <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="25"/>
-      </Unit71>
-      <Unit72>
-        <Filename Value="GENERICS/Generic/GenericListString.inc"/>
-        <EditorIndex Value="-1"/>
-        <WindowIndex Value="-1"/>
-        <TopLine Value="-1"/>
-        <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="25"/>
-      </Unit72>
-      <Unit73>
-        <Filename Value="GENERICS/Generic/GenericMatrix.inc"/>
-        <EditorIndex Value="-1"/>
-        <WindowIndex Value="-1"/>
-        <TopLine Value="-1"/>
-        <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="25"/>
-      </Unit73>
-      <Unit74>
-        <Filename Value="GENERICS/Generic/GenericPoint.inc"/>
-        <EditorIndex Value="-1"/>
-        <WindowIndex Value="-1"/>
-        <TopLine Value="-1"/>
-        <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="25"/>
-      </Unit74>
-      <Unit75>
-        <Filename Value="GENERICS/Generic/GenericQueue.inc"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="64"/>
-        <CursorPos Y="80"/>
-        <UsageCount Value="25"/>
-      </Unit75>
-      <Unit76>
-        <Filename Value="GENERICS/Generic/GenericRange.inc"/>
-        <EditorIndex Value="-1"/>
-        <WindowIndex Value="-1"/>
-        <TopLine Value="-1"/>
-        <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="25"/>
-      </Unit76>
-      <Unit77>
-        <Filename Value="GENERICS/Generic/GenericRectangle.inc"/>
-        <EditorIndex Value="-1"/>
-        <WindowIndex Value="-1"/>
-        <TopLine Value="-1"/>
-        <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="25"/>
-      </Unit77>
-      <Unit78>
-        <Filename Value="GENERICS/Generic/GenericSet.inc"/>
-        <EditorIndex Value="-1"/>
-        <WindowIndex Value="-1"/>
-        <TopLine Value="-1"/>
-        <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="25"/>
-      </Unit78>
-      <Unit79>
-        <Filename Value="GENERICS/Generic/GenericStack.inc"/>
-        <EditorIndex Value="-1"/>
-        <WindowIndex Value="-1"/>
-        <TopLine Value="-1"/>
-        <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="25"/>
-      </Unit79>
-      <Unit80>
-        <Filename Value="GENERICS/Generic/GenericStream.inc"/>
-        <EditorIndex Value="-1"/>
-        <WindowIndex Value="-1"/>
-        <TopLine Value="-1"/>
-        <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="25"/>
-      </Unit80>
-      <Unit81>
-        <Filename Value="GENERICS/Generic/GenericTree.inc"/>
-        <EditorIndex Value="-1"/>
-        <WindowIndex Value="-1"/>
-        <TopLine Value="-1"/>
-        <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="25"/>
-      </Unit81>
-      <Unit82>
-        <Filename Value="GENERICS/Additional/UBinarySerializer.pas"/>
-        <EditorIndex Value="-1"/>
-        <WindowIndex Value="-1"/>
-        <TopLine Value="-1"/>
-        <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="25"/>
-      </Unit82>
-      <Unit83>
         <Filename Value="ENGINE/blowfishex.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="BlowFishEx"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="63" Y="11"/>
         <UsageCount Value="26"/>
-      </Unit83>
-      <Unit84>
+      </Unit55>
+      <Unit56>
         <Filename Value="ENGINE/rsaex.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="RsaEx"/>
@@ -742,252 +521,36 @@
         <TopLine Value="34"/>
         <CursorPos X="17" Y="46"/>
         <UsageCount Value="26"/>
-      </Unit84>
-      <Unit85>
-        <Filename Value="Frames/framelogin.pas"/>
-        <ComponentName Value="FrameLogin"/>
-        <HasResources Value="True"/>
-        <ResourceBaseClass Value="Frame"/>
-        <EditorIndex Value="-1"/>
-        <CursorPos X="25" Y="8"/>
-        <UsageCount Value="25"/>
-      </Unit85>
-      <Unit86>
-        <Filename Value="Frames/frameofferregisteruser.pas"/>
-        <ComponentName Value="FrameOfferRegisterUser"/>
-        <HasResources Value="True"/>
-        <ResourceBaseClass Value="Frame"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="39"/>
-        <CursorPos X="3" Y="41"/>
-        <UsageCount Value="25"/>
-      </Unit86>
-      <Unit87>
-        <Filename Value="Frames/frameregisteruser.pas"/>
-        <ComponentName Value="FrameRegisterUser"/>
-        <HasResources Value="True"/>
-        <ResourceBaseClass Value="Frame"/>
-        <EditorIndex Value="-1"/>
-        <CursorPos X="56" Y="18"/>
-        <UsageCount Value="24"/>
-      </Unit87>
-      <Unit88>
-        <Filename Value="CryptoChat.res"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="355"/>
-        <UsageCount Value="10"/>
-        <DefaultSyntaxHighlighter Value="None"/>
-      </Unit88>
-      <Unit89>
-        <Filename Value="Frames/frameofferregisteruser.lfm"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="31"/>
-        <CursorPos X="15" Y="44"/>
-        <UsageCount Value="11"/>
-        <DefaultSyntaxHighlighter Value="LFM"/>
-      </Unit89>
-      <Unit90>
-        <Filename Value="/usr/lib/codetyphon/typhon/components/BaseUtils/fileutil.pas"/>
-        <EditorIndex Value="-1"/>
-        <UsageCount Value="10"/>
-      </Unit90>
-      <Unit91>
-        <Filename Value="../Тестовые_программы/Работа_с_базой_данных/engine.databases.pas"/>
-        <EditorIndex Value="-1"/>
-        <CursorPos X="5" Y="840"/>
-        <UsageCount Value="10"/>
-      </Unit91>
-      <Unit92>
-        <Filename Value="/usr/lib/codetyphon/typhon/lcl/dialogs.pp"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="15"/>
-        <CursorPos X="3" Y="35"/>
-        <UsageCount Value="11"/>
-      </Unit92>
-      <Unit93>
-        <Filename Value="/usr/lib/codetyphon/fpcsrc/packages/libpng/src/png.pp"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="388"/>
-        <UsageCount Value="10"/>
-      </Unit93>
-      <Unit94>
-        <Filename Value="/usr/lib/codetyphon/fpcsrc/packages/fcl-image/src/pngcomn.pp"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="10"/>
-        <UsageCount Value="10"/>
-      </Unit94>
-      <Unit95>
-        <Filename Value="/usr/lib/codetyphon/fpcsrc/packages/fcl-image/src/fpimage.pp"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="517"/>
-        <CursorPos X="36" Y="258"/>
-        <UsageCount Value="10"/>
-      </Unit95>
-      <Unit96>
-        <Filename Value="/usr/lib/codetyphon/fpcsrc/rtl/objpas/classes/classesh.inc"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="1592"/>
-        <CursorPos X="44" Y="1612"/>
-        <UsageCount Value="10"/>
-      </Unit96>
-      <Unit97>
-        <Filename Value="/usr/share/fpcsrc/2.6.4/rtl/objpas/classes/classesh.inc"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="836"/>
-        <CursorPos X="17" Y="847"/>
-        <UsageCount Value="10"/>
-      </Unit97>
-      <Unit98>
-        <Filename Value="/usr/share/fpcsrc/2.6.4/rtl/objpas/fgl.pp"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="34"/>
-        <CursorPos X="42" Y="52"/>
-        <UsageCount Value="10"/>
-      </Unit98>
-      <Unit99>
-        <Filename Value="GENERICS/src/inc/generics.dictionaries.inc"/>
-        <EditorIndex Value="-1"/>
-        <WindowIndex Value="-1"/>
-        <TopLine Value="-1"/>
-        <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="21"/>
-      </Unit99>
-      <Unit100>
-        <Filename Value="GENERICS/src/inc/generics.dictionariesh.inc"/>
-        <EditorIndex Value="-1"/>
-        <WindowIndex Value="-1"/>
-        <TopLine Value="-1"/>
-        <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="21"/>
-      </Unit100>
-      <Unit101>
-        <Filename Value="GENERICS/src/generics_collections.pas"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="21"/>
-        <CursorPos X="32" Y="34"/>
-        <UsageCount Value="21"/>
-      </Unit101>
-      <Unit102>
-        <Filename Value="GENERICS/src/generics_defaults.pas"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="20"/>
-        <CursorPos X="73" Y="32"/>
-        <UsageCount Value="21"/>
-      </Unit102>
-      <Unit103>
-        <Filename Value="GENERICS/src/generics_hashes.pas"/>
-        <EditorIndex Value="-1"/>
-        <UsageCount Value="21"/>
-      </Unit103>
-      <Unit104>
-        <Filename Value="GENERICS/src/generics_helpers.pas"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="21"/>
-        <CursorPos X="39" Y="30"/>
-        <UsageCount Value="21"/>
-      </Unit104>
-      <Unit105>
-        <Filename Value="GENERICS/src/generics_memoryexpanders.pas"/>
-        <EditorIndex Value="-1"/>
-        <UsageCount Value="21"/>
-      </Unit105>
-      <Unit106>
-        <Filename Value="GENERICS/src/generics_strings.pas"/>
-        <EditorIndex Value="-1"/>
-        <UsageCount Value="21"/>
-      </Unit106>
-      <Unit107>
-        <Filename Value="GENERICS/Demo/UMainForm.pas"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="193"/>
-        <CursorPos X="50" Y="213"/>
-        <UsageCount Value="10"/>
-      </Unit107>
-      <Unit108>
-        <Filename Value="../Тестовые_программы/Шифрование_RSA/extendedssl.pas"/>
-        <UnitName Value="ExtendedSSL"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="61"/>
-        <CursorPos X="22" Y="73"/>
-        <UsageCount Value="10"/>
-      </Unit108>
-      <Unit109>
-        <Filename Value="../Тестовые_программы/Шифрование_RSA/openssl.pas"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="67"/>
-        <UsageCount Value="10"/>
-      </Unit109>
-      <Unit110>
-        <Filename Value="ENGINE/tar.pas"/>
-        <UnitName Value="Tar"/>
-        <EditorIndex Value="-1"/>
-        <CursorPos X="10" Y="14"/>
-        <UsageCount Value="20"/>
-      </Unit110>
-      <Unit111>
+      </Unit56>
+      <Unit57>
         <Filename Value="ENGINE/tars.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="Tars"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="104"/>
-        <CursorPos X="47" Y="96"/>
+        <EditorIndex Value="4"/>
+        <TopLine Value="179"/>
+        <CursorPos X="3" Y="188"/>
         <UsageCount Value="25"/>
-      </Unit111>
-      <Unit112>
-        <Filename Value="/usr/share/fpcsrc/2.6.4/rtl/inc/objpash.inc"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="180"/>
-        <CursorPos X="23" Y="192"/>
-        <UsageCount Value="10"/>
-      </Unit112>
-      <Unit113>
-        <Filename Value="/usr/share/fpcsrc/2.6.4/rtl/inc/objpas.inc"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="265"/>
-        <CursorPos X="9" Y="267"/>
-        <UsageCount Value="10"/>
-      </Unit113>
-      <Unit114>
+        <Loaded Value="True"/>
+      </Unit57>
+      <Unit58>
         <Filename Value="ENGINE/guidcommands.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="GUIDCommands"/>
-        <EditorIndex Value="6"/>
+        <EditorIndex Value="7"/>
         <CursorPos X="21" Y="9"/>
-        <UsageCount Value="24"/>
+        <UsageCount Value="25"/>
         <Loaded Value="True"/>
-      </Unit114>
-      <Unit115>
-        <Filename Value="/usr/share/fpcsrc/2.6.4/rtl/objpas/classes/streams.inc"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="36"/>
-        <CursorPos X="28" Y="49"/>
-        <UsageCount Value="10"/>
-      </Unit115>
-      <Unit116>
-        <Filename Value="/usr/share/fpcsrc/2.6.4/packages/fcl-base/src/libtar.pp"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="188"/>
-        <CursorPos X="37" Y="200"/>
-        <UsageCount Value="10"/>
-      </Unit116>
-      <Unit117>
-        <Filename Value="GENERICS/generics.collections.pas"/>
-        <UnitName Value="Generics.Collections"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="13"/>
-        <CursorPos X="3" Y="28"/>
-        <UsageCount Value="20"/>
-      </Unit117>
-      <Unit118>
+      </Unit58>
+      <Unit59>
         <Filename Value="GENERICS/DelphiGenerics.pas"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="7"/>
+        <EditorIndex Value="8"/>
         <TopLine Value="26"/>
         <CursorPos X="14" Y="27"/>
-        <UsageCount Value="22"/>
+        <UsageCount Value="23"/>
         <Loaded Value="True"/>
-      </Unit118>
-      <Unit119>
+      </Unit59>
+      <Unit60>
         <Filename Value="FORMS/waitform.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="FormWait"/>
@@ -997,21 +560,458 @@
         <EditorIndex Value="2"/>
         <TopLine Value="18"/>
         <CursorPos X="91" Y="18"/>
-        <UsageCount Value="21"/>
+        <UsageCount Value="22"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
+      </Unit60>
+      <Unit61>
+        <Filename Value="GENERICS/Specialized/SpecializedBitmap.pas"/>
+        <EditorIndex Value="-1"/>
+        <WindowIndex Value="-1"/>
+        <TopLine Value="-1"/>
+        <CursorPos X="-1" Y="-1"/>
+        <UsageCount Value="25"/>
+      </Unit61>
+      <Unit62>
+        <Filename Value="GENERICS/Specialized/SpecializedDictionary.pas"/>
+        <EditorIndex Value="-1"/>
+        <WindowIndex Value="-1"/>
+        <TopLine Value="-1"/>
+        <CursorPos X="-1" Y="-1"/>
+        <UsageCount Value="25"/>
+      </Unit62>
+      <Unit63>
+        <Filename Value="GENERICS/Specialized/SpecializedList.pas"/>
+        <EditorIndex Value="-1"/>
+        <WindowIndex Value="-1"/>
+        <TopLine Value="-1"/>
+        <CursorPos X="-1" Y="-1"/>
+        <UsageCount Value="25"/>
+      </Unit63>
+      <Unit64>
+        <Filename Value="GENERICS/Specialized/SpecializedMatrix.pas"/>
+        <EditorIndex Value="-1"/>
+        <WindowIndex Value="-1"/>
+        <TopLine Value="-1"/>
+        <CursorPos X="-1" Y="-1"/>
+        <UsageCount Value="25"/>
+      </Unit64>
+      <Unit65>
+        <Filename Value="GENERICS/Specialized/SpecializedPoint.pas"/>
+        <EditorIndex Value="-1"/>
+        <WindowIndex Value="-1"/>
+        <TopLine Value="-1"/>
+        <CursorPos X="-1" Y="-1"/>
+        <UsageCount Value="25"/>
+      </Unit65>
+      <Unit66>
+        <Filename Value="GENERICS/Specialized/SpecializedQueue.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="42"/>
+        <CursorPos X="52" Y="23"/>
+        <UsageCount Value="25"/>
+      </Unit66>
+      <Unit67>
+        <Filename Value="GENERICS/Specialized/SpecializedRectangle.pas"/>
+        <EditorIndex Value="-1"/>
+        <WindowIndex Value="-1"/>
+        <TopLine Value="-1"/>
+        <CursorPos X="-1" Y="-1"/>
+        <UsageCount Value="25"/>
+      </Unit67>
+      <Unit68>
+        <Filename Value="GENERICS/Specialized/SpecializedSet.pas"/>
+        <EditorIndex Value="-1"/>
+        <WindowIndex Value="-1"/>
+        <TopLine Value="-1"/>
+        <CursorPos X="-1" Y="-1"/>
+        <UsageCount Value="25"/>
+      </Unit68>
+      <Unit69>
+        <Filename Value="GENERICS/Specialized/SpecializedStack.pas"/>
+        <EditorIndex Value="-1"/>
+        <WindowIndex Value="-1"/>
+        <TopLine Value="-1"/>
+        <CursorPos X="-1" Y="-1"/>
+        <UsageCount Value="25"/>
+      </Unit69>
+      <Unit70>
+        <Filename Value="GENERICS/Specialized/SpecializedStream.pas"/>
+        <EditorIndex Value="-1"/>
+        <WindowIndex Value="-1"/>
+        <TopLine Value="-1"/>
+        <CursorPos X="-1" Y="-1"/>
+        <UsageCount Value="25"/>
+      </Unit70>
+      <Unit71>
+        <Filename Value="GENERICS/Specialized/SpecializedTree.pas"/>
+        <EditorIndex Value="-1"/>
+        <WindowIndex Value="-1"/>
+        <TopLine Value="-1"/>
+        <CursorPos X="-1" Y="-1"/>
+        <UsageCount Value="25"/>
+      </Unit71>
+      <Unit72>
+        <Filename Value="GENERICS/Generic/GenericBitmap.inc"/>
+        <EditorIndex Value="-1"/>
+        <WindowIndex Value="-1"/>
+        <TopLine Value="-1"/>
+        <CursorPos X="-1" Y="-1"/>
+        <UsageCount Value="25"/>
+      </Unit72>
+      <Unit73>
+        <Filename Value="GENERICS/Generic/GenericDictionary.inc"/>
+        <EditorIndex Value="-1"/>
+        <WindowIndex Value="-1"/>
+        <TopLine Value="-1"/>
+        <CursorPos X="-1" Y="-1"/>
+        <UsageCount Value="25"/>
+      </Unit73>
+      <Unit74>
+        <Filename Value="GENERICS/Generic/GenericFileList.inc"/>
+        <EditorIndex Value="-1"/>
+        <WindowIndex Value="-1"/>
+        <TopLine Value="-1"/>
+        <CursorPos X="-1" Y="-1"/>
+        <UsageCount Value="25"/>
+      </Unit74>
+      <Unit75>
+        <Filename Value="GENERICS/Generic/GenericList.inc"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="424"/>
+        <CursorPos Y="437"/>
+        <UsageCount Value="25"/>
+      </Unit75>
+      <Unit76>
+        <Filename Value="GENERICS/Generic/GenericListAbstract.inc"/>
+        <EditorIndex Value="-1"/>
+        <WindowIndex Value="-1"/>
+        <TopLine Value="-1"/>
+        <CursorPos X="-1" Y="-1"/>
+        <UsageCount Value="25"/>
+      </Unit76>
+      <Unit77>
+        <Filename Value="GENERICS/Generic/GenericListObject.inc"/>
+        <EditorIndex Value="-1"/>
+        <WindowIndex Value="-1"/>
+        <TopLine Value="-1"/>
+        <CursorPos X="-1" Y="-1"/>
+        <UsageCount Value="25"/>
+      </Unit77>
+      <Unit78>
+        <Filename Value="GENERICS/Generic/GenericListString.inc"/>
+        <EditorIndex Value="-1"/>
+        <WindowIndex Value="-1"/>
+        <TopLine Value="-1"/>
+        <CursorPos X="-1" Y="-1"/>
+        <UsageCount Value="25"/>
+      </Unit78>
+      <Unit79>
+        <Filename Value="GENERICS/Generic/GenericMatrix.inc"/>
+        <EditorIndex Value="-1"/>
+        <WindowIndex Value="-1"/>
+        <TopLine Value="-1"/>
+        <CursorPos X="-1" Y="-1"/>
+        <UsageCount Value="25"/>
+      </Unit79>
+      <Unit80>
+        <Filename Value="GENERICS/Generic/GenericPoint.inc"/>
+        <EditorIndex Value="-1"/>
+        <WindowIndex Value="-1"/>
+        <TopLine Value="-1"/>
+        <CursorPos X="-1" Y="-1"/>
+        <UsageCount Value="25"/>
+      </Unit80>
+      <Unit81>
+        <Filename Value="GENERICS/Generic/GenericQueue.inc"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="64"/>
+        <CursorPos Y="80"/>
+        <UsageCount Value="25"/>
+      </Unit81>
+      <Unit82>
+        <Filename Value="GENERICS/Generic/GenericRange.inc"/>
+        <EditorIndex Value="-1"/>
+        <WindowIndex Value="-1"/>
+        <TopLine Value="-1"/>
+        <CursorPos X="-1" Y="-1"/>
+        <UsageCount Value="25"/>
+      </Unit82>
+      <Unit83>
+        <Filename Value="GENERICS/Generic/GenericRectangle.inc"/>
+        <EditorIndex Value="-1"/>
+        <WindowIndex Value="-1"/>
+        <TopLine Value="-1"/>
+        <CursorPos X="-1" Y="-1"/>
+        <UsageCount Value="25"/>
+      </Unit83>
+      <Unit84>
+        <Filename Value="GENERICS/Generic/GenericSet.inc"/>
+        <EditorIndex Value="-1"/>
+        <WindowIndex Value="-1"/>
+        <TopLine Value="-1"/>
+        <CursorPos X="-1" Y="-1"/>
+        <UsageCount Value="25"/>
+      </Unit84>
+      <Unit85>
+        <Filename Value="GENERICS/Generic/GenericStack.inc"/>
+        <EditorIndex Value="-1"/>
+        <WindowIndex Value="-1"/>
+        <TopLine Value="-1"/>
+        <CursorPos X="-1" Y="-1"/>
+        <UsageCount Value="25"/>
+      </Unit85>
+      <Unit86>
+        <Filename Value="GENERICS/Generic/GenericStream.inc"/>
+        <EditorIndex Value="-1"/>
+        <WindowIndex Value="-1"/>
+        <TopLine Value="-1"/>
+        <CursorPos X="-1" Y="-1"/>
+        <UsageCount Value="25"/>
+      </Unit86>
+      <Unit87>
+        <Filename Value="GENERICS/Generic/GenericTree.inc"/>
+        <EditorIndex Value="-1"/>
+        <WindowIndex Value="-1"/>
+        <TopLine Value="-1"/>
+        <CursorPos X="-1" Y="-1"/>
+        <UsageCount Value="25"/>
+      </Unit87>
+      <Unit88>
+        <Filename Value="GENERICS/Additional/UBinarySerializer.pas"/>
+        <EditorIndex Value="-1"/>
+        <WindowIndex Value="-1"/>
+        <TopLine Value="-1"/>
+        <CursorPos X="-1" Y="-1"/>
+        <UsageCount Value="25"/>
+      </Unit88>
+      <Unit89>
+        <Filename Value="Frames/framelogin.pas"/>
+        <ComponentName Value="FrameLogin"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Frame"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="25" Y="8"/>
+        <UsageCount Value="24"/>
+      </Unit89>
+      <Unit90>
+        <Filename Value="Frames/frameofferregisteruser.pas"/>
+        <ComponentName Value="FrameOfferRegisterUser"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Frame"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="39"/>
+        <CursorPos X="3" Y="41"/>
+        <UsageCount Value="24"/>
+      </Unit90>
+      <Unit91>
+        <Filename Value="Frames/frameregisteruser.pas"/>
+        <ComponentName Value="FrameRegisterUser"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Frame"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="56" Y="18"/>
+        <UsageCount Value="23"/>
+      </Unit91>
+      <Unit92>
+        <Filename Value="CryptoChat.res"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="355"/>
+        <UsageCount Value="9"/>
+        <DefaultSyntaxHighlighter Value="None"/>
+      </Unit92>
+      <Unit93>
+        <Filename Value="Frames/frameofferregisteruser.lfm"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="31"/>
+        <CursorPos X="15" Y="44"/>
+        <UsageCount Value="10"/>
+        <DefaultSyntaxHighlighter Value="LFM"/>
+      </Unit93>
+      <Unit94>
+        <Filename Value="/usr/lib/codetyphon/typhon/components/BaseUtils/fileutil.pas"/>
+        <EditorIndex Value="-1"/>
+        <UsageCount Value="9"/>
+      </Unit94>
+      <Unit95>
+        <Filename Value="../Тестовые_программы/Работа_с_базой_данных/engine.databases.pas"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="5" Y="840"/>
+        <UsageCount Value="9"/>
+      </Unit95>
+      <Unit96>
+        <Filename Value="/usr/lib/codetyphon/typhon/lcl/dialogs.pp"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="15"/>
+        <CursorPos X="3" Y="35"/>
+        <UsageCount Value="10"/>
+      </Unit96>
+      <Unit97>
+        <Filename Value="/usr/lib/codetyphon/fpcsrc/packages/libpng/src/png.pp"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="388"/>
+        <UsageCount Value="9"/>
+      </Unit97>
+      <Unit98>
+        <Filename Value="/usr/lib/codetyphon/fpcsrc/packages/fcl-image/src/pngcomn.pp"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="10"/>
+        <UsageCount Value="9"/>
+      </Unit98>
+      <Unit99>
+        <Filename Value="/usr/lib/codetyphon/fpcsrc/packages/fcl-image/src/fpimage.pp"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="517"/>
+        <CursorPos X="36" Y="258"/>
+        <UsageCount Value="9"/>
+      </Unit99>
+      <Unit100>
+        <Filename Value="/usr/lib/codetyphon/fpcsrc/rtl/objpas/classes/classesh.inc"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="1592"/>
+        <CursorPos X="44" Y="1612"/>
+        <UsageCount Value="9"/>
+      </Unit100>
+      <Unit101>
+        <Filename Value="/usr/share/fpcsrc/2.6.4/rtl/objpas/classes/classesh.inc"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="934"/>
+        <CursorPos X="16" Y="947"/>
+        <UsageCount Value="10"/>
+      </Unit101>
+      <Unit102>
+        <Filename Value="/usr/share/fpcsrc/2.6.4/rtl/objpas/fgl.pp"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="34"/>
+        <CursorPos X="42" Y="52"/>
+        <UsageCount Value="9"/>
+      </Unit102>
+      <Unit103>
+        <Filename Value="GENERICS/src/inc/generics.dictionaries.inc"/>
+        <EditorIndex Value="-1"/>
+        <WindowIndex Value="-1"/>
+        <TopLine Value="-1"/>
+        <CursorPos X="-1" Y="-1"/>
+        <UsageCount Value="20"/>
+      </Unit103>
+      <Unit104>
+        <Filename Value="GENERICS/src/inc/generics.dictionariesh.inc"/>
+        <EditorIndex Value="-1"/>
+        <WindowIndex Value="-1"/>
+        <TopLine Value="-1"/>
+        <CursorPos X="-1" Y="-1"/>
+        <UsageCount Value="20"/>
+      </Unit104>
+      <Unit105>
+        <Filename Value="GENERICS/src/generics_collections.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="21"/>
+        <CursorPos X="32" Y="34"/>
+        <UsageCount Value="20"/>
+      </Unit105>
+      <Unit106>
+        <Filename Value="GENERICS/src/generics_defaults.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="20"/>
+        <CursorPos X="73" Y="32"/>
+        <UsageCount Value="20"/>
+      </Unit106>
+      <Unit107>
+        <Filename Value="GENERICS/src/generics_hashes.pas"/>
+        <EditorIndex Value="-1"/>
+        <UsageCount Value="20"/>
+      </Unit107>
+      <Unit108>
+        <Filename Value="GENERICS/src/generics_helpers.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="21"/>
+        <CursorPos X="39" Y="30"/>
+        <UsageCount Value="20"/>
+      </Unit108>
+      <Unit109>
+        <Filename Value="GENERICS/src/generics_memoryexpanders.pas"/>
+        <EditorIndex Value="-1"/>
+        <UsageCount Value="20"/>
+      </Unit109>
+      <Unit110>
+        <Filename Value="GENERICS/src/generics_strings.pas"/>
+        <EditorIndex Value="-1"/>
+        <UsageCount Value="20"/>
+      </Unit110>
+      <Unit111>
+        <Filename Value="GENERICS/Demo/UMainForm.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="193"/>
+        <CursorPos X="50" Y="213"/>
+        <UsageCount Value="9"/>
+      </Unit111>
+      <Unit112>
+        <Filename Value="../Тестовые_программы/Шифрование_RSA/extendedssl.pas"/>
+        <UnitName Value="ExtendedSSL"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="61"/>
+        <CursorPos X="22" Y="73"/>
+        <UsageCount Value="9"/>
+      </Unit112>
+      <Unit113>
+        <Filename Value="../Тестовые_программы/Шифрование_RSA/openssl.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="67"/>
+        <UsageCount Value="9"/>
+      </Unit113>
+      <Unit114>
+        <Filename Value="ENGINE/tar.pas"/>
+        <UnitName Value="Tar"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="10" Y="14"/>
+        <UsageCount Value="19"/>
+      </Unit114>
+      <Unit115>
+        <Filename Value="/usr/share/fpcsrc/2.6.4/rtl/inc/objpash.inc"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="180"/>
+        <CursorPos X="23" Y="192"/>
+        <UsageCount Value="10"/>
+      </Unit115>
+      <Unit116>
+        <Filename Value="/usr/share/fpcsrc/2.6.4/rtl/inc/objpas.inc"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="265"/>
+        <CursorPos X="9" Y="267"/>
+        <UsageCount Value="10"/>
+      </Unit116>
+      <Unit117>
+        <Filename Value="/usr/share/fpcsrc/2.6.4/rtl/objpas/classes/streams.inc"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="620"/>
+        <CursorPos X="3" Y="623"/>
+        <UsageCount Value="10"/>
+      </Unit117>
+      <Unit118>
+        <Filename Value="/usr/share/fpcsrc/2.6.4/packages/fcl-base/src/libtar.pp"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="188"/>
+        <CursorPos X="37" Y="200"/>
+        <UsageCount Value="10"/>
+      </Unit118>
+      <Unit119>
+        <Filename Value="GENERICS/generics.collections.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="13"/>
+        <CursorPos X="3" Y="28"/>
+        <UsageCount Value="20"/>
       </Unit119>
       <Unit120>
         <Filename Value="/usr/share/lazarus/1.4.2/lcl/forms.pp"/>
         <UnitName Value="Forms"/>
-        <EditorIndex Value="5"/>
+        <EditorIndex Value="6"/>
         <TopLine Value="37"/>
         <CursorPos X="21" Y="49"/>
         <UsageCount Value="11"/>
         <Loaded Value="True"/>
       </Unit120>
     </Units>
-    <JumpHistory Count="13" HistoryIndex="12">
+    <JumpHistory Count="18" HistoryIndex="17">
       <Position1>
         <Filename Value="main.pas"/>
         <Caret Line="144" Column="47" TopLine="130"/>
@@ -1064,17 +1064,26 @@
         <Filename Value="ENGINE/transports.pas"/>
         <Caret Line="125" Column="30" TopLine="114"/>
       </Position13>
+      <Position14>
+        <Filename Value="ENGINE/transports.pas"/>
+        <Caret Line="126" Column="35" TopLine="114"/>
+      </Position14>
+      <Position15>
+        <Filename Value="ENGINE/tars.pas"/>
+        <Caret Line="188" Column="3" TopLine="179"/>
+      </Position15>
+      <Position16>
+        <Filename Value="ENGINE/transports.pas"/>
+        <Caret Line="126" Column="38" TopLine="114"/>
+      </Position16>
+      <Position17>
+        <Filename Value="ENGINE/transports.pas"/>
+        <Caret Line="30" Column="35" TopLine="22"/>
+      </Position17>
+      <Position18>
+        <Filename Value="ENGINE/transports.pas"/>
+        <Caret Line="139" Column="83" TopLine="120"/>
+      </Position18>
     </JumpHistory>
   </ProjectSession>
-  <Debugging>
-    <BreakPoints Count="1">
-      <Item1>
-        <Kind Value="bpkSource"/>
-        <WatchScope Value="wpsLocal"/>
-        <WatchKind Value="wpkWrite"/>
-        <Source Value="ENGINE/transports.pas"/>
-        <Line Value="65"/>
-      </Item1>
-    </BreakPoints>
-  </Debugging>
 </CONFIG>
