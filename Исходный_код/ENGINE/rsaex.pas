@@ -100,35 +100,46 @@ begin
 end;
 
 procedure DoLoadOpenSSL;
+var
+  FuncAddr: Pointer;
+  DllName: string;
 begin
-  hLibSSL := LoadLibrary(DLLSSLName + '.so');
+  DllName := '';
+
+  {$IFDEF WINDOWS}
+  DllName := DLLUtilName;
+  {$ENDIF}
+  {$IFDEF UNIX}
+  DllName := DLLSSLName + '.so';
+  {$ENDIF}
+
+  hLibSSL := LoadLibrary(DllName);
   OpenSSL_add_all_algorithms();
 
-  PEM_write_bio_RSAPrivateKey :=
-    TPEM_write_bio_RSAPrivateKey(GetProcAddress(hLibSSL, 'PEM_write_bio_RSAPrivateKey'));
-  if PEM_write_bio_RSAPrivateKey = nil then
-    raise Exception.Create('Error Loading function #1');
+  FuncAddr := GetProcAddress(hLibSSL, 'PEM_write_bio_RSAPrivateKey');
+  if FuncAddr = nil then
+    raise Exception.Create('Error Loading function #1: ' + GetLoadErrorStr);
+  PEM_write_bio_RSAPrivateKey := TPEM_write_bio_RSAPrivateKey(FuncAddr);
 
-  PEM_write_bio_RSAPublicKey :=
-    TPEM_write_bio_RSAPublicKey(GetProcAddress(hLibSSL, 'PEM_write_bio_RSAPublicKey'));
-  if PEM_write_bio_RSAPublicKey = nil then
-    raise Exception.Create('Error Loading function #2');
+  FuncAddr := GetProcAddress(hLibSSL, 'PEM_write_bio_RSAPublicKey');
+  if FuncAddr = nil then
+    raise Exception.Create('Error Loading function #2' + GetLoadErrorStr);
+  PEM_write_bio_RSAPublicKey := TPEM_write_bio_RSAPublicKey(FuncAddr);
 
-  PEM_read_bio_RSA_PUBKEY :=
-    TPEM_read_bio_RSA_PUBKEY(GetProcAddress(hLibSSL, 'PEM_read_bio_RSA_PUBKEY'));
-  if PEM_read_bio_RSA_PUBKEY = nil then
-    raise Exception.Create('Error Loading function #3');
+  FuncAddr := GetProcAddress(hLibSSL, 'PEM_read_bio_RSA_PUBKEY');
+  if FuncAddr = nil then
+    raise Exception.Create('Error Loading function #3' + GetLoadErrorStr);
+  PEM_read_bio_RSA_PUBKEY := TPEM_read_bio_RSA_PUBKEY(FuncAddr);
 
-  PEM_read_bio_RSAPrivateKey :=
-    TPEM_read_bio_RSAPrivateKey(GetProcAddress(hLibSSL, 'PEM_read_bio_RSAPrivateKey'));
-  if PEM_read_bio_RSAPrivateKey = nil then
-    raise Exception.Create('Error Loading function #4');
+  FuncAddr := GetProcAddress(hLibSSL, 'PEM_read_bio_RSAPrivateKey');
+  PEM_read_bio_RSAPrivateKey := TPEM_read_bio_RSAPrivateKey(FuncAddr);
+  if FuncAddr = nil then
+    raise Exception.Create('Error Loading function #4' + GetLoadErrorStr);
 
-  PEM_read_bio_RSAPublicKey :=
-    TPEM_read_bio_RSAPublicKey(GetProcAddress(hLibSSL, 'PEM_read_bio_RSAPublicKey'));
-  if PEM_read_bio_RSAPublicKey = nil then
-    raise Exception.Create('Error Loading function #5');
-
+  FuncAddr := GetProcAddress(hLibSSL, 'PEM_read_bio_RSAPublicKey');
+  if FuncAddr = nil then
+    raise Exception.Create('Error Loading function #5' + GetLoadErrorStr);
+  PEM_read_bio_RSAPublicKey := TPEM_read_bio_RSAPublicKey(FuncAddr);
 end;
 
 
