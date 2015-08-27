@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, Forms, ExtCtrls, Graphics, StdCtrls, Controls,
-  Dialogs, Menus, LazUTF8, fgl;
+  Dialogs, Menus, LazUTF8, fgl, Math;
 
 const
   clHighLightMsg = TColor($FFC0C0);
@@ -16,9 +16,8 @@ type
   { TDialogMessage }
 
   TDialogMessage = class(TCustomPanel)
-  // Элемент диалога
+    // Элемент диалога
   private
-    fPicture: TPicture;
     fImage: TImage;
     fNameCollocutor: TLabel;
     fText: TLabel;
@@ -32,6 +31,7 @@ type
     procedure OnClickAttach(Sender: TObject);
     function GetTextHeigh(AText: string): integer;
   private
+    function GetPicture: TPicture;
     procedure SetAttachCount(AValue: integer);
     procedure SetNameCollocutor(AValue: string);
     procedure SetPicture(AValue: TPicture);
@@ -45,7 +45,7 @@ type
     procedure Establish(AName, AText: string; ATime: TDateTime);
     procedure ClearAttachInfo;
     procedure AddAttachInfo(AFileName: string; AOnClick: TNotifyEvent);
-    property Picture: TPicture read fPicture write SetPicture;
+    property Picture: TPicture read GetPicture write SetPicture;
     property NameCollocutor: string write SetNameCollocutor;
     property Text: string write SetText;
     property Time: TDateTime write SetTime;
@@ -53,26 +53,200 @@ type
   end;
 
   TAttachInfo = class(TObject)
-  // Информация о вложении
+    // Информация о вложении
     Name: string;
     OnClick: TNotifyEvent;
   end;
 
+  TAttachList = specialize fgl.TFPGObjectList<TAttachInfo>;
+
+  { TMessageData }
+
   TMessageData = class(TObject)
-  // Данные сообщения
+    // Данные сообщения
     Text: string;
     Time: TDateTime;
-    AttachList: specialize fgl.TFPGObjectList<TAttachInfo>;
+    AttachList: TAttachList;
+    Picture: TPicture;
+    Message: TDialogMessage;
+    constructor Create; virtual;
+    destructor Destroy; override;
   end;
 
-  TDialog = class(TCustomPanel)
-  // Диалог
-  private
-    fItems: specialize fgl.TFPGObjectList<TMessageData>;
+  TMessageDataList = specialize fgl.TFPGObjectList<TMessageData>;
 
+  TDialog = class(TCustomPanel)
+    // Диалог
+  private
+    fFriendName: string;
+    fUserName: string;
+    fUserPicture: TPicture;
+    fFriendPicture: TPicture;
+    fItems: TMessageDataList;
+    fPanel: TCustomPanel;
+    fScrollBar: TScrollBar;
+    function GetCount: integer;
+    function GetMessageData(Index: integer): TMessageData;
+    procedure SetMessageData(Index: integer; AValue: TMessageData);
+    procedure OnScroll(Sender: TObject; ScrollCode: TScrollCode; var ScrollPos: integer);
+    procedure OnChangeScroll(Sender: TObject);
+  public
+    constructor Create(AOwner: TComponent); override;
+    destructor Destroy; override;
+  public
+    procedure Add(AText: string; ATime: TDateTime; AIsFriend: boolean);
+    property UserPicture: TPicture read fUserPicture write fUserPicture;
+    property UserName: string read fUserName write fUserName;
+    property FriendPicture: TPicture read fFriendPicture write fFriendPicture;
+    property FriendName: string read fFriendName write fFriendName;
+    property Items[Index: integer]: TMessageData
+      read GetMessageData write SetMessageData;
+    property Count: integer read GetCount;
   end;
 
 implementation
+
+procedure Nop;
+begin
+  // Нет действий
+end;
+
+{ TMessageData }
+
+constructor TMessageData.Create;
+begin
+  AttachList := TAttachList.Create(True);
+  Picture := TPicture.Create;
+  Message := TDialogMessage.Create(nil);
+  inherited Create;
+end;
+
+destructor TMessageData.Destroy;
+begin
+  if Assigned(AttachList) then
+    AttachList.Free;
+  if Assigned(Picture) then
+    Picture.Free;
+  if Assigned(Message) then
+    Message.Free;
+  inherited Destroy;
+end;
+
+{ TDialog }
+
+function TDialog.GetMessageData(Index: integer): TMessageData;
+begin
+  Result := fItems[Index];
+end;
+
+function TDialog.GetCount: integer;
+begin
+  Result := fItems.Count;
+end;
+
+procedure TDialog.SetMessageData(Index: integer; AValue: TMessageData);
+begin
+  fItems[Index] := AValue;
+end;
+
+procedure TDialog.OnScroll(Sender: TObject; ScrollCode: TScrollCode;
+  var ScrollPos: integer);
+var
+  delta: integer;
+begin
+  delta := -1 * (ScrollPos + Items[0].Message.Top);
+  case ScrollCode of
+    scLineUp: fPanel.ScrollBy(0, delta);   // = SB_LINEUP
+    scLineDown: fPanel.ScrollBy(0, delta); // = SB_LINEDOWN
+  //  scPageUp: fPanel.ScrollBy(0, delta * 10);   // = SB_PAGEUP
+    scPageDown: fPanel.ScrollBy(0, delta * 10); // = SB_PAGEDOWN
+    scPosition: fPanel.ScrollBy(0, delta); // = SB_THUMBPOSITION
+    scTrack: fPanel.ScrollBy(0, delta);    // = SB_THUMBTRACK
+  //  scTop: fPanel.ScrollBy(0, delta);      // = SB_TOP
+  //  scBottom: fPanel.ScrollBy(0, delta);   // = SB_BOTTOM
+//    scEndScroll: fPanel.ScrollBy(0, delta); // = SB_ENDSCROLL
+  end;
+end;
+
+procedure TDialog.OnChangeScroll(Sender: TObject);
+begin
+  //  fPanel.ScrollBy(0, 1)
+end;
+
+constructor TDialog.Create(AOwner: TComponent);
+begin
+  inherited Create(AOwner);
+  Self.BevelInner := bvNone;
+  Self.BevelOuter := bvRaised;
+  fItems := TMessageDataList.Create(True);
+  fUserPicture := TPicture.Create;
+  fFriendPicture := TPicture.Create;
+  // Компонент
+  fScrollBar := TScrollBar.Create(self);
+  fScrollBar.Kind := sbVertical;
+  fScrollBar.Align := alRight;
+  fScrollBar.Parent := self;
+  fScrollBar.OnScroll := @OnScroll;
+  fScrollBar.OnChange := @OnChangeScroll;
+  fPanel := TCustomPanel.Create(Self);
+  fPanel.Parent := self;
+  fPanel.Align := alClient;
+end;
+
+destructor TDialog.Destroy;
+begin
+  if Assigned(fPanel) then
+    fPanel.Free;
+  if Assigned(fScrollBar) then
+    fScrollBar.Free;
+  if Assigned(fItems) then
+    fItems.Free;
+  if Assigned(fUserPicture) then
+    fUserPicture.Free;
+  if Assigned(fFriendPicture) then
+    fFriendPicture.Free;
+  inherited Destroy;
+end;
+
+procedure TDialog.Add(AText: string; ATime: TDateTime; AIsFriend: boolean);
+var
+  Data: TMessageData;
+begin
+  // Запоминаем параметры
+  Data := TMessageData.Create;
+  Data.Text := AText;
+  Data.Time := ATime;
+  if AIsFriend then
+    Data.Picture.Assign(FriendPicture)
+  else
+    Data.Picture.Assign(UserPicture);
+  // Добавляем визуальный элемент
+  Data.Message.Left := 0;
+  if Count = 0 then
+    Data.Message.Top := 0
+  else
+    Data.Message.Top := Items[Count - 1].Message.Top + Items[Count - 1].Message.Height;
+  if Data.Message.Top > Height then
+    fScrollBar.Visible := True;
+  Data.Message.Width := fPanel.Width;
+  Data.Message.Parent := fPanel;
+  Data.Message.Anchors := [akLeft, akRight, akTop];
+  // заполняем
+  if AIsFriend then
+  begin
+    Data.Message.Establish(FriendName, Data.Text, Data.Time);
+    Data.Message.Picture := FriendPicture;
+  end
+  else
+  begin
+    Data.Message.Establish(UserName, Data.Text, Data.Time);
+    Data.Message.Picture := UserPicture;
+  end;
+  //  Message.AddAttachInfo('Инструкция.pdf', nil);
+  fItems.Add(Data);
+
+  fScrollBar.Max := Items[Count - 1].Message.Top;
+end;
 
 { TDialogMessage }
 
@@ -131,6 +305,11 @@ begin
   Result := Result * (Canvas.Font.GetTextHeight('a') + 1);
 end;
 
+function TDialogMessage.GetPicture: TPicture;
+begin
+  Result := fImage.Picture;
+end;
+
 procedure TDialogMessage.SetAttachCount(AValue: integer);
 // устанавливает количество файлов в сообщении
 var
@@ -157,10 +336,7 @@ end;
 procedure TDialogMessage.SetPicture(AValue: TPicture);
 // Установить аватарку
 begin
-  if fPicture = AValue then
-    Exit;
-  fPicture := AValue;
-  fImage.Picture.Assign(fPicture);
+  fImage.Picture.Assign(AValue);
 end;
 
 procedure TDialogMessage.SetText(AValue: string);
@@ -200,6 +376,7 @@ begin
   fImage.Width := 64;
   fImage.Stretch := True;
   fImage.Proportional := True;
+  fImage.Transparent := True;
   // Name User
   fNameCollocutor := TLabel.Create(self as TDialogMessage);
   fNameCollocutor.Parent := self as TDialogMessage;
@@ -257,8 +434,6 @@ destructor TDialogMessage.Destroy;
   // Уничтожение компонента
 begin
   try
-    if Assigned(fPicture) then
-      fPicture := nil;
     if Assigned(fImage) then
       fImage.Free;
     if Assigned(fNameCollocutor) then
@@ -273,6 +448,7 @@ begin
       fAttachPopup.Free;
   except
     // Пропускаем ошибки если есть ибо не критично
+    Nop;
   end;
   inherited Destroy;
 end;
