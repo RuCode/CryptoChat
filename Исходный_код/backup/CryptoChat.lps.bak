@@ -3,7 +3,7 @@
   <ProjectSession>
     <Version Value="9"/>
     <BuildModes Active="Default"/>
-    <Units Count="121">
+    <Units Count="122">
       <Unit0>
         <Filename Value="CryptoChat.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -121,7 +121,6 @@
         <Filename Value="ENGINE/transports.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="Transports"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="3"/>
         <TopLine Value="129"/>
         <CursorPos X="17" Y="142"/>
@@ -132,7 +131,7 @@
         <Filename Value="ENGINE/mails.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="Mails"/>
-        <EditorIndex Value="5"/>
+        <EditorIndex Value="6"/>
         <TopLine Value="593"/>
         <CursorPos X="49" Y="598"/>
         <UsageCount Value="30"/>
@@ -526,7 +525,7 @@
         <Filename Value="ENGINE/tars.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="Tars"/>
-        <EditorIndex Value="4"/>
+        <EditorIndex Value="5"/>
         <TopLine Value="179"/>
         <CursorPos X="3" Y="188"/>
         <UsageCount Value="25"/>
@@ -536,7 +535,7 @@
         <Filename Value="ENGINE/guidcommands.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="GUIDCommands"/>
-        <EditorIndex Value="7"/>
+        <EditorIndex Value="8"/>
         <CursorPos X="21" Y="9"/>
         <UsageCount Value="25"/>
         <Loaded Value="True"/>
@@ -544,7 +543,7 @@
       <Unit59>
         <Filename Value="GENERICS/DelphiGenerics.pas"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="8"/>
+        <EditorIndex Value="9"/>
         <TopLine Value="26"/>
         <CursorPos X="14" Y="27"/>
         <UsageCount Value="23"/>
@@ -1004,14 +1003,23 @@
       <Unit120>
         <Filename Value="/usr/share/lazarus/1.4.2/lcl/forms.pp"/>
         <UnitName Value="Forms"/>
-        <EditorIndex Value="6"/>
+        <EditorIndex Value="7"/>
         <TopLine Value="37"/>
         <CursorPos X="21" Y="49"/>
         <UsageCount Value="11"/>
         <Loaded Value="True"/>
       </Unit120>
+      <Unit121>
+        <Filename Value="VIRTUALTREEVIEW/VirtualTrees.pas"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="4"/>
+        <TopLine Value="34876"/>
+        <CursorPos X="37" Y="34887"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit121>
     </Units>
-    <JumpHistory Count="18" HistoryIndex="17">
+    <JumpHistory Count="20" HistoryIndex="19">
       <Position1>
         <Filename Value="main.pas"/>
         <Caret Line="144" Column="47" TopLine="130"/>
@@ -1084,6 +1092,13 @@
         <Filename Value="ENGINE/transports.pas"/>
         <Caret Line="139" Column="83" TopLine="120"/>
       </Position18>
+      <Position19>
+        <Filename Value="VIRTUALTREEVIEW/VirtualTrees.pas"/>
+      </Position19>
+      <Position20>
+        <Filename Value="VIRTUALTREEVIEW/VirtualTrees.pas"/>
+        <Caret Line="34583" Column="44" TopLine="34571"/>
+      </Position20>
     </JumpHistory>
   </ProjectSession>
 </CONFIG>

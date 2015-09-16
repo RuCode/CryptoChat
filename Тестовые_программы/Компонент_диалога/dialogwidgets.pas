@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, Forms, ExtCtrls, Graphics, StdCtrls, Controls,
-  Dialogs, Menus, LazUTF8, fgl, Math;
+  Dialogs, Menus, LazUTF8, fgl;
 
 const
   clHighLightMsg = TColor($FFC0C0);
@@ -15,13 +15,13 @@ type
 
   { TDialogMessage }
 
-  TDialogMessage = class(TCustomPanel)
+  TDialogMessage = class(TCustomControl {CustomPanel})
     // Элемент диалога
   private
-    fImage: TImage;
-    fNameCollocutor: TLabel;
-    fText: TLabel;
-    fTime: TLabel;
+    fPicture: TPicture;
+    fNameCollocutor: string; // Имя собеседника
+    fText: string;
+    fTime: string;
     fAttachCount: TLabel;
     fAttachPopup: TPopupMenu;
     procedure EnterMouse(Sender: TObject);
@@ -37,6 +37,8 @@ type
     procedure SetPicture(AValue: TPicture);
     procedure SetText(AValue: string);
     procedure SetTime(AValue: TDateTime);
+  protected
+    procedure Paint; override;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -50,6 +52,7 @@ type
     property Text: string write SetText;
     property Time: TDateTime write SetTime;
     property AttachCount: integer write SetAttachCount;
+    property OnMouseWheel;
   end;
 
   TAttachInfo = class(TObject)
@@ -58,7 +61,7 @@ type
     OnClick: TNotifyEvent;
   end;
 
-  TAttachList = specialize fgl.TFPGObjectList<TAttachInfo>;
+  TAttachList = specialize TFPGObjectList<TAttachInfo>;
 
   { TMessageData }
 
@@ -73,7 +76,7 @@ type
     destructor Destroy; override;
   end;
 
-  TMessageDataList = specialize fgl.TFPGObjectList<TMessageData>;
+  TMessageDataList = specialize TFPGObjectList<TMessageData>;
 
   TDialog = class(TCustomPanel)
     // Диалог
@@ -89,7 +92,8 @@ type
     function GetMessageData(Index: integer): TMessageData;
     procedure SetMessageData(Index: integer; AValue: TMessageData);
     procedure OnScroll(Sender: TObject; ScrollCode: TScrollCode; var ScrollPos: integer);
-    procedure OnChangeScroll(Sender: TObject);
+    procedure OnEventMouseWheelUp(Sender: TObject; Shift: TShiftState; MousePos: TPoint; var Handled: boolean);
+    procedure OnEventMouseWheelDown(Sender: TObject; Shift: TShiftState; MousePos: TPoint; var Handled: boolean);
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -99,8 +103,7 @@ type
     property UserName: string read fUserName write fUserName;
     property FriendPicture: TPicture read fFriendPicture write fFriendPicture;
     property FriendName: string read fFriendName write fFriendName;
-    property Items[Index: integer]: TMessageData
-      read GetMessageData write SetMessageData;
+    property Items[Index: integer]: TMessageData read GetMessageData write SetMessageData;
     property Count: integer read GetCount;
   end;
 
@@ -149,8 +152,7 @@ begin
   fItems[Index] := AValue;
 end;
 
-procedure TDialog.OnScroll(Sender: TObject; ScrollCode: TScrollCode;
-  var ScrollPos: integer);
+procedure TDialog.OnScroll(Sender: TObject; ScrollCode: TScrollCode; var ScrollPos: integer);
 var
   delta: integer;
 begin
@@ -158,24 +160,45 @@ begin
   case ScrollCode of
     scLineUp: fPanel.ScrollBy(0, delta);   // = SB_LINEUP
     scLineDown: fPanel.ScrollBy(0, delta); // = SB_LINEDOWN
-  //  scPageUp: fPanel.ScrollBy(0, delta * 10);   // = SB_PAGEUP
+    scPageUp: fPanel.ScrollBy(0, delta * -10);   // = SB_PAGEUP
     scPageDown: fPanel.ScrollBy(0, delta * 10); // = SB_PAGEDOWN
     scPosition: fPanel.ScrollBy(0, delta); // = SB_THUMBPOSITION
     scTrack: fPanel.ScrollBy(0, delta);    // = SB_THUMBTRACK
-  //  scTop: fPanel.ScrollBy(0, delta);      // = SB_TOP
-  //  scBottom: fPanel.ScrollBy(0, delta);   // = SB_BOTTOM
-//    scEndScroll: fPanel.ScrollBy(0, delta); // = SB_ENDSCROLL
   end;
 end;
 
-procedure TDialog.OnChangeScroll(Sender: TObject);
+procedure TDialog.OnEventMouseWheelUp(Sender: TObject; Shift: TShiftState; MousePos: TPoint; var Handled: boolean);
+// Прокрутка колёсиком мыши вверх
+var
+  delta: integer;
 begin
-  //  fPanel.ScrollBy(0, 1)
+  fScrollBar.Position := fScrollBar.Position - 10;
+  delta := -1 * (fScrollBar.Position + Items[0].Message.Top);
+  fPanel.BeginUpdateBounds;
+  fPanel.ScrollBy(0, delta);
+  fPanel.EndUpdateBounds;
+  Application.ProcessMessages;
+end;
+
+procedure TDialog.OnEventMouseWheelDown(Sender: TObject; Shift: TShiftState; MousePos: TPoint; var Handled: boolean);
+// Прокрутка колёсиком мыши вниз
+var
+  delta: integer;
+begin
+  fScrollBar.Position := fScrollBar.Position + 10;
+  delta := -1 * (fScrollBar.Position + Items[0].Message.Top);
+  fPanel.BeginUpdateBounds;
+  fPanel.ScrollBy(0, delta);
+  fPanel.EndUpdateBounds;
+  Application.ProcessMessages;
 end;
 
 constructor TDialog.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
+  OnMouseWheelDown := @OnEventMouseWheelDown;
+  OnMouseWheelUp := @OnEventMouseWheelUp;
+  DoubleBuffered := True;
   Self.BevelInner := bvNone;
   Self.BevelOuter := bvRaised;
   fItems := TMessageDataList.Create(True);
@@ -187,7 +210,6 @@ begin
   fScrollBar.Align := alRight;
   fScrollBar.Parent := self;
   fScrollBar.OnScroll := @OnScroll;
-  fScrollBar.OnChange := @OnChangeScroll;
   fPanel := TCustomPanel.Create(Self);
   fPanel.Parent := self;
   fPanel.Align := alClient;
@@ -242,6 +264,9 @@ begin
     Data.Message.Establish(UserName, Data.Text, Data.Time);
     Data.Message.Picture := UserPicture;
   end;
+  Data.Message.OnMouseWheelUp := @OnEventMouseWheelUp;
+  Data.Message.OnMouseWheelDown := @OnEventMouseWheelDown;
+
   //  Message.AddAttachInfo('Инструкция.pdf', nil);
   fItems.Add(Data);
 
@@ -307,7 +332,7 @@ end;
 
 function TDialogMessage.GetPicture: TPicture;
 begin
-  Result := fImage.Picture;
+  Result := fPicture;
 end;
 
 procedure TDialogMessage.SetAttachCount(AValue: integer);
@@ -330,19 +355,20 @@ end;
 procedure TDialogMessage.SetNameCollocutor(AValue: string);
 // Устанавливает имя собеседнику
 begin
-  fNameCollocutor.Caption := AValue;
+  fNameCollocutor := AValue;
 end;
 
 procedure TDialogMessage.SetPicture(AValue: TPicture);
 // Установить аватарку
 begin
-  fImage.Picture.Assign(AValue);
+  //  fImage.Picture.Assign(AValue);
+  fPicture.Assign(AValue);
 end;
 
 procedure TDialogMessage.SetText(AValue: string);
 // Текст сообщения
 begin
-  fText.Caption := AValue;
+  fText := AValue;
 end;
 
 procedure TDialogMessage.SetTime(AValue: TDateTime);
@@ -351,13 +377,48 @@ var
   TimeStr: string;
 begin
   DateTimeToString(TimeStr, 'DD.MM.YYYY hh:mm:ss', Avalue);
-  fTime.Caption := TimeStr;
+  fTime := TimeStr;
+end;
+
+procedure TDialogMessage.Paint;
+var
+  LeftVal: integer;
+  Rect: TRect;
+begin
+  // Для более быстрого рисования имеет смысл отключать OnPaint когда компонент не видим
+  inherited Paint;
+  // Имя
+  Canvas.Font.Color := TColor($8a5f3e);
+  Canvas.Font.Style := [fsBold];
+  Canvas.TextOut(74, 4, fNameCollocutor);
+  // Время сообщения
+  Canvas.Font.Color := clGray;
+  Canvas.Font.Style := [];
+  LeftVal := (self as TDialogMessage).Width - Canvas.GetTextWidth(fTime) - 8;
+  Canvas.TextOut(LeftVal, 4, fTime);
+  // Текст сообщения
+  Canvas.Font.Color := clBlack;
+  Canvas.Font.Style := [];
+  Rect.Left := 74;
+  Rect.Top := 24;
+  Rect.Right := LeftVal - 8;
+  Rect.Bottom := Height;
+  Canvas.TextRect(Rect, 74, 24, fText);
+  // Изображение аватарки
+  Rect.Top := 4;
+  Rect.Left := 8;
+  Rect.Right := 64;
+  Rect.Bottom := 64;
+  Canvas.StretchDraw(Rect, fPicture.Graphic);
+  // Выводим инфу
+  Canvas.TextOut(LeftVal, 40, 'Позиция: ' + IntToStr(BoundsRect.Top));
 end;
 
 constructor TDialogMessage.Create(AOwner: TComponent);
   // Создание компонентов
 begin
   inherited Create(AOwner);
+  DoubleBuffered := True;
   // Panel
   Caption := '';
   Color := clWhite;
@@ -365,66 +426,26 @@ begin
   (self as TDialogMessage).Top := 10;
   (self as TDialogMessage).Height := 100;
   (self as TDialogMessage).BorderStyle := bsNone;
-  (self as TDialogMessage).BevelInner := bvNone;
-  (self as TDialogMessage).BevelOuter := bvNone;
+  (self as TDialogMessage).DoubleBuffered := True;
   // Avatar
-  fImage := TImage.Create(self as TDialogMessage);
-  fImage.Parent := self as TDialogMessage;
-  fImage.Left := 8;
-  fImage.Top := 4;
-  fImage.Height := 64;
-  fImage.Width := 64;
-  fImage.Stretch := True;
-  fImage.Proportional := True;
-  fImage.Transparent := True;
-  // Name User
-  fNameCollocutor := TLabel.Create(self as TDialogMessage);
-  fNameCollocutor.Parent := self as TDialogMessage;
-  fNameCollocutor.Left := 74;
-  fNameCollocutor.Top := 4;
-  fNameCollocutor.Font.Color := TColor($8a5f3e);
-  fNameCollocutor.Font.Style := [fsBold];
-  // Text
-  fText := TLabel.Create(self as TDialogMessage);
-  fText.Parent := self as TDialogMessage;
-  fText.Font.Color := clBlack;
-  fText.Left := 74;
-  fText.Top := 24;
-  fText.WordWrap := True;
-  fText.AutoSize := True;
+  fPicture := TPicture.Create;
   // Attach count
   fAttachCount := TLabel.Create(self as TDialogMessage);
   fAttachCount.Parent := self as TDialogMessage;
   fAttachCount.Font.Color := clBlack;
   fAttachCount.Left := (self as TDialogMessage).Width - fAttachCount.Width - 8;
-  fAttachCount.Top := (self as TDialogMessage).Height -
-    (Height - fImage.Height - fImage.Top) - fAttachCount.Height;
+  fAttachCount.Top := (self as TDialogMessage).Height - (Height - 64 {fImage.Height} - 4{fImage.Top}) - fAttachCount.Height;
   fAttachCount.WordWrap := True;
   fAttachCount.AutoSize := True;
   fAttachCount.Anchors := [akRight, akTop];
   fAttachCount.Font.Color := TColor($8a5f3e);
   AttachCount := 2;
-  // Date of Message
-  fTime := TLabel.Create(self as TDialogMessage);
-  fTime.Parent := self as TDialogMessage;
-  fTime.Left := (self as TDialogMessage).Width - fTime.Width - 8;
-  fTime.Anchors := [akRight, akTop];
-  fTime.Top := 4;
-  fTime.Font.Color := clGray;
   // Popup menu
   fAttachPopup := TPopupMenu.Create(self as TDialogMessage);
   ClearAttachInfo;
   // Mouse events
   (self as TDialogMessage).OnMouseEnter := @EnterMouse;
   (self as TDialogMessage).OnMouseLeave := @LeaveMouse;
-  fImage.OnMouseEnter := @EnterMouse;
-  fImage.OnMouseLeave := @LeaveMouse;
-  fTime.OnMouseEnter := @EnterMouse;
-  fTime.OnMouseLeave := @LeaveMouse;
-  fText.OnMouseEnter := @EnterMouse;
-  fText.OnMouseLeave := @LeaveMouse;
-  fNameCollocutor.OnMouseEnter := @EnterMouse;
-  fNameCollocutor.OnMouseLeave := @LeaveMouse;
   fAttachCount.OnMouseEnter := @EnterMouseForAttachPopup;
   fAttachCount.OnMouseLeave := @LeaveMouseForAttachPopup;
   fAttachCount.OnClick := @OnClickAttach;
@@ -434,18 +455,12 @@ destructor TDialogMessage.Destroy;
   // Уничтожение компонента
 begin
   try
-    if Assigned(fImage) then
-      fImage.Free;
-    if Assigned(fNameCollocutor) then
-      fNameCollocutor.Free;
-    if Assigned(fText) then
-      fText.Free;
-    if Assigned(fTime) then
-      fTime.Free;
     if Assigned(fAttachCount) then
       fAttachCount.Free;
     if Assigned(fAttachPopup) then
       fAttachPopup.Free;
+    if Assigned(fPicture) then
+      fPicture.Free;
   except
     // Пропускаем ошибки если есть ибо не критично
     Nop;
@@ -457,7 +472,8 @@ procedure TDialogMessage.ReAlign;
 // Изменение размера
 begin
   inherited ReAlign;
-  (self as TDialogMessage).Height := 74 + GetTextHeigh(string(fText.Caption));
+  // Нужна фича (WordWrap) которая разобьёт строку на строки что бы поместиться в RECT по ширине
+  (self as TDialogMessage).Height := 74 + GetTextHeigh(string(fText));
 end;
 
 procedure TDialogMessage.Establish(AName, AText: string; ATime: TDateTime);
