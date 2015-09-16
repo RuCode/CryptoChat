@@ -18,10 +18,11 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="Main"/>
-        <TopLine Value="130"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="122"/>
         <CursorPos X="47" Y="144"/>
         <UsageCount Value="47"/>
-        <Loaded Value="True"/>
       </Unit1>
       <Unit2>
         <Filename Value="FRAMES/framelogin.pas"/>
@@ -85,12 +86,11 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Frame"/>
         <UnitName Value="FrameDialogs"/>
-        <EditorIndex Value="0"/>
+        <EditorIndex Value="-1"/>
         <WindowIndex Value="1"/>
         <TopLine Value="130"/>
         <CursorPos X="40" Y="140"/>
         <UsageCount Value="40"/>
-        <Loaded Value="True"/>
       </Unit9>
       <Unit10>
         <Filename Value="FORMS/addfrienddlg.pas"/>
@@ -107,10 +107,10 @@
         <Filename Value="ENGINE/transports.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="Transports"/>
-        <EditorIndex Value="2"/>
+        <IsVisibleTab Value="True"/>
         <WindowIndex Value="1"/>
-        <TopLine Value="129"/>
-        <CursorPos X="17" Y="142"/>
+        <TopLine Value="21"/>
+        <CursorPos X="3" Y="34"/>
         <UsageCount Value="31"/>
         <Loaded Value="True"/>
       </Unit11>
@@ -118,12 +118,11 @@
         <Filename Value="ENGINE/mails.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="Mails"/>
-        <EditorIndex Value="4"/>
+        <EditorIndex Value="-1"/>
         <WindowIndex Value="1"/>
         <TopLine Value="593"/>
         <CursorPos X="49" Y="598"/>
         <UsageCount Value="30"/>
-        <Loaded Value="True"/>
       </Unit12>
       <Unit13>
         <Filename Value="SYNAPSE/source/lib/asn1util.pas"/>
@@ -359,43 +358,38 @@
         <Filename Value="ENGINE/rsaex.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="RsaEx"/>
-        <TopLine Value="34"/>
-        <CursorPos X="17" Y="46"/>
+        <EditorIndex Value="-1"/>
+        <WindowIndex Value="1"/>
+        <TopLine Value="106"/>
+        <CursorPos Y="121"/>
         <UsageCount Value="26"/>
       </Unit56>
       <Unit57>
         <Filename Value="ENGINE/tars.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="Tars"/>
-        <IsVisibleTab Value="True"/>
-        <EditorIndex Value="3"/>
+        <EditorIndex Value="-1"/>
         <WindowIndex Value="1"/>
         <TopLine Value="179"/>
         <CursorPos X="30" Y="183"/>
         <UsageCount Value="25"/>
-        <Loaded Value="True"/>
       </Unit57>
       <Unit58>
         <Filename Value="ENGINE/guidcommands.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="GUIDCommands"/>
-        <EditorIndex Value="5"/>
+        <EditorIndex Value="-1"/>
         <WindowIndex Value="1"/>
-        <TopLine Value="1"/>
         <CursorPos X="21" Y="9"/>
         <UsageCount Value="25"/>
-        <Loaded Value="True"/>
       </Unit58>
       <Unit59>
         <Filename Value="GENERICS/DelphiGenerics.pas"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="DelphiGenerics"/>
-        <EditorIndex Value="6"/>
+        <EditorIndex Value="-1"/>
         <WindowIndex Value="1"/>
-        <TopLine Value="26"/>
-        <CursorPos X="14" Y="27"/>
+        <TopLine Value="20"/>
         <UsageCount Value="23"/>
-        <Loaded Value="True"/>
       </Unit59>
       <Unit60>
         <Filename Value="FORMS/waitform.pas"/>
@@ -404,13 +398,11 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="WaitForm"/>
-        <EditorIndex Value="1"/>
+        <EditorIndex Value="-1"/>
         <WindowIndex Value="1"/>
         <TopLine Value="18"/>
         <CursorPos X="91" Y="18"/>
         <UsageCount Value="22"/>
-        <Loaded Value="True"/>
-        <LoadedDesigner Value="True"/>
       </Unit60>
       <Unit61>
         <Filename Value="GENERICS/Specialized/SpecializedBitmap.pas"/>
@@ -719,7 +711,6 @@
       </Unit120>
       <Unit121>
         <Filename Value="VIRTUALTREEVIEW/VirtualTrees.pas"/>
-        <UnitName Value="VirtualTrees"/>
         <WindowIndex Value="1"/>
         <TopLine Value="34950"/>
         <CursorPos X="85" Y="34896"/>
@@ -727,74 +718,77 @@
       </Unit121>
     </Units>
     <General>
-      <ActiveWindowIndexAtStart Value="0"/>
+      <ActiveWindowIndexAtStart Value="1"/>
     </General>
-    <JumpHistory Count="16" HistoryIndex="15">
+    <JumpHistory Count="17" HistoryIndex="16">
       <Position1>
-        <Filename Value="FRAMES/framedialogs.pas"/>
-        <Caret Line="148" Column="18" TopLine="128"/>
+        <Filename Value="ENGINE/transports.pas"/>
+        <Caret Line="124" Column="64" TopLine="106"/>
       </Position1>
       <Position2>
-        <Filename Value="FORMS/waitform.pas"/>
-        <Caret Line="38" Column="28" TopLine="19"/>
+        <Filename Value="ENGINE/transports.pas"/>
+        <Caret Line="125" Column="30" TopLine="114"/>
       </Position2>
       <Position3>
-        <Filename Value="FORMS/waitform.pas"/>
-        <Caret Line="17" Column="70" TopLine="6"/>
+        <Filename Value="ENGINE/transports.pas"/>
+        <Caret Line="126" Column="35" TopLine="114"/>
       </Position3>
       <Position4>
-        <Filename Value="FORMS/waitform.pas"/>
-        <Caret Line="24" Column="5" TopLine="6"/>
+        <Filename Value="ENGINE/transports.pas"/>
+        <Caret Line="126" Column="38" TopLine="114"/>
       </Position4>
       <Position5>
-        <Filename Value="FORMS/waitform.pas"/>
-        <Caret Line="46" Column="23" TopLine="26"/>
+        <Filename Value="ENGINE/transports.pas"/>
+        <Caret Line="30" Column="35" TopLine="22"/>
       </Position5>
       <Position6>
-        <Filename Value="FRAMES/framedialogs.pas"/>
-        <Caret Line="149" Column="31" TopLine="130"/>
+        <Filename Value="ENGINE/transports.pas"/>
+        <Caret Line="139" Column="83" TopLine="120"/>
       </Position6>
       <Position7>
-        <Filename Value="FORMS/waitform.pas"/>
-        <Caret Line="24" Column="29" TopLine="12"/>
+        <Filename Value="ENGINE/transports.pas"/>
+        <Caret Line="142" Column="17" TopLine="129"/>
       </Position7>
       <Position8>
         <Filename Value="ENGINE/transports.pas"/>
-        <Caret Line="124" Column="64" TopLine="106"/>
+        <Caret Line="41" Column="5" TopLine="35"/>
       </Position8>
       <Position9>
-        <Filename Value="ENGINE/mails.pas"/>
-        <Caret Line="124" Column="69" TopLine="112"/>
+        <Filename Value="ENGINE/transports.pas"/>
+        <Caret Line="40" Column="28" TopLine="25"/>
       </Position9>
       <Position10>
-        <Filename Value="ENGINE/mails.pas"/>
-        <Caret Line="596" Column="37" TopLine="539"/>
+        <Filename Value="ENGINE/transports.pas"/>
+        <Caret Line="9" Column="56" TopLine="22"/>
       </Position10>
       <Position11>
         <Filename Value="ENGINE/transports.pas"/>
-        <Caret Line="125" Column="30" TopLine="114"/>
+        <Caret Line="41" Column="6" TopLine="25"/>
       </Position11>
       <Position12>
         <Filename Value="ENGINE/transports.pas"/>
-        <Caret Line="126" Column="35" TopLine="114"/>
+        <Caret Line="62" Column="4" TopLine="46"/>
       </Position12>
       <Position13>
-        <Filename Value="ENGINE/tars.pas"/>
-        <Caret Line="188" Column="3" TopLine="179"/>
+        <Filename Value="ENGINE/transports.pas"/>
+        <Caret Line="69" Column="4" TopLine="53"/>
       </Position13>
       <Position14>
         <Filename Value="ENGINE/transports.pas"/>
-        <Caret Line="126" Column="38" TopLine="114"/>
+        <Caret Line="84" Column="9" TopLine="68"/>
       </Position14>
       <Position15>
         <Filename Value="ENGINE/transports.pas"/>
-        <Caret Line="30" Column="35" TopLine="22"/>
+        <Caret Line="95" Column="16" TopLine="80"/>
       </Position15>
       <Position16>
         <Filename Value="ENGINE/transports.pas"/>
-        <Caret Line="139" Column="83" TopLine="120"/>
+        <Caret Line="159" Column="4" TopLine="22"/>
       </Position16>
+      <Position17>
+        <Filename Value="ENGINE/transports.pas"/>
+        <Caret Line="34" Column="3" TopLine="21"/>
+      </Position17>
     </JumpHistory>
   </ProjectSession>
-  <EditorMacros Count="0"/>
 </CONFIG>

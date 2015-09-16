@@ -38,7 +38,7 @@ type
   TTransport = class(TThread)
   private
     Mail: TMail;
-    Queue: TDataQueue;
+    fQueue: TDataQueue;
     TransportType: integer;
   protected
     procedure Execute; override;
@@ -59,14 +59,14 @@ constructor TTransport.Create(CreateSuspended: boolean);
 begin
   FreeOnTerminate := True;
   Mail := TMail.Create;
-  Queue := TDataQueue.Create;
+  fQueue := TDataQueue.Create;
   inherited Create(CreateSuspended);
 end;
 
 destructor TTransport.Destroy;
 begin
   Mail.Free;
-  Queue.Free;
+  fQueue.Free;
   inherited Destroy;
 end;
 
@@ -81,7 +81,7 @@ begin
   // Основной цикл сетевого транспорта
   while not Terminated do
   begin
-    if Queue.Count <= 0 then
+    if fQueue.Count <= 0 then
     begin
       if TransportType = CONNECTIONTYPE_EMAIL then
       begin
@@ -92,7 +92,7 @@ begin
     end
     else
     begin
-      info := Queue.Dequeue;
+      info := fQueue.Dequeue;
       case Info.Command of
         // Подключиться
         CMD_CONNECT:
@@ -156,7 +156,7 @@ end;
 procedure TTransport.Enqueue(Command: TDataInfo);
 // Положить комманду
 begin
-  Queue.Enqueue(Command);
+  fQueue.Enqueue(Command);
 end;
 
 initialization
