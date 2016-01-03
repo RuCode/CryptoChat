@@ -32,11 +32,18 @@ type
 
 type
   TDataQueue = specialize TQueue<TDataInfo>;
+  {
+    Когда операция начинается и заканчивается, сообщаем главному окну об этом.
+  }
+  TOnStartOperation = procedure(AName: string) of object;
+  TOnEndOperation = TProcedureOfObject;
 
   { TTransport }
 
   TTransport = class(TThread)
   private
+    FOnEndOperation: TProcedureOfObject;
+    FOnStartOperation: TOnStartOperation;
     Mail: TMail;
     fQueue: TDataQueue;
     TransportType: integer;
@@ -46,6 +53,15 @@ type
     constructor Create(CreateSuspended: boolean);
     destructor Destroy; override;
     procedure Enqueue(Command: TDataInfo);
+  public
+    // Не удобно использовать Enqueue, описываем операции тут
+    procedure Connect;
+    procedure Disconnect;
+    procedure AddFriend(AName, AEmail, AAvatarPath: ShortString);
+    procedure SynchronizeMails;
+    // События
+    property OnStartOperation: TOnStartOperation read FOnStartOperation write FOnStartOperation;
+    property OnEndOperation: TProcedureOfObject read FOnEndOperation write FOnEndOperation;
   end;
 
 var
@@ -76,7 +92,7 @@ var
   Rsa: TRsa;
   Tar: TTar;
   Stream: TMemoryStream;
-  i: Integer;
+  i: integer;
 begin
   // Основной цикл сетевого транспорта
   while not Terminated do
@@ -97,6 +113,8 @@ begin
         // Подключиться
         CMD_CONNECT:
         begin
+          if Assigned(FOnStartOperation) then
+            OnStartOperation('Производим попытку подключения...');
           TransportType := Database.GetTransportType(DataBase.CurrentUserID);
           if TransportType = CONNECTIONTYPE_EMAIL then
           begin
@@ -108,20 +126,30 @@ begin
             Mail.Password := DataBase.GetTransportPassword(DataBase.CurrentUserID);
             Mail.Connected := True;
           end;
+          if Assigned(FOnEndOperation) then
+            OnEndOperation();
         end;
         // Отключаемся
         CMD_DISCONNECT:
         begin
+          if Assigned(FOnStartOperation) then
+            OnStartOperation('Отключаемся от сервера...');
           if TransportType = CONNECTIONTYPE_EMAIL then
             Mail.Connected := False;
+          if Assigned(FOnEndOperation) then
+            OnEndOperation();
         end;
         // Добавляем в друзья
         CMD_ADDFRIEND:
         begin
           // Генерируем ключи
+          if Assigned(FOnStartOperation) then
+            OnStartOperation('Генерируем ключи...');
           Rsa := TRSA.Create;
           Rsa.GenKeys;
           // Пихаем в тар и отправляем на мыло
+          if Assigned(FOnStartOperation) then
+            OnStartOperation('Отправляем сообщение с открытым ключем...');
           Tar := TTar.Create;
           Tar.AddTextFile('command.cfg', CC_IWONTADDFRIEND);
           Tar.AddTextFile('public.pem', Rsa.PublicKey);
@@ -129,18 +157,24 @@ begin
           Tar.StoreToStream(TStream(Stream));
           Mail.SendMail(Info.Email, CC_ALLMAILSSUBJECT, '...', CC_ATTACHNAME, Stream);
           // Смываем за собой
-          Synchronize(info.OnEndOperation);
           Rsa.Free;
           Tar.Free;
           Stream.Free;
+          if Assigned(FOnEndOperation) then
+            OnEndOperation();
         end;
         // Синхронизация сообщений
         CMD_SYNCH_RAWMESSAGES:
         begin
+          if Assigned(FOnStartOperation) then
+            OnStartOperation('Синхронизируем сообщения...');
           { TODO : Нужно сделать фичу синхронизации }
           if mail.Connected then
             for i := 0 to mail.CountOfMails do
               mail.GetMailHeader(i);
+
+          if Assigned(FOnEndOperation) then
+            OnEndOperation();
         end
           // Не смогли определить комманду
         else
@@ -157,6 +191,42 @@ procedure TTransport.Enqueue(Command: TDataInfo);
 // Положить комманду
 begin
   fQueue.Enqueue(Command);
+end;
+
+procedure TTransport.Connect;
+// Подключение к серверу
+var
+  Info: TDataInfo;
+begin
+  Info.Command := CMD_CONNECT;
+  Enqueue(Info);
+end;
+
+procedure TTransport.Disconnect;
+// Отключение от сервера
+var
+  Info: TDataInfo;
+begin
+  Info.Command := CMD_DISCONNECT;
+  Enqueue(Info);
+end;
+
+procedure TTransport.AddFriend(AName, AEmail, AAvatarPath: ShortString);
+// Добавление нового друга
+var
+  Info: TDataInfo;
+begin
+  Info.Command := CMD_ADDFRIEND;
+  Info.Name := AName;
+  Info.Email := AEmail;
+  Info.AvatarPath := AAvatarPath;
+  Enqueue(Info);
+end;
+
+procedure TTransport.SynchronizeMails;
+// Синхронизируем почту
+begin
+
 end;
 
 initialization

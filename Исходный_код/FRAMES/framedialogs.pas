@@ -18,19 +18,27 @@ type
     PageControl: TPageControl;
     PanelLeft: TPanel;
     PanelLeftBottom: TPanel;
+    ProgressBar: TProgressBar;
     Splitter: TSplitter;
+    MainStatusBar: TStatusBar;
     TabSheet1: TTabSheet;
     ToolBar: TToolBar;
+    ToolButtonDel: TToolButton;
     ToolButtonAdd: TToolButton;
     procedure ListViewResize(Sender: TObject);
+    procedure MainStatusBarDrawPanel(StatusBar: TStatusBar; Panel: TStatusPanel; const Rect: TRect);
     procedure ToolButtonAddClick(Sender: TObject);
   private
     { private declarations }
   public
     { public declarations }
-    procedure LoadUsers;
+    constructor Create(AOwner: TComponent); override;
+    procedure LoadFriendsFromDB;
     procedure ShowWaitForm;
     procedure HideWaitForm;
+
+    procedure OnStartOperation(AName: string);
+    procedure OnEndOperation;
   end;
 
 implementation
@@ -49,33 +57,53 @@ begin
   ListView.Column[0].Width := ListView.Width - 14;
 end;
 
+procedure TFrameWithDialogs.MainStatusBarDrawPanel(StatusBar: TStatusBar; Panel: TStatusPanel; const Rect: TRect);
+// Должен рисовать прогресс бар в статус баре
+begin
+  case Panel.Index of
+    0:
+    begin
+      ProgressBar.BoundsRect := Rect;
+      ProgressBar.PaintTo(StatusBar.Canvas.Handle, Rect.Left, Rect.Top);
+    end;
+  end;
+end;
+
 procedure TFrameWithDialogs.ToolButtonAddClick(Sender: TObject);
 // Добавляем нового друга
-var
-  Info: TDataInfo;
 begin
   with FormAddFriend do
   begin
     Clear;
     if ShowModal = mrOk then
-      if DataBase.AddFriend(DataBase.CurrentUserID, EditName.Text,
-        EditMail.Text, OpenPictureDialog.FileName) then
-      begin
-        with Info do
-        begin
-          Command := CMD_ADDFRIEND;
-          Name := EditName.Text;
-          Email := EditMail.Text;
-          AvatarPath := OpenPictureDialog.FileName;
-          OnEndOperation := @HideWaitForm;
-        end;
-        Transport.Enqueue(Info);
-        ShowWaitForm;
-      end;
+      if DataBase.AddFriend(DataBase.CurrentUserID, EditName.Text, EditMail.Text, OpenPictureDialog.FileName) then
+        Transport.AddFriend(EditName.Text, EditMail.Text, OpenPictureDialog.FileName);
   end;
 end;
 
-procedure TFrameWithDialogs.LoadUsers;
+constructor TFrameWithDialogs.Create(AOwner: TComponent);
+  // Если открывается этот фрэйм, значит получаем все сообщения
+begin
+  inherited Create(AOwner);
+  // Ставим иконки
+  ToolButtonAdd.ImageIndex := 0;
+  ToolButtonDel.ImageIndex := 1;
+  // Установим новые события
+  Transport.OnStartOperation := @OnStartOperation;
+  Transport.OnEndOperation := @OnEndOperation;
+  // Впишем прогресс бар в статус бар
+  ProgressBar.Width := 100;
+  ProgressBar.Parent := self;
+  ProgressBar.Visible := False;
+  ProgressBar.Position := 100;
+
+  // Грузим список друзей
+  LoadFriendsFromDB;
+  // Читаем входящие сообщения
+  Transport.SynchronizeMails;
+end;
+
+procedure TFrameWithDialogs.LoadFriendsFromDB;
 // Загружаем пользователей из БД
 var
   i: integer;
@@ -134,6 +162,7 @@ begin
 end;
 
 procedure TFrameWithDialogs.ShowWaitForm;
+// Показать диалог ожидания
 begin
   if Assigned(FormWait) then
     exit;
@@ -142,13 +171,26 @@ begin
 end;
 
 procedure TFrameWithDialogs.HideWaitForm;
+// Скрыть диалог ожидания
 begin
   if not Assigned(FormWait) then
     Exit;
   FormWait.Close;
-  MessageDlg('Информация', Format(
-    'На почту %s отправлен запрос открытого ключа, после получения ответа, Вы можете начать переписку...',
+  MessageDlg('Информация', Format('На почту %s отправлен запрос открытого ключа, после получения ответа, Вы можете начать переписку...',
     [FormAddFriend.EditMail.Text]), mtInformation, [mbOK], '');
+end;
+
+procedure TFrameWithDialogs.OnStartOperation(AName: string);
+// Устанавливаем статус операции и дёргаем ProgressBar
+begin
+  MainStatusBar.Panels[1].Text := AName;
+  ProgressBar.Position := 100;
+end;
+
+procedure TFrameWithDialogs.OnEndOperation;
+// Перестаем дёрьгать ProgressBar
+begin
+  MainStatusBar.Panels[1].Text := 'Все задания выполнены...';
 end;
 
 end.

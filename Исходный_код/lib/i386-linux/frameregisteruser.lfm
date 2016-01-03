@@ -45,8 +45,8 @@ object FrameRegisterUser: TFrameRegisterUser
       EditLabel.AnchorSideRight.Side = asrBottom
       EditLabel.AnchorSideBottom.Control = EditName
       EditLabel.Left = 200
-      EditLabel.Height = 17
-      EditLabel.Top = 4
+      EditLabel.Height = 15
+      EditLabel.Top = 6
       EditLabel.Width = 184
       EditLabel.Caption = 'Имя'
       EditLabel.ParentColor = False
@@ -62,8 +62,8 @@ object FrameRegisterUser: TFrameRegisterUser
       EditLabel.AnchorSideRight.Side = asrBottom
       EditLabel.AnchorSideBottom.Control = EditMail
       EditLabel.Left = 200
-      EditLabel.Height = 17
-      EditLabel.Top = 60
+      EditLabel.Height = 15
+      EditLabel.Top = 62
       EditLabel.Width = 184
       EditLabel.Caption = 'EMail'
       EditLabel.ParentColor = False
@@ -80,8 +80,8 @@ object FrameRegisterUser: TFrameRegisterUser
       EditLabel.AnchorSideRight.Side = asrBottom
       EditLabel.AnchorSideBottom.Control = EditPassword
       EditLabel.Left = 200
-      EditLabel.Height = 17
-      EditLabel.Top = 116
+      EditLabel.Height = 15
+      EditLabel.Top = 118
       EditLabel.Width = 184
       EditLabel.Caption = 'Пароль'
       EditLabel.ParentColor = False
@@ -90,7 +90,7 @@ object FrameRegisterUser: TFrameRegisterUser
     end
     object LabelAvatar: TLabel
       Left = 16
-      Height = 17
+      Height = 15
       Top = 4
       Width = 55
       Caption = 'Аватарка'
@@ -107,8 +107,8 @@ object FrameRegisterUser: TFrameRegisterUser
       EditLabel.AnchorSideRight.Side = asrBottom
       EditLabel.AnchorSideBottom.Control = EditPasswordEmail
       EditLabel.Left = 392
-      EditLabel.Height = 17
-      EditLabel.Top = 4
+      EditLabel.Height = 15
+      EditLabel.Top = 6
       EditLabel.Width = 184
       EditLabel.Caption = 'Пароль от почты'
       EditLabel.ParentColor = False
@@ -125,8 +125,8 @@ object FrameRegisterUser: TFrameRegisterUser
       EditLabel.AnchorSideRight.Side = asrBottom
       EditLabel.AnchorSideBottom.Control = EditHostIncoming
       EditLabel.Left = 392
-      EditLabel.Height = 17
-      EditLabel.Top = 60
+      EditLabel.Height = 15
+      EditLabel.Top = 62
       EditLabel.Width = 184
       EditLabel.Caption = 'Сервер входящих (imap)'
       EditLabel.ParentColor = False
@@ -142,8 +142,8 @@ object FrameRegisterUser: TFrameRegisterUser
       EditLabel.AnchorSideRight.Side = asrBottom
       EditLabel.AnchorSideBottom.Control = EditHostOutgoing
       EditLabel.Left = 392
-      EditLabel.Height = 17
-      EditLabel.Top = 115
+      EditLabel.Height = 15
+      EditLabel.Top = 117
       EditLabel.Width = 184
       EditLabel.Caption = 'Сервер исходящих (smtp)'
       EditLabel.ParentColor = False
@@ -159,8 +159,8 @@ object FrameRegisterUser: TFrameRegisterUser
       EditLabel.AnchorSideRight.Side = asrBottom
       EditLabel.AnchorSideBottom.Control = EditPortImap
       EditLabel.Left = 16
-      EditLabel.Height = 17
-      EditLabel.Top = 172
+      EditLabel.Height = 15
+      EditLabel.Top = 174
       EditLabel.Width = 184
       EditLabel.Caption = 'Порт imap'
       EditLabel.ParentColor = False
@@ -176,8 +176,8 @@ object FrameRegisterUser: TFrameRegisterUser
       EditLabel.AnchorSideRight.Side = asrBottom
       EditLabel.AnchorSideBottom.Control = EditPortSmtp
       EditLabel.Left = 200
-      EditLabel.Height = 17
-      EditLabel.Top = 172
+      EditLabel.Height = 15
+      EditLabel.Top = 174
       EditLabel.Width = 184
       EditLabel.Caption = 'Порт smtp'
       EditLabel.ParentColor = False
@@ -185,9 +185,9 @@ object FrameRegisterUser: TFrameRegisterUser
     end
     object CheckBox: TCheckBox
       Left = 392
-      Height = 22
+      Height = 23
       Top = 192
-      Width = 134
+      Width = 133
       Caption = 'Скрывать пароли'
       Checked = True
       OnChange = CheckBoxChange

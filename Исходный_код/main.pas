@@ -99,8 +99,6 @@ end;
 
 procedure TMainForm.ShowFrameDialogs;
 // Показать фрэйм диалогов
-var
-  Info: TDataInfo;
 begin
   HideAllFrames;
   if not Assigned(FrameDialogs) then
@@ -108,12 +106,10 @@ begin
     FrameDialogs := TFrameWithDialogs.Create(MainForm);
     FrameDialogs.Align := alClient;
   end;
-  FrameDialogs.LoadUsers; // Загружаем пользователей
   FrameDialogs.Parent := MainForm;
   FrameDialogs.Visible := True;
   SetCaptionWithForm(FrameDialogs);
-  Info.Command := CMD_CONNECT;
-  Transport.Enqueue(Info);
+  Transport.Connect;
 end;
 
 procedure TMainForm.HideAllFrames;

@@ -103,7 +103,9 @@ begin
     DataBase.AddTransport(DataBase.CurrentUserID, CONNECTIONTYPE_EMAIL, StrToInt(EditPortImap.Text), StrToInt(EditPortSmtp.Text),
       EditHostIncoming.Text, EditHostOutgoing.Text, EditMail.Text, EditPasswordEmail.Text);
     MainForm.ShowFrameDialogs;
-  end;
+  end
+  else
+    raise Exception.Create('Системная ошибка при создании нового пользователя...');
 end;
 
 procedure TFrameRegisterUser.CheckBoxChange(Sender: TObject);

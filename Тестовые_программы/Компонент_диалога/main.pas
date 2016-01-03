@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs,
-  ExtCtrls, Menus, DialogWidgets;
+  ExtCtrls, Menus, DialogWidgets, DialogItems;
 
 type
 
@@ -21,7 +21,7 @@ type
     { private declarations }
   public
     { public declarations }
-    Message: TDialogMessage;
+    Message: TDialogItem;
     Dialog: TDialog;
   end;
 
@@ -35,8 +35,8 @@ implementation
 { TForm1 }
 
 procedure TForm1.FormCreate(Sender: TObject);
-var
-  i: integer;
+//var
+//  i: integer;
 begin
   // Одно сообщение
  { Message := TDialogMessage.Create(Self);
@@ -63,12 +63,18 @@ begin
   Dialog.FriendName := 'Сергей';
   Dialog.UserPicture.LoadFromFile('1.jpg');
   Dialog.FriendPicture.LoadFromFile('2.png');
-  for i := 1 to 100 do
+
+
+  Dialog.Add('Здарова мужик!!!' + #13 + #10 + 'Ну это проверка текста, ведь диалоги должны быть разной длинны', Now, True);
+  Dialog.Add('Здарова мужик!!!', Now, True);
+  Dialog.Add('Здарова мужик!!!', Now, True);
+
+ { for i := 1 to 100 do
   begin
     Dialog.Add('Здарова мужик!!!', Now, True);
     Dialog.Add('Здарова мужик 22222!!!Здарова мужик 22222!!!', Now, False);
   end;
-  Dialog.Items[Dialog.Count - 1].Message.AddAttachInfo('Test.txt', nil);
+  Dialog.Items[Dialog.Count - 1].AddAttachInfo('Test.txt');}
 end;
 
 procedure TForm1.FormDestroy(Sender: TObject);

@@ -62,6 +62,7 @@
         <ComponentName Value="FrameOfferRegisterUser"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Frame"/>
+        <UnitName Value="FrameOfferRegisterUser"/>
       </Unit3>
       <Unit4>
         <Filename Value="FRAMES/frameregisteruser.pas"/>

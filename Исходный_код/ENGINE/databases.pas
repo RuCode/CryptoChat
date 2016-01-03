@@ -52,8 +52,7 @@ type
     function ExecSQL(SQLText: string): boolean;
   public
     {: Добавление нового пользователя}
-    function AddUser(const NickName, Password, Email: string;
-      const AvatarFileName: string = ''): boolean;
+    function AddUser(const NickName, Password, Email: string; const AvatarFileName: string = ''): boolean;
     {: Удаление пользователя}
     function RemoveUser(UserID: integer): boolean;
     {: Установить NickName пользователю}
@@ -71,8 +70,7 @@ type
     {: Сохранить аватарку пользоватля в поток}
     function SaveUserAvatarToStream(UserID: integer; Stream: TStream): boolean;
     {: Получить информацию о пользователе}
-    function GetUserInfo(UserID: integer;
-      out NickName, PasswordHash, Email: string): boolean;
+    function GetUserInfo(UserID: integer; out NickName, PasswordHash, Email: string): boolean;
     {: Получить количество пользователей в БД}
     function GetUsersCount: integer;
     {: Узнать наличие пользователя в БД}
@@ -99,8 +97,7 @@ type
     function GetTransportPassword(UserID: integer): string;
   public
     {: Добавить нового друга}
-    function AddFriend(UserID: integer; const NickName, Email: string;
-      const AvatarFileName: string = ''): boolean;
+    function AddFriend(UserID: integer; const NickName, Email: string; const AvatarFileName: string = ''): boolean;
     {: Удалить друга}
     function RemoveFriend(UserID, FriendID: integer): boolean;
     {: Установить новое имя пользователю}
@@ -114,13 +111,11 @@ type
     {: Получить количество друзей пользователя}
     function GetFriendsCount(UserID: integer): integer;
     {: Сохранить аватарку друга в поток}
-    function SaveFriendAvatarToStream(UserID, FriendID: integer;
-      Stream: TStream): boolean;
+    function SaveFriendAvatarToStream(UserID, FriendID: integer; Stream: TStream): boolean;
   public
     {: Добавление нового сообщения}
-    function AddMessage(UserID, FriendID: integer; Direction: TMsgDirection;
-      TypeMsg: TMsgType; MessageStream, OpenKey, PrivateKey, BlowFishKey:
-      TStream): boolean;
+    function AddMessage(UserID, FriendID: integer; Direction: TMsgDirection; TypeMsg: TMsgType;
+      MessageStream, OpenKey, PrivateKey, BlowFishKey: TStream): boolean;
     {: Удаление сообщения}
     function RemoveMessage(UserID, FriendID, ID: integer): boolean;
     {: Получить направление сообщения}
@@ -134,11 +129,9 @@ type
     {: Получить открытый ключ}
     function GetMessageOpenKey(UserID, FriendID, ID: integer; Stream: TStream): boolean;
     {: Получить закрытый ключ}
-    function GetMessagePrivateKey(UserID, FriendID, ID: integer;
-      Stream: TStream): boolean;
+    function GetMessagePrivateKey(UserID, FriendID, ID: integer; Stream: TStream): boolean;
     {: Получить blowfish ключ}
-    function GetMessageBlowFishKey(UserID, FriendID, ID: integer;
-      Stream: TStream): boolean;
+    function GetMessageBlowFishKey(UserID, FriendID, ID: integer; Stream: TStream): boolean;
     {: Получить количество сообщений}
     function GetMessagesCount(UserID, FriendID: integer): integer;
   end;
@@ -172,8 +165,7 @@ implementation
 constructor TDataBase.Create;
 begin
   inherited Create;
-  fFileName := ExtractFilePath(ParamStrUTF8(0)) + 'DATA' + PathDelim +
-    'DataBase.SQLite3';
+  fFileName := ExtractFilePath(ParamStrUTF8(0)) + 'DATA' + PathDelim + 'DataBase.SQLite3';
 end;
 
 destructor TDataBase.Destroy;
@@ -189,8 +181,10 @@ begin
   Result := False;
   UserID := UserExist(EMail);
   if UserID <> INVALID_VALUE then
+  begin
     if MD5Print(MD5String(Password)) = GetUserPasswordHash(UserID) then
       Result := True;
+  end;
   fCurrentUserID := UserID;
 end;
 
@@ -200,12 +194,12 @@ procedure TCustomDataBase.UpdateGeneralTableStructure;
 // Обновление структур основных таблиц в базе данных
 begin
   // Таблица с описанием пользователей программы
-  ExecSQL('CREATE TABLE IF NOT EXISTS USERS (ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, NickName TEXT, Email TEXT, '
-    + 'PasswordHash TEXT, AVATAR BLOB)');
+  ExecSQL('CREATE TABLE IF NOT EXISTS USERS (ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, NickName TEXT, Email TEXT, ' +
+    'PasswordHash TEXT, AVATAR BLOB)');
 
   // Таблица с описанием друзей
-  ExecSQL('CREATE TABLE IF NOT EXISTS FRIENDS (USERID INTEGER REFERENCES ID(USERS), ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, '
-    + 'NickName TEXT, Email TEXT, AVATAR BLOB)');
+  ExecSQL('CREATE TABLE IF NOT EXISTS FRIENDS (USERID INTEGER REFERENCES ID(USERS), ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, ' +
+    'NickName TEXT, Email TEXT, AVATAR BLOB)');
 
   // Таблица с сообщениями
   ///////////////////////////////////////
@@ -219,12 +213,12 @@ begin
   // 8. Закрытый ключ RSA
   // 9. Ключ BlowFish
   ///////////////////////////////////////
-  ExecSQL('CREATE TABLE IF NOT EXISTS MESSAGES (USERID INTEGER REFERENCES ID(USERS), FRIENDID INTEGER REFERENCES ID(Friends), '
-    + 'ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, DIRECTION INTEGER, TYPE INTEGER, ENCMESSAGE BLOB, DATE DATETIME, '
-    + 'OPENKEY BLOB, PRIVATEKEY BLOB, BLOWFISHKEY BLOB)');
+  ExecSQL('CREATE TABLE IF NOT EXISTS MESSAGES (USERID INTEGER REFERENCES ID(USERS), FRIENDID INTEGER REFERENCES ID(Friends), ' +
+    'ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, DIRECTION INTEGER, TYPE INTEGER, ENCMESSAGE BLOB, DATE DATETIME, ' +
+    'OPENKEY BLOB, PRIVATEKEY BLOB, BLOWFISHKEY BLOB)');
 
-  ExecSQL('CREATE TABLE IF NOT EXISTS TRANSPORTS (USERID INTEGER REFERENCES ID(USERS), TYPE INTEGER, PORTIN INTEGER, '
-    + 'PORTOUT INTEGER, HOSTIN TEXT, HOSTOUT TEXT, USERNAME TEXT, PASSWORD TEXT)');
+  ExecSQL('CREATE TABLE IF NOT EXISTS TRANSPORTS (USERID INTEGER REFERENCES ID(USERS), TYPE INTEGER, PORTIN INTEGER, ' +
+    'PORTOUT INTEGER, HOSTIN TEXT, HOSTOUT TEXT, USERNAME TEXT, PASSWORD TEXT)');
 end;
 
 constructor TCustomDataBase.Create;
@@ -234,6 +228,8 @@ end;
 
 destructor TCustomDataBase.Destroy;
 begin
+  if Assigned(SqliteDatabase) then
+    FreeAndNil(SqliteDatabase);
   inherited Destroy;
 end;
 
@@ -281,8 +277,7 @@ begin
   end;
 end;
 
-function TCustomDataBase.AddUser(const NickName, Password, Email: string;
-  const AvatarFileName: string): boolean;
+function TCustomDataBase.AddUser(const NickName, Password, Email: string; const AvatarFileName: string): boolean;
   // Создание нового пользователя
 var
   Stmt: TSQLite3Statement;
@@ -294,8 +289,7 @@ begin
     try
       if AvatarFileName <> '' then
       begin
-        Stmt := SqliteDatabase.Prepare(
-          'INSERT INTO USERS (NickName, Email, PasswordHash, AVATAR) VALUES (?, ?, ?, ?)');
+        Stmt := SqliteDatabase.Prepare('INSERT INTO USERS (NickName, Email, PasswordHash, AVATAR) VALUES (?, ?, ?, ?)');
         Stream := TMemoryStream.Create;
         Stream.LoadFromFile(AvatarFileName);
         Stmt.BindText(1, WideString(NickName));
@@ -309,8 +303,7 @@ begin
       else
       begin
         SqliteDatabase.Execute(
-          WideString(Format(
-          'INSERT INTO USERS (NickName, Email, PasswordHash) VALUES (''%s'', ''%s'', ''%s'');',
+          WideString(Format('INSERT INTO USERS (NickName, Email, PasswordHash) VALUES (''%s'', ''%s'', ''%s'');',
           [NickName, Email, MD5Print(MD5String(Password))])));
       end;
     except
@@ -327,8 +320,7 @@ begin
   Result := ExecSQL(Format('DELETE FROM USERS WHERE ID = %d', [UserID]));
 end;
 
-function TCustomDataBase.SetUserNickName(UserID: integer;
-  const NickName: string): boolean;
+function TCustomDataBase.SetUserNickName(UserID: integer; const NickName: string): boolean;
   // Установить NickName пользователю
 var
   Stmt: TSQLite3Statement;
@@ -372,8 +364,7 @@ begin
   end;
 end;
 
-function TCustomDataBase.SetUserAvatar(UserID: integer;
-  const AvatarFileName: string): boolean;
+function TCustomDataBase.SetUserAvatar(UserID: integer; const AvatarFileName: string): boolean;
   // Установка новой аватарки пользователю
 var
   Stmt: TSQLite3Statement;
@@ -407,8 +398,7 @@ begin
   Result := '';
   EnterCriticalsection(CriticalSection);
   try
-    Stmt := SqliteDatabase.Prepare('SELECT NickName FROM USERS WHERE ID = ' +
-      WideString(IntToStr(UserID)));
+    Stmt := SqliteDatabase.Prepare('SELECT NickName FROM USERS WHERE ID = ' + WideString(IntToStr(UserID)));
     Stmt.Step;
     Result := string(Stmt.ColumnText(0));
   finally
@@ -425,8 +415,7 @@ begin
   Result := '';
   EnterCriticalsection(CriticalSection);
   try
-    Stmt := SqliteDatabase.Prepare('SELECT Email FROM USERS WHERE ID = ' +
-      WideString(IntToStr(UserID)));
+    Stmt := SqliteDatabase.Prepare('SELECT Email FROM USERS WHERE ID = ' + WideString(IntToStr(UserID)));
     Stmt.Step;
     Result := string(Stmt.ColumnText(0));
   finally
@@ -443,8 +432,7 @@ begin
   Result := '';
   EnterCriticalsection(CriticalSection);
   try
-    Stmt := SqliteDatabase.Prepare('SELECT PasswordHash FROM USERS WHERE ID = ' +
-      WideString(IntToStr(UserID)));
+    Stmt := SqliteDatabase.Prepare('SELECT PasswordHash FROM USERS WHERE ID = ' + WideString(IntToStr(UserID)));
     Stmt.Step;
     Result := string(Stmt.ColumnText(0));
   finally
@@ -453,8 +441,7 @@ begin
   end;
 end;
 
-function TCustomDataBase.SaveUserAvatarToStream(UserID: integer;
-  Stream: TStream): boolean;
+function TCustomDataBase.SaveUserAvatarToStream(UserID: integer; Stream: TStream): boolean;
   // Сохранение пользовательской аватарки в файл
 var
   Stmt: TSQLite3Statement;
@@ -464,8 +451,7 @@ begin
   Result := True;
   EnterCriticalsection(CriticalSection);
   try
-    Stmt := SqliteDatabase.Prepare('SELECT AVATAR FROM USERS WHERE ID = ' +
-      WideString(IntToStr(UserID)));
+    Stmt := SqliteDatabase.Prepare('SELECT AVATAR FROM USERS WHERE ID = ' + WideString(IntToStr(UserID)));
     try
       Stmt.Step;
       Size := Stmt.ColumnBytes(0);
@@ -484,8 +470,7 @@ begin
   end;
 end;
 
-function TCustomDataBase.GetUserInfo(UserID: integer;
-  out NickName, PasswordHash, Email: string): boolean;
+function TCustomDataBase.GetUserInfo(UserID: integer; out NickName, PasswordHash, Email: string): boolean;
   // Получить информацию о пользователе
 var
   Stmt: TSQLite3Statement;
@@ -494,9 +479,7 @@ begin
   EnterCriticalsection(CriticalSection);
   try
     try
-      Stmt := SqliteDatabase.Prepare(
-        'SELECT NickName, EMail, PasswordHash FROM USERS WHERE ID = ' +
-        WideString(IntToStr(UserID)));
+      Stmt := SqliteDatabase.Prepare('SELECT NickName, EMail, PasswordHash FROM USERS WHERE ID = ' + WideString(IntToStr(UserID)));
       Stmt.Step;
       NickName := string(Stmt.ColumnText(0));
       Email := string(Stmt.ColumnText(1));
@@ -551,8 +534,8 @@ begin
   end;
 end;
 
-function TCustomDataBase.AddTransport(UserID, TypeConnection, PortIncoming,
-  PortOutgoing: integer; HostIncoming, HostOutgoing, User, Password: string): boolean;
+function TCustomDataBase.AddTransport(UserID, TypeConnection, PortIncoming, PortOutgoing: integer;
+  HostIncoming, HostOutgoing, User, Password: string): boolean;
   // Добавление настроек соединения
 var
   Stmt: TSQLite3Statement;
@@ -595,8 +578,7 @@ begin
   Result := INVALID_VALUE;
   EnterCriticalsection(CriticalSection);
   try
-    Stmt := SqliteDatabase.Prepare('SELECT TYPE FROM TRANSPORTS WHERE USERID = ' +
-      WideString(IntToStr(UserID)));
+    Stmt := SqliteDatabase.Prepare('SELECT TYPE FROM TRANSPORTS WHERE USERID = ' + WideString(IntToStr(UserID)));
     Stmt.Step;
     Result := Stmt.ColumnInt(0);
   finally
@@ -613,8 +595,7 @@ begin
   Result := INVALID_VALUE;
   EnterCriticalsection(CriticalSection);
   try
-    Stmt := SqliteDatabase.Prepare('SELECT PORTIN FROM TRANSPORTS WHERE USERID = ' +
-      WideString(IntToStr(UserID)));
+    Stmt := SqliteDatabase.Prepare('SELECT PORTIN FROM TRANSPORTS WHERE USERID = ' + WideString(IntToStr(UserID)));
     Stmt.Step;
     Result := Stmt.ColumnInt(0);
   finally
@@ -631,8 +612,7 @@ begin
   Result := INVALID_VALUE;
   EnterCriticalsection(CriticalSection);
   try
-    Stmt := SqliteDatabase.Prepare('SELECT PORTOUT FROM TRANSPORTS WHERE USERID = ' +
-      WideString(IntToStr(UserID)));
+    Stmt := SqliteDatabase.Prepare('SELECT PORTOUT FROM TRANSPORTS WHERE USERID = ' + WideString(IntToStr(UserID)));
     Stmt.Step;
     Result := Stmt.ColumnInt(0);
   finally
@@ -649,8 +629,7 @@ begin
   Result := '';
   EnterCriticalsection(CriticalSection);
   try
-    Stmt := SqliteDatabase.Prepare('SELECT HOSTIN FROM TRANSPORTS WHERE USERID = ' +
-      WideString(IntToStr(UserID)));
+    Stmt := SqliteDatabase.Prepare('SELECT HOSTIN FROM TRANSPORTS WHERE USERID = ' + WideString(IntToStr(UserID)));
     Stmt.Step;
     Result := string(Stmt.ColumnText(0));
   finally
@@ -667,8 +646,7 @@ begin
   Result := '';
   EnterCriticalsection(CriticalSection);
   try
-    Stmt := SqliteDatabase.Prepare('SELECT HOSTOUT FROM TRANSPORTS WHERE USERID = ' +
-      WideString(IntToStr(UserID)));
+    Stmt := SqliteDatabase.Prepare('SELECT HOSTOUT FROM TRANSPORTS WHERE USERID = ' + WideString(IntToStr(UserID)));
     Stmt.Step;
     Result := string(Stmt.ColumnText(0));
   finally
@@ -685,8 +663,7 @@ begin
   Result := '';
   EnterCriticalsection(CriticalSection);
   try
-    Stmt := SqliteDatabase.Prepare('SELECT USERNAME FROM TRANSPORTS WHERE USERID = ' +
-      WideString(IntToStr(UserID)));
+    Stmt := SqliteDatabase.Prepare('SELECT USERNAME FROM TRANSPORTS WHERE USERID = ' + WideString(IntToStr(UserID)));
     Stmt.Step;
     Result := string(Stmt.ColumnText(0));
   finally
@@ -703,8 +680,7 @@ begin
   Result := '';
   EnterCriticalsection(CriticalSection);
   try
-    Stmt := SqliteDatabase.Prepare('SELECT PASSWORD FROM TRANSPORTS WHERE USERID = ' +
-      WideString(IntToStr(UserID)));
+    Stmt := SqliteDatabase.Prepare('SELECT PASSWORD FROM TRANSPORTS WHERE USERID = ' + WideString(IntToStr(UserID)));
     Stmt.Step;
     Result := string(Stmt.ColumnText(0));
   finally
@@ -713,8 +689,7 @@ begin
   end;
 end;
 
-function TCustomDataBase.AddFriend(UserID: integer; const NickName, Email: string;
-  const AvatarFileName: string): boolean;
+function TCustomDataBase.AddFriend(UserID: integer; const NickName, Email: string; const AvatarFileName: string): boolean;
   // Добавить нового друга
 var
   Stmt: TSQLite3Statement;
@@ -726,8 +701,7 @@ begin
     try
       if AvatarFileName <> '' then
       begin
-        Stmt := SqliteDatabase.Prepare(
-          'INSERT INTO FRIENDS (UserID, NickName, Email, AVATAR) VALUES (?, ?, ?, ?)');
+        Stmt := SqliteDatabase.Prepare('INSERT INTO FRIENDS (UserID, NickName, Email, AVATAR) VALUES (?, ?, ?, ?)');
         Stream := TMemoryStream.Create;
         Stream.LoadFromFile(AvatarFileName);
         Stmt.BindInt(1, UserID);
@@ -741,9 +715,8 @@ begin
       else
       begin
         SqliteDatabase.Execute(
-          WideString(Format(
-          'INSERT INTO FRIENDS (UserID, NickName, Email) VALUES (''%d'', ''%s'', ''%s'');',
-          [UserID, NickName, Email])));
+          WideString(Format('INSERT INTO FRIENDS (UserID, NickName, Email) VALUES (''%d'', ''%s'', ''%s'');', [UserID, NickName, Email])));
+
       end;
     except
       Result := False;
@@ -756,12 +729,10 @@ end;
 function TCustomDataBase.RemoveFriend(UserID, FriendID: integer): boolean;
   // Удалить друга
 begin
-  Result := ExecSQL(Format('DELETE FROM FRIENDS WHERE USERID = %d AND ID = %d',
-    [UserID, FriendID]));
+  Result := ExecSQL(Format('DELETE FROM FRIENDS WHERE USERID = %d AND ID = %d', [UserID, FriendID]));
 end;
 
-function TCustomDataBase.SetFriendNickName(UserID, FriendID: integer;
-  NickName: string): boolean;
+function TCustomDataBase.SetFriendNickName(UserID, FriendID: integer; NickName: string): boolean;
   // Установить новое имя пользователю
 var
   Stmt: TSQLite3Statement;
@@ -770,8 +741,7 @@ begin
   try
     Result := True;
     try
-      Stmt := SqliteDatabase.Prepare(
-        'UPDATE FRIENDS SET NickName = ? WHERE USERID = ? AND ID = ?');
+      Stmt := SqliteDatabase.Prepare('UPDATE FRIENDS SET NickName = ? WHERE USERID = ? AND ID = ?');
       Stmt.BindText(1, WideString(NickName));
       Stmt.BindInt(2, UserID);
       Stmt.BindInt(3, FriendID);
@@ -785,8 +755,7 @@ begin
   end;
 end;
 
-function TCustomDataBase.SetFriendEmail(UserID, FriendID: integer;
-  EMail: string): boolean;
+function TCustomDataBase.SetFriendEmail(UserID, FriendID: integer; EMail: string): boolean;
   // Присвоить новую почту пользователю
 var
   Stmt: TSQLite3Statement;
@@ -795,8 +764,7 @@ begin
   try
     Result := True;
     try
-      Stmt := SqliteDatabase.Prepare(
-        'UPDATE FRIENDS SET EMail = ? WHERE USERID = ? AND ID = ?');
+      Stmt := SqliteDatabase.Prepare('UPDATE FRIENDS SET EMail = ? WHERE USERID = ? AND ID = ?');
       Stmt.BindText(1, WideString(EMail));
       Stmt.BindInt(2, UserID);
       Stmt.BindInt(3, FriendID);
@@ -818,9 +786,7 @@ begin
   Result := '';
   EnterCriticalsection(CriticalSection);
   try
-    Stmt := SqliteDatabase.Prepare(
-      WideString(Format('SELECT NickName FROM FRIENDS WHERE USERID = %d AND ID = %d',
-      [UserID, FriendID])));
+    Stmt := SqliteDatabase.Prepare(WideString(Format('SELECT NickName FROM FRIENDS WHERE USERID = %d AND ID = %d', [UserID, FriendID])));
     Stmt.Step;
     Result := string(Stmt.ColumnText(0));
   finally
@@ -837,9 +803,7 @@ begin
   Result := '';
   EnterCriticalsection(CriticalSection);
   try
-    Stmt := SqliteDatabase.Prepare(
-      WideString(Format('SELECT EMail FROM FRIENDS WHERE USERID = %d AND ID = %d',
-      [UserID, FriendID])));
+    Stmt := SqliteDatabase.Prepare(WideString(Format('SELECT EMail FROM FRIENDS WHERE USERID = %d AND ID = %d', [UserID, FriendID])));
     Stmt.Step;
     Result := string(Stmt.ColumnText(0));
   finally
@@ -856,8 +820,7 @@ begin
   Result := INVALID_VALUE;
   EnterCriticalsection(CriticalSection);
   try
-    Stmt := SqliteDatabase.Prepare(
-      WideString('SELECT COUNT(ID) FROM FRIENDS WHERE USERID = ' + IntToStr(UserID)));
+    Stmt := SqliteDatabase.Prepare(WideString('SELECT COUNT(ID) FROM FRIENDS WHERE USERID = ' + IntToStr(UserID)));
     Stmt.Step;
     Result := Stmt.ColumnInt(0);
   finally
@@ -865,8 +828,7 @@ begin
   end;
 end;
 
-function TCustomDataBase.SaveFriendAvatarToStream(UserID, FriendID: integer;
-  Stream: TStream): boolean;
+function TCustomDataBase.SaveFriendAvatarToStream(UserID, FriendID: integer; Stream: TStream): boolean;
   // Сохранить аватарку друга в поток
 var
   Stmt: TSQLite3Statement;
@@ -876,8 +838,7 @@ begin
   Result := True;
   EnterCriticalsection(CriticalSection);
   try
-    Stmt := SqliteDatabase.Prepare(
-      'SELECT AVATAR FROM FRIENDS WHERE USERID = ? AND ID = ?');
+    Stmt := SqliteDatabase.Prepare('SELECT AVATAR FROM FRIENDS WHERE USERID = ? AND ID = ?');
     try
       Stmt.BindInt(1, UserID);
       Stmt.BindInt(2, FriendID);
@@ -898,8 +859,7 @@ begin
   end;
 end;
 
-function TCustomDataBase.AddMessage(UserID, FriendID: integer;
-  Direction: TMsgDirection; TypeMsg: TMsgType;
+function TCustomDataBase.AddMessage(UserID, FriendID: integer; Direction: TMsgDirection; TypeMsg: TMsgType;
   MessageStream, OpenKey, PrivateKey, BlowFishKey: TStream): boolean;
   // Добавление нового сообщения
 var
@@ -940,14 +900,10 @@ end;
 function TCustomDataBase.RemoveMessage(UserID, FriendID, ID: integer): boolean;
   // Удаление сообщения
 begin
-  Result := ExecSQL(Format(
-    'DELETE FROM MESSAGES WHERE USERID = %d AND FRIENDID = %d AND ID = %d',
-    [UserID, FriendID, ID]));
+  Result := ExecSQL(Format('DELETE FROM MESSAGES WHERE USERID = %d AND FRIENDID = %d AND ID = %d', [UserID, FriendID, ID]));
 end;
 
-function TCustomDataBase.GetMessageDirection(UserID, FriendID, ID:
-  integer): TMsgDirection;
-
+function TCustomDataBase.GetMessageDirection(UserID, FriendID, ID: integer): TMsgDirection;
 
   // Получить направление сообщения
 var
@@ -956,9 +912,7 @@ begin
   Result := mdoutgoingMsg;
   EnterCriticalsection(CriticalSection);
   try
-    Stmt := SqliteDatabase.Prepare(
-      WideString(Format(
-      'SELECT Direction FROM MESSAGES WHERE USERID = %d AND FRIENDID = %d AND ID = %d',
+    Stmt := SqliteDatabase.Prepare(WideString(Format('SELECT Direction FROM MESSAGES WHERE USERID = %d AND FRIENDID = %d AND ID = %d',
       [UserID, FriendID, ID])));
     Stmt.Step;
     if Stmt.ColumnInt(0) = 1 then
@@ -977,9 +931,7 @@ begin
   Result := mtMessage;
   EnterCriticalsection(CriticalSection);
   try
-    Stmt := SqliteDatabase.Prepare(
-      WideString(Format(
-      'SELECT TYPE FROM MESSAGES WHERE USERID = %d AND FRIENDID = %d AND ID = %d',
+    Stmt := SqliteDatabase.Prepare(WideString(Format('SELECT TYPE FROM MESSAGES WHERE USERID = %d AND FRIENDID = %d AND ID = %d',
       [UserID, FriendID, ID])));
     Stmt.Step;
     case Stmt.ColumnInt(0) of
@@ -994,8 +946,7 @@ begin
   end;
 end;
 
-function TCustomDataBase.GetMessage(UserID, FriendID, ID: integer;
-  Stream: TStream): boolean;
+function TCustomDataBase.GetMessage(UserID, FriendID, ID: integer; Stream: TStream): boolean;
   // Получение сообщения
 var
   Stmt: TSQLite3Statement;
@@ -1005,9 +956,7 @@ begin
   Result := True;
   EnterCriticalsection(CriticalSection);
   try
-    Stmt := SqliteDatabase.Prepare(
-      WideString(Format(
-      'SELECT ENCMESSAGE FROM MESSAGES WHERE USERID = %d AND FRIENDID = %d AND ID = %d',
+    Stmt := SqliteDatabase.Prepare(WideString(Format('SELECT ENCMESSAGE FROM MESSAGES WHERE USERID = %d AND FRIENDID = %d AND ID = %d',
       [UserID, FriendID, ID])));
     try
       Stmt.Step;
@@ -1035,9 +984,7 @@ begin
   Result := 0;
   EnterCriticalsection(CriticalSection);
   try
-    Stmt := SqliteDatabase.Prepare(
-      WideString(Format(
-      'SELECT Date FROM MESSAGES WHERE USERID = %d AND FRIENDID = %d AND ID = %d',
+    Stmt := SqliteDatabase.Prepare(WideString(Format('SELECT Date FROM MESSAGES WHERE USERID = %d AND FRIENDID = %d AND ID = %d',
       [UserID, FriendID, ID])));
     Stmt.Step;
     Result := Stmt.ColumnDouble(0);
@@ -1047,8 +994,7 @@ begin
   end;
 end;
 
-function TCustomDataBase.GetMessageOpenKey(UserID, FriendID, ID: integer;
-  Stream: TStream): boolean;
+function TCustomDataBase.GetMessageOpenKey(UserID, FriendID, ID: integer; Stream: TStream): boolean;
   // Получить открытый ключ
 var
   Stmt: TSQLite3Statement;
@@ -1058,9 +1004,7 @@ begin
   Result := True;
   EnterCriticalsection(CriticalSection);
   try
-    Stmt := SqliteDatabase.Prepare(
-      WideString(Format(
-      'SELECT OPENKEY FROM MESSAGES WHERE USERID = %d AND FRIENDID = %d AND ID = %d',
+    Stmt := SqliteDatabase.Prepare(WideString(Format('SELECT OPENKEY FROM MESSAGES WHERE USERID = %d AND FRIENDID = %d AND ID = %d',
       [UserID, FriendID, ID])));
     try
       Stmt.Step;
@@ -1080,8 +1024,7 @@ begin
   end;
 end;
 
-function TCustomDataBase.GetMessagePrivateKey(UserID, FriendID, ID: integer;
-  Stream: TStream): boolean;
+function TCustomDataBase.GetMessagePrivateKey(UserID, FriendID, ID: integer; Stream: TStream): boolean;
   // Получить закрытый ключ
 var
   Stmt: TSQLite3Statement;
@@ -1091,9 +1034,7 @@ begin
   Result := True;
   EnterCriticalsection(CriticalSection);
   try
-    Stmt := SqliteDatabase.Prepare(
-      WideString(Format(
-      'SELECT PrivateKey FROM MESSAGES WHERE USERID = %d AND FRIENDID = %d AND ID = %d',
+    Stmt := SqliteDatabase.Prepare(WideString(Format('SELECT PrivateKey FROM MESSAGES WHERE USERID = %d AND FRIENDID = %d AND ID = %d',
       [UserID, FriendID, ID])));
     try
       Stmt.Step;
@@ -1113,8 +1054,7 @@ begin
   end;
 end;
 
-function TCustomDataBase.GetMessageBlowFishKey(UserID, FriendID, ID: integer;
-  Stream: TStream): boolean;
+function TCustomDataBase.GetMessageBlowFishKey(UserID, FriendID, ID: integer; Stream: TStream): boolean;
   // Получить blowfish ключ
 var
   Stmt: TSQLite3Statement;
@@ -1124,11 +1064,8 @@ begin
   Result := True;
   EnterCriticalsection(CriticalSection);
   try
-    Stmt := SqliteDatabase.Prepare(
-      WideString(Format(
-      'SELECT BLOWFISHKEY FROM MESSAGES WHERE USERID = %d AND FRIENDID = %d AND ID = %d',
-      [
-      UserID, FriendID, ID])));
+    Stmt := SqliteDatabase.Prepare(WideString(Format('SELECT BLOWFISHKEY FROM MESSAGES WHERE USERID = %d AND FRIENDID = %d AND ID = %d',
+      [UserID, FriendID, ID])));
     try
       Stmt.Step;
       Size := Stmt.ColumnBytes(0);
@@ -1155,8 +1092,7 @@ begin
   Result := INVALID_VALUE;
   EnterCriticalsection(CriticalSection);
   try
-    Stmt := SqliteDatabase.Prepare(
-      'SELECT COUNT(ID) FROM MESSAGES WHERE USERID = ? AND FRIENDID = ?');
+    Stmt := SqliteDatabase.Prepare('SELECT COUNT(ID) FROM MESSAGES WHERE USERID = ? AND FRIENDID = ?');
     Stmt.BindInt(1, UserID);
     Stmt.BindInt(2, FriendID);
     Stmt.Step;
@@ -1173,6 +1109,7 @@ initialization
   DataBase := TDataBase.Create;
 
 finalization
-  DataBase.Free;
+  if Assigned(DataBase) then
+    DataBase.Free;
 
 end.
